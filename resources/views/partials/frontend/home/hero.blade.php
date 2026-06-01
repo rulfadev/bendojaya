@@ -31,10 +31,7 @@
                         Lihat Koleksi
                     </a>
 
-                    <a href="https://wa.me/{{ $whatsapp }}" target="_blank"
-                        class="inline-flex justify-center rounded-full border border-[#FBE9CB]/35 bg-white/5 px-8 py-4 text-sm font-black text-[#FBE9CB] backdrop-blur transition hover:-translate-y-1 hover:bg-white/10">
-                        Konsultasi Kerja Sama
-                    </a>
+                    <x-frontend.consultation-link label="Konsultasi Kerja Sama" variant="outline-light" />
                 </div>
 
                 <div class="mt-14 grid max-w-2xl gap-4 border-t border-[#FBE9CB]/20 pt-8 sm:grid-cols-3">

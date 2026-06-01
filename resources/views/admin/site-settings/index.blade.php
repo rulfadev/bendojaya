@@ -70,6 +70,23 @@
                             <p class="mt-2 text-xs font-semibold text-stone-500">Gunakan format 628..., tanpa tanda +.</p>
                         </div>
 
+                        <div>
+                            <label for="consultation_label" class="{{ $labelClass }}">Label Tombol Konsultasi</label>
+                            <input type="text" id="consultation_label" name="consultation_label"
+                                value="{{ old('consultation_label', $setting->consultation_label) }}"
+                                placeholder="Konsultasi" class="{{ $inputClass }}">
+                        </div>
+
+                        <div>
+                            <label for="consultation_url" class="{{ $labelClass }}">Link Tombol Konsultasi</label>
+                            <input type="text" id="consultation_url" name="consultation_url"
+                                value="{{ old('consultation_url', $setting->consultation_url) }}"
+                                placeholder="/pages/kerja-sama atau https://wa.me/628..." class="{{ $inputClass }}">
+                            <p class="mt-2 text-xs font-semibold text-stone-500">
+                                Bisa isi link internal seperti /pages/kerja-sama atau link eksternal seperti WhatsApp.
+                            </p>
+                        </div>
+
                         <div class="md:col-span-2">
                             <label for="address" class="{{ $labelClass }}">Alamat</label>
                             <textarea id="address" name="address" rows="4" class="{{ $inputClass }}">{{ old('address', $setting->address) }}</textarea>

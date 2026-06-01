@@ -20,10 +20,7 @@
                         Jaya.
                     </p>
 
-                    <a href="https://wa.me/{{ $whatsapp }}" target="_blank"
-                        class="mt-9 inline-flex rounded-full bg-[#FBE9CB] px-8 py-4 text-sm font-black text-[#3C3B39] transition hover:bg-white">
-                        Konsultasi via WhatsApp
-                    </a>
+                    <x-frontend.consultation-link label="Konsultasi Sekarang" variant="light" />
                 </div>
             </div>
         </div>

@@ -16,6 +16,18 @@
             'active' => 'admin.site-settings.*',
             'icon' => '✦',
         ],
+        [
+            'label' => 'Layanan',
+            'route' => 'admin.services.index',
+            'active' => 'admin.services.*',
+            'icon' => '✧',
+        ],
+        [
+            'label' => 'Custom Page',
+            'route' => 'admin.pages.index',
+            'active' => 'admin.pages.*',
+            'icon' => '✺',
+        ],
     ];
 
     $futureItems = ['Artikel', 'Gallery', 'Koleksi', 'Partner / Kerja Sama', 'Custom Page', 'Pesan Kontak'];

@@ -59,6 +59,9 @@ class SiteSettingController extends Controller
             'meta_title' => ['nullable', 'string', 'max:180'],
             'meta_description' => ['nullable', 'string'],
             'meta_keywords' => ['nullable', 'string'],
+
+            'consultation_label' => ['nullable', 'string', 'max:100'],
+            'consultation_url' => ['nullable', 'string', 'max:255'],
         ]);
 
         if ($request->hasFile('logo')) {

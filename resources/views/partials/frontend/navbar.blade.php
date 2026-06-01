@@ -20,10 +20,7 @@
         </nav>
 
         <div class="flex items-center gap-3">
-            <a href="https://wa.me/{{ $whatsapp }}" target="_blank"
-                class="hidden rounded-full bg-[#3C3B39] px-5 py-3 text-sm font-bold text-[#FBE9CB] shadow-lg shadow-[#3C3B39]/10 transition hover:-translate-y-0.5 hover:bg-[#58433D] sm:inline-flex">
-                Konsultasi
-            </a>
+            <x-frontend.consultation-link class="hidden sm:inline-flex" />
 
             <button type="button"
                 class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#E6D8C8] bg-white text-[#3C3B39] lg:hidden">

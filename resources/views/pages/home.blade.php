@@ -23,12 +23,6 @@
             ],
         ];
 
-        $services = [
-            'Koleksi batik wanita ready to wear',
-            'Custom pakaian dan seragam batik',
-            'Kerja sama brand fashion dan komunitas',
-        ];
-
         $articles = [
             'Mengenal Karakter Motif Batik dalam Fashion Modern',
             'Cara Merawat Pakaian Batik agar Tetap Indah',
