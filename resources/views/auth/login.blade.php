@@ -85,7 +85,7 @@
                         </div>
                     @enderror
 
-                    <form action="{{ route('admin.login.submit') }}" method="POST" class="space-y-5">
+                    <form action="{{ route('login.store') }}" method="POST" class="space-y-5">
                         @csrf
 
                         <div>
@@ -120,14 +120,6 @@
                             Masuk Admin Panel
                         </button>
                     </form>
-
-                    <div class="mt-8 rounded-3xl border border-amber-200 bg-amber-50/70 p-5">
-                        <p class="text-xs font-black uppercase tracking-[0.2em] text-amber-800">Akun Awal</p>
-                        <p class="mt-2 text-sm leading-6 text-stone-600">
-                            Username: <strong>admin</strong><br>
-                            Password: <strong>password</strong>
-                        </p>
-                    </div>
                 </div>
             </section>
         </div>

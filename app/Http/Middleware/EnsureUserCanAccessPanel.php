@@ -6,11 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserIsAdmin
+class EnsureUserCanAccessPanel
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
@@ -19,8 +16,8 @@ class EnsureUserIsAdmin
             return redirect()->route('login');
         }
 
-        if (! $user->isAdminPanelUser()) {
-            abort(403, 'Akun ini tidak memiliki akses ke halaman admin.');
+        if (! $user->canAccessPanel()) {
+            abort(403, 'Akun ini tidak memiliki akses ke panel pengelolaan.');
         }
 
         return $next($request);

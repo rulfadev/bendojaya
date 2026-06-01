@@ -23,8 +23,12 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdminPanelUser(): bool
+    public function canAccessPanel(): bool
     {
-        return $this->is_active && in_array($this->role, ['admin', 'editor'], true);
+        return $this->is_active && in_array($this->role, [
+            'admin',
+            'editor',
+            'staff',
+        ], true);
     }
 }

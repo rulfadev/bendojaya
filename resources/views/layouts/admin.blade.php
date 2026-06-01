@@ -130,8 +130,9 @@
                             Lihat Website
                         </a>
 
-                        <form action="{{ route('admin.logout') }}" method="POST">
+                        <form action="{{ route('logout') }}" method="POST">
                             @csrf
+
                             <button type="submit"
                                 class="rounded-2xl bg-stone-950 px-4 py-2.5 text-sm font-bold text-amber-200 transition hover:bg-stone-800">
                                 Logout
