@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+
+#[Fillable(['name', 'slug', 'category', 'main_image', 'short_description', 'description', 'material', 'color_palette', 'size_info', 'is_featured', 'is_active', 'sort_order'])]
+class FashionCollection extends Model
+{
+    protected function casts(): array
+    {
+        return [
+            'is_featured' => 'boolean',
+            'is_active' => 'boolean',
+            'sort_order' => 'integer',
+        ];
+    }
+
+    public function getMainImageUrlAttribute(): ?string
+    {
+        return $this->main_image ? Storage::url($this->main_image) : null;
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $query->where('is_featured', true);
+    }
+}

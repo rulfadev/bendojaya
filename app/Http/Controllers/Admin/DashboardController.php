@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FashionCollection;
 use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\View\View;
@@ -47,6 +48,11 @@ class DashboardController extends Controller
                     ->where('is_active', true)
                     ->count(),
                 'description' => 'Pengelola website aktif.',
+            ],
+            [
+                'label' => 'Koleksi',
+                'value' => FashionCollection::query()->count(),
+                'description' => 'Katalog pakaian dan motif batik.',
             ],
         ];
 

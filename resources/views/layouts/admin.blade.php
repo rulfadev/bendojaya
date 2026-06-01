@@ -28,6 +28,12 @@
             'active' => 'admin.pages.*',
             'icon' => '✺',
         ],
+        [
+            'label' => 'Koleksi',
+            'route' => 'admin.collections.index',
+            'active' => 'admin.collections.*',
+            'icon' => '✤',
+        ],
     ];
 
     $futureItems = ['Artikel', 'Gallery', 'Koleksi', 'Partner / Kerja Sama', 'Custom Page', 'Pesan Kontak'];

@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\PageController as FrontendPageController;
+use App\Models\FashionCollection;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +23,17 @@ Route::get('/', function () {
         ->take(3)
         ->get();
 
+    $collections = FashionCollection::query()
+        ->active()
+        ->featured()
+        ->orderBy('sort_order')
+        ->take(3)
+        ->get();
+
     return view('pages.home', [
         'setting' => $setting,
         'services' => $services,
+        'collections' => $collections,
         'title' => $setting?->meta_title ?? 'Bendo Jaya Batik Fashion',
         'metaDescription' => $setting?->meta_description ?? 'Bendo Jaya Batik Fashion menghadirkan koleksi batik elegan, custom pakaian, dan kerja sama brand fashion.',
     ]);
@@ -64,4 +74,10 @@ Route::prefix('admin')
                 Route::resource('sections', PageSectionController::class)
                     ->except(['show']);
             });
+
+        Route::resource('collections', FashionCollectionController::class)
+            ->parameters([
+                'collections' => 'collection',
+            ])
+            ->except(['show']);
     });

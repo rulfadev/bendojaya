@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             ServiceSeeder::class,
             PageSeeder::class,
+            FashionCollectionSeeder::class,
         ]);
     }
 }

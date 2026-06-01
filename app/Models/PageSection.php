@@ -2,29 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
+#[Fillable(['page_id', 'type', 'eyebrow', 'title', 'subtitle', 'content', 'image', 'image_position', 'button_label', 'button_url', 'settings', 'is_active', 'sort_order'])]
 class PageSection extends Model
 {
-    protected $fillable = [
-        'page_id',
-        'type',
-        'eyebrow',
-        'title',
-        'subtitle',
-        'content',
-        'image',
-        'image_position',
-        'button_label',
-        'button_url',
-        'settings',
-        'is_active',
-        'sort_order',
-    ];
-
     protected function casts(): array
     {
         return [
