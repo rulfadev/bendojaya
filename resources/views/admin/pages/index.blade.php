@@ -56,6 +56,11 @@
 
                             <td class="px-6 py-5">
                                 <div class="flex justify-end gap-2">
+                                    <a href="{{ route('admin.pages.sections.index', $page) }}"
+                                        class="rounded-xl border border-amber-200 bg-amber-50 px-4 py-2 text-xs font-black text-amber-800 transition hover:bg-amber-100">
+                                        Section
+                                    </a>
+
                                     <a href="{{ route('admin.pages.edit', $page) }}"
                                         class="rounded-xl border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-700 transition hover:border-stone-950 hover:text-stone-950">
                                         Edit

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Auth\AdminAuthController;
@@ -56,4 +57,11 @@ Route::prefix('admin')
             ->except(['show']);
         Route::resource('pages', AdminPageController::class)
             ->except(['show']);
+
+        Route::prefix('pages/{page}')
+            ->name('pages.')
+            ->group(function () {
+                Route::resource('sections', PageSectionController::class)
+                    ->except(['show']);
+            });
     });

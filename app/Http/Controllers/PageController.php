@@ -14,6 +14,10 @@ class PageController extends Controller
 
         $setting = SiteSetting::query()->first();
 
+        $page->load([
+            'activeSections',
+        ]);
+
         return view('pages.show', [
             'setting' => $setting,
             'page' => $page,

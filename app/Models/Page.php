@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
 #[Fillable(['title', 'slug', 'excerpt', 'content', 'featured_image', 'meta_title', 'meta_description', 'meta_keywords', 'show_in_navigation', 'is_active', 'sort_order', 'published_at'])]
@@ -34,5 +35,17 @@ class Page extends Model
     public function scopeNavigation(Builder $query): Builder
     {
         return $query->where('show_in_navigation', true);
+    }
+
+    public function sections(): HasMany
+    {
+        return $this->hasMany(PageSection::class)
+            ->orderBy('sort_order')
+            ->orderBy('id');
+    }
+
+    public function activeSections(): HasMany
+    {
+        return $this->sections()->where('is_active', true);
     }
 }
