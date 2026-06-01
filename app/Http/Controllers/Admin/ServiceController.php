@@ -115,22 +115,41 @@ class ServiceController extends Controller
 
     private function validateService(Request $request, ?Service $service = null): array
     {
-        return $request->validate([
-            'title' => ['required', 'string', 'max:180'],
-            'slug' => [
-                'nullable',
-                'string',
-                'max:200',
-                Rule::unique('services', 'slug')->ignore($service?->id),
+        return $request->validate(
+            [
+                'title' => ['required', 'string', 'max:180'],
+                'slug' => [
+                    'nullable',
+                    'string',
+                    'max:200',
+                    Rule::unique('services', 'slug')->ignore($service?->id),
+                ],
+                'icon' => ['nullable', 'string', 'max:80'],
+                'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+                'short_description' => ['required', 'string'],
+                'description' => ['nullable', 'string'],
+                'sort_order' => ['nullable', 'integer', 'min:0'],
+                'is_featured' => ['nullable', 'boolean'],
+                'is_active' => ['nullable', 'boolean'],
             ],
-            'icon' => ['nullable', 'string', 'max:80'],
-            'image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,svg', 'max:2048'],
-            'short_description' => ['required', 'string'],
-            'description' => ['nullable', 'string'],
-            'sort_order' => ['nullable', 'integer', 'min:0'],
-            'is_featured' => ['nullable', 'boolean'],
-            'is_active' => ['nullable', 'boolean'],
-        ]);
+            [
+                'title.required' => 'Judul layanan wajib diisi.',
+                'title.max' => 'Judul layanan maksimal 180 karakter.',
+
+                'slug.unique' => 'Slug layanan sudah digunakan.',
+                'slug.max' => 'Slug layanan maksimal 200 karakter.',
+
+                'image.uploaded' => 'Gambar gagal diupload. Pastikan ukuran file tidak terlalu besar.',
+                'image.image' => 'File harus berupa gambar.',
+                'image.mimes' => 'Format gambar harus jpg, jpeg, png, atau webp.',
+                'image.max' => 'Ukuran gambar maksimal 4MB.',
+
+                'short_description.required' => 'Deskripsi singkat wajib diisi.',
+
+                'sort_order.integer' => 'Urutan harus berupa angka.',
+                'sort_order.min' => 'Urutan minimal 0.',
+            ]
+        );
     }
 
     private function makeUniqueSlug(string $value, ?int $ignoreId = null): string

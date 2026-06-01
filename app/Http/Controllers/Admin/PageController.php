@@ -109,27 +109,46 @@ class PageController extends Controller
 
     private function validatePage(Request $request, ?Page $page = null): array
     {
-        return $request->validate([
-            'title' => ['required', 'string', 'max:180'],
-            'slug' => [
-                'nullable',
-                'string',
-                'max:220',
-                Rule::unique('pages', 'slug')->ignore($page?->id),
+        return $request->validate(
+            [
+                'title' => ['required', 'string', 'max:180'],
+                'slug' => [
+                    'nullable',
+                    'string',
+                    'max:220',
+                    Rule::unique('pages', 'slug')->ignore($page?->id),
+                ],
+                'excerpt' => ['nullable', 'string'],
+                'content' => ['nullable', 'string'],
+                'featured_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+
+                'meta_title' => ['nullable', 'string', 'max:180'],
+                'meta_description' => ['nullable', 'string'],
+                'meta_keywords' => ['nullable', 'string'],
+
+                'show_in_navigation' => ['nullable', 'boolean'],
+                'is_active' => ['nullable', 'boolean'],
+                'sort_order' => ['nullable', 'integer', 'min:0'],
+                'published_at' => ['nullable', 'date'],
             ],
-            'excerpt' => ['nullable', 'string'],
-            'content' => ['nullable', 'string'],
-            'featured_image' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,svg', 'max:2048'],
+            [
+                'title.required' => 'Judul halaman wajib diisi.',
+                'title.max' => 'Judul halaman maksimal 180 karakter.',
 
-            'meta_title' => ['nullable', 'string', 'max:180'],
-            'meta_description' => ['nullable', 'string'],
-            'meta_keywords' => ['nullable', 'string'],
+                'slug.unique' => 'Slug halaman sudah digunakan.',
+                'slug.max' => 'Slug halaman maksimal 220 karakter.',
 
-            'show_in_navigation' => ['nullable', 'boolean'],
-            'is_active' => ['nullable', 'boolean'],
-            'sort_order' => ['nullable', 'integer', 'min:0'],
-            'published_at' => ['nullable', 'date'],
-        ]);
+                'featured_image.uploaded' => 'Gambar gagal diupload. Pastikan ukuran file tidak terlalu besar.',
+                'featured_image.image' => 'File harus berupa gambar.',
+                'featured_image.mimes' => 'Format gambar harus jpg, jpeg, png, atau webp.',
+                'featured_image.max' => 'Ukuran gambar maksimal 4MB.',
+
+                'sort_order.integer' => 'Urutan harus berupa angka.',
+                'sort_order.min' => 'Urutan minimal 0.',
+
+                'published_at.date' => 'Tanggal publish tidak valid.',
+            ]
+        );
     }
 
     private function makeUniqueSlug(string $value, ?int $ignoreId = null): string
