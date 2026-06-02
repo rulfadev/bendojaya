@@ -140,6 +140,82 @@
                             <textarea id="meta_keywords" name="meta_keywords" rows="4" class="{{ $inputClass }}">{{ old('meta_keywords', $setting->meta_keywords) }}</textarea>
                         </div>
                     </div>
+
+                    <label
+                        class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
+                        <span class="text-sm font-black text-stone-800">Izinkan Indexing Mesin Pencarian</span>
+                        <input type="checkbox" name="allow_search_indexing" value="1" @checked(old('allow_search_indexing', $setting->allow_search_indexing ?? true))
+                            class="rounded border-stone-300 text-stone-950 focus:ring-amber-300">
+                    </label>
+
+                    <div>
+                        <label for="site_author" class="{{ $labelClass }}">Site Author</label>
+                        <input type="text" id="site_author" name="site_author"
+                            value="{{ old('site_author', $setting->site_author) }}" class="{{ $inputClass }}"
+                            placeholder="Bendo Jaya">
+                    </div>
+
+                    <div>
+                        <label for="google_site_verification" class="{{ $labelClass }}">Google Site
+                            Verification</label>
+                        <input type="text" id="google_site_verification" name="google_site_verification"
+                            value="{{ old('google_site_verification', $setting->google_site_verification) }}"
+                            class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label for="bing_site_verification" class="{{ $labelClass }}">Bing Site Verification</label>
+                        <input type="text" id="bing_site_verification" name="bing_site_verification"
+                            value="{{ old('bing_site_verification', $setting->bing_site_verification) }}"
+                            class="{{ $inputClass }}">
+                    </div>
+
+                    <div>
+                        <label for="default_og_image" class="{{ $labelClass }}">Default OG Image</label>
+                        <input type="file" id="default_og_image" name="default_og_image"
+                            accept=".jpg,.jpeg,.png,.webp"
+                            class="block w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-600 file:mr-4 file:rounded-xl file:border-0 file:bg-stone-950 file:px-4 file:py-2 file:text-sm file:font-black file:text-amber-200">
+                    </div>
+                </section>
+
+                <section class="{{ $cardClass }}">
+                    <div class="mb-6">
+                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">Maintenance</p>
+                        <h3 class="mt-2 text-xl font-black text-stone-950">Mode Maintenance Website</h3>
+                        <p class="mt-2 text-sm leading-6 text-stone-500">
+                            Aktifkan saat website sedang dibangun ulang. Admin tetap bisa login dan mengakses panel.
+                        </p>
+                    </div>
+
+                    <div class="grid gap-5 md:grid-cols-2">
+                        <label
+                            class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3 md:col-span-2">
+                            <span class="text-sm font-black text-stone-800">Aktifkan Maintenance Mode</span>
+                            <input type="checkbox" name="is_maintenance_mode" value="1" @checked(old('is_maintenance_mode', $setting->is_maintenance_mode))
+                                class="rounded border-stone-300 text-stone-950 focus:ring-amber-300">
+                        </label>
+
+                        <div class="md:col-span-2">
+                            <label for="maintenance_title" class="{{ $labelClass }}">Judul Maintenance</label>
+                            <input type="text" id="maintenance_title" name="maintenance_title"
+                                value="{{ old('maintenance_title', $setting->maintenance_title) }}"
+                                class="{{ $inputClass }}" placeholder="Bendo Jaya Batik Fashion Sedang Diperbarui">
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label for="maintenance_description" class="{{ $labelClass }}">Deskripsi
+                                Maintenance</label>
+                            <textarea id="maintenance_description" name="maintenance_description" rows="4" class="{{ $inputClass }}">{{ old('maintenance_description', $setting->maintenance_description) }}</textarea>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label for="maintenance_image" class="{{ $labelClass }}">Gambar Background
+                                Maintenance</label>
+                            <input type="file" id="maintenance_image" name="maintenance_image"
+                                accept=".jpg,.jpeg,.png,.webp"
+                                class="block w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-600 file:mr-4 file:rounded-xl file:border-0 file:bg-stone-950 file:px-4 file:py-2 file:text-sm file:font-black file:text-amber-200">
+                        </div>
+                    </div>
                 </section>
             </div>
 

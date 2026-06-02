@@ -62,7 +62,37 @@ class SiteSettingController extends Controller
 
             'consultation_label' => ['nullable', 'string', 'max:100'],
             'consultation_url' => ['nullable', 'string', 'max:255'],
+
+            'is_maintenance_mode' => ['nullable', 'boolean'],
+            'maintenance_title' => ['nullable', 'string', 'max:180'],
+            'maintenance_description' => ['nullable', 'string'],
+            'maintenance_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+
+            'allow_search_indexing' => ['nullable', 'boolean'],
+            'site_author' => ['nullable', 'string', 'max:150'],
+            'default_og_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'google_site_verification' => ['nullable', 'string', 'max:255'],
+            'bing_site_verification' => ['nullable', 'string', 'max:255'],
         ]);
+
+        $validated['is_maintenance_mode'] = $request->boolean('is_maintenance_mode');
+        $validated['allow_search_indexing'] = $request->boolean('allow_search_indexing');
+
+        if ($request->hasFile('maintenance_image')) {
+            if ($setting->maintenance_image) {
+                Storage::disk('public')->delete($setting->maintenance_image);
+            }
+
+            $validated['maintenance_image'] = $request->file('maintenance_image')->store('site', 'public');
+        }
+
+        if ($request->hasFile('default_og_image')) {
+            if ($setting->default_og_image) {
+                Storage::disk('public')->delete($setting->default_og_image);
+            }
+
+            $validated['default_og_image'] = $request->file('default_og_image')->store('site', 'public');
+        }
 
         if ($request->hasFile('logo')) {
             if ($setting->logo) {
