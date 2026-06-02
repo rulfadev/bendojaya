@@ -82,10 +82,6 @@ class NavigationMenu extends Model
             return $this->url;
         }
 
-        if ($this->url === '#home' || $this->url === '/#home') {
-            return route('home');
-        }
-
         if (str_starts_with($this->url, '#')) {
             return route('home').$this->url;
         }

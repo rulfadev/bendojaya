@@ -43,25 +43,27 @@
     </div>
     <script>
         document.addEventListener('click', function(event) {
-            const link = event.target.closest('a[href="#home"], a[href$="/#home"]');
+            const link = event.target.closest('a[href]');
 
             if (!link) {
                 return;
             }
 
-            event.preventDefault();
+            const targetUrl = new URL(link.getAttribute('href'), window.location.origin);
 
-            const targetUrl = new URL(link.href);
+            if (targetUrl.hash !== '#home') {
+                return;
+            }
+
             const currentUrl = new URL(window.location.href);
 
-            const homeUrl = targetUrl.origin + targetUrl.pathname;
+            const isSameOrigin = currentUrl.origin === targetUrl.origin;
+            const isLandingPage = currentUrl.pathname.replace(/\/$/, '') === targetUrl.pathname.replace(/\/$/, '');
 
-            const isSamePage =
-                currentUrl.origin === targetUrl.origin &&
-                currentUrl.pathname.replace(/\/$/, '') === targetUrl.pathname.replace(/\/$/, '');
+            event.preventDefault();
 
-            if (!isSamePage) {
-                window.location.href = homeUrl;
+            if (!isSameOrigin || !isLandingPage) {
+                window.location.href = targetUrl.origin + targetUrl.pathname;
                 return;
             }
 
