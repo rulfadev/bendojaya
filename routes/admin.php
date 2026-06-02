@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
@@ -50,5 +51,8 @@ Route::prefix('admin')
             ->name('profile.password.update');
 
         Route::resource('galleries', GalleryController::class)
+            ->except(['show']);
+
+        Route::resource('partners', PartnerController::class)
             ->except(['show']);
     });

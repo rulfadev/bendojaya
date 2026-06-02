@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
+use App\Models\Partner;
 use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\View\View;
@@ -39,7 +40,7 @@ class DashboardController extends Controller
             ],
             [
                 'label' => 'Partner',
-                'value' => 0,
+                'value' => Partner::query()->count(),
                 'description' => 'Brand dan kerja sama bisnis.',
             ],
             [

@@ -1,40 +1,62 @@
-    {{-- PARTNER --}}
-    <section class="py-24 lg:py-32">
-        <div class="mx-auto max-w-7xl px-5 lg:px-8">
-            <div
-                class="grid overflow-hidden rounded-[2.5rem] border border-[#E6D8C8] bg-[#F6EFE4] lg:grid-cols-[1.1fr_0.9fr]">
-                <div class="p-8 sm:p-12 lg:p-16">
-                    <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">Kerja Sama</p>
+@php
+    $partnerItems = collect($partners ?? []);
+@endphp
 
-                    <h2
-                        class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39] sm:text-5xl">
-                        Terbuka untuk brand, komunitas, dan kebutuhan custom.
-                    </h2>
+<section class="py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div
+            class="grid overflow-hidden rounded-[2.5rem] border border-[#E6D8C8] bg-[#F6EFE4] lg:grid-cols-[1.1fr_0.9fr]">
+            <div class="p-8 sm:p-12 lg:p-16">
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">Kerja Sama</p>
 
-                    <p class="mt-6 text-base leading-8 text-[#7F756D]">
-                        Bendo Jaya dapat menjadi partner untuk kebutuhan koleksi fashion, custom pakaian batik, seragam
-                        komunitas, maupun pengembangan produk bersama brand.
-                    </p>
+                <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39] sm:text-5xl">
+                    Terbuka untuk brand, komunitas, dan kebutuhan custom.
+                </h2>
 
-                    <div class="mt-8 flex flex-wrap gap-3">
+                <p class="mt-6 text-base leading-8 text-[#7F756D]">
+                    Bendo Jaya dapat menjadi partner untuk kebutuhan koleksi fashion, custom pakaian batik, seragam
+                    komunitas, maupun pengembangan produk bersama brand.
+                </p>
+
+                <div class="mt-8 grid gap-3 sm:grid-cols-2">
+                    @forelse ($partnerItems as $partner)
+                        <div class="rounded-3xl border border-[#D8C5AF] bg-white/70 p-5">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3C3B39] text-xs font-black text-[#FBE9CB]">
+                                    @if ($partner->logo)
+                                        <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}"
+                                            class="h-full w-full rounded-2xl object-cover">
+                                    @else
+                                        BJ
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <h3 class="font-black text-[#3C3B39]">{{ $partner->name }}</h3>
+                                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-[#8A3F35]">
+                                        {{ $partner->category ?: 'Partner' }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
                         @foreach (['Fashion Brand', 'Komunitas', 'Instansi', 'Custom Production'] as $item)
                             <span
-                                class="rounded-full border border-[#D8C5AF] bg-white/70 px-5 py-2 text-xs font-black uppercase tracking-[0.18em] text-[#765A4F]">
+                                class="rounded-full border border-[#D8C5AF] bg-white/70 px-5 py-3 text-xs font-black uppercase tracking-[0.18em] text-[#765A4F]">
                                 {{ $item }}
                             </span>
                         @endforeach
-                    </div>
-
-                    <a href="https://wa.me/{{ $whatsapp }}" target="_blank"
-                        class="mt-10 inline-flex rounded-full bg-[#3C3B39] px-8 py-4 text-sm font-black text-[#FBE9CB] transition hover:bg-[#58433D]">
-                        Ajukan Kerja Sama
-                    </a>
+                    @endforelse
                 </div>
 
-                <div class="relative min-h-[420px]">
-                    <img src="{{ $heroImage }}" alt="Kerja sama Bendo Jaya"
-                        class="absolute inset-0 h-full w-full object-cover object-right">
-                </div>
+                <x-frontend.consultation-link label="Ajukan Kerja Sama" class="mt-10" />
+            </div>
+
+            <div class="relative min-h-[420px]">
+                <img src="{{ asset('assets/frontend/hero-product.jpg') }}" alt="Kerja sama Bendo Jaya"
+                    class="absolute inset-0 h-full w-full object-cover object-right">
             </div>
         </div>
-    </section>
+    </div>
+</section>
