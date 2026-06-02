@@ -43,15 +43,27 @@
     </div>
     <script>
         document.addEventListener('click', function(event) {
-            const link = event.target.closest('a[href="#home"], a[href$="/#home"]');
+            const link = event.target.closest(
+                'a[href="#home"], a[href$="/#home"], a[href$="{{ route('home') }}#home"]');
 
             if (!link) {
                 return;
             }
 
+            const currentUrl = new URL(window.location.href);
+            const targetUrl = new URL(link.href);
+
+            const isSamePage =
+                currentUrl.origin === targetUrl.origin &&
+                currentUrl.pathname.replace(/\/$/, '') === targetUrl.pathname.replace(/\/$/, '');
+
+            if (!isSamePage) {
+                return;
+            }
+
             event.preventDefault();
 
-            history.pushState(null, '', '{{ route('home') }}');
+            history.replaceState(null, '', targetUrl.pathname + targetUrl.search);
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'

@@ -97,7 +97,7 @@ class NavigationMenu extends Model
     {
         $anchor = ltrim((string) $this->anchor, '#');
 
-        if ($anchor === '' || $anchor === 'home') {
+        if ($anchor === '') {
             return route('home');
         }
 

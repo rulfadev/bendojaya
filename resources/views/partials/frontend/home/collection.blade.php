@@ -78,6 +78,24 @@
                     @endphp
 
                     <a href="{{ $detailUrl }}" class="block">
+                        <div class="overflow-hidden rounded-[2.5rem] bg-[#F6EFE4] p-3">
+                            <img src="{{ $image }}" alt="{{ $name }}"
+                                class="h-[520px] w-full rounded-[2rem] object-cover transition duration-700 group-hover:scale-105 {{ $objectPosition }}">
+                        </div>
+
+                        <div class="pt-6">
+                            <p class="text-xs font-black uppercase tracking-[0.25em] text-[#8A3F35]">
+                                {{ $category ?: 'Bendo Jaya Collection' }}
+                            </p>
+
+                            <h3 class="mt-3 font-['Playfair_Display'] text-3xl font-black text-[#3C3B39]">
+                                {{ $name }}
+                            </h3>
+
+                            <p class="mt-3 text-sm leading-7 text-[#7F756D]">
+                                {{ $shortDescription }}
+                            </p>
+                        </div>
                     </a>
                 </article>
             @endforeach
