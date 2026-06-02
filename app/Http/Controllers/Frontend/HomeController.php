@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\Partner;
@@ -44,6 +45,15 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
+        $articles = Article::query()
+            ->active()
+            ->featured()
+            ->published()
+            ->orderBy('sort_order')
+            ->latest('published_at')
+            ->take(2)
+            ->get();
+
         return view('pages.home', [
             'setting' => $setting,
             'services' => $services,
@@ -51,6 +61,7 @@ class HomeController extends Controller
             'title' => $setting?->meta_title ?? 'Bendo Jaya Batik Fashion',
             'galleries' => $galleries,
             'partners' => $partners,
+            'articles' => $articles,
             'metaDescription' => $setting?->meta_description
                 ?? 'Bendo Jaya Batik Fashion menghadirkan koleksi batik elegan, custom pakaian, dan kerja sama brand fashion.',
         ]);

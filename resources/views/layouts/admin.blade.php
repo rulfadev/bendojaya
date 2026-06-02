@@ -11,16 +11,10 @@
             'icon' => '◇',
         ],
         [
-            'label' => 'Pengaturan Website',
-            'route' => 'admin.site-settings.index',
-            'active' => 'admin.site-settings.*',
-            'icon' => '✦',
-        ],
-        [
-            'label' => 'Layanan',
-            'route' => 'admin.services.index',
-            'active' => 'admin.services.*',
-            'icon' => '✧',
+            'label' => 'Artikel',
+            'route' => 'admin.articles.index',
+            'active' => 'admin.articles.*',
+            'icon' => '✎',
         ],
         [
             'label' => 'Custom Page',
@@ -41,6 +35,18 @@
             'icon' => '✹',
         ],
         [
+            'label' => 'Layanan',
+            'route' => 'admin.services.index',
+            'active' => 'admin.services.*',
+            'icon' => '✧',
+        ],
+        [
+            'label' => 'Pengaturan Website',
+            'route' => 'admin.site-settings.index',
+            'active' => 'admin.site-settings.*',
+            'icon' => '✦',
+        ],
+        [
             'label' => 'Profil Admin',
             'route' => 'admin.profile.edit',
             'active' => 'admin.profile.*',
@@ -48,7 +54,7 @@
         ],
     ];
 
-    $futureItems = ['Artikel', 'Partner / Kerja Sama', 'Pesan Kontak'];
+    $futureItems = ['Pesan Kontak'];
 @endphp
 
 <!DOCTYPE html>

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             FashionCollectionSeeder::class,
             GallerySeeder::class,
             PartnerSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }

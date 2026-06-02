@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -54,5 +55,8 @@ Route::prefix('admin')
             ->except(['show']);
 
         Route::resource('partners', PartnerController::class)
+            ->except(['show']);
+
+        Route::resource('articles', ArticleController::class)
             ->except(['show']);
     });

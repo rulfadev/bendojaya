@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\Partner;
@@ -25,18 +26,13 @@ class DashboardController extends Controller
         $stats = [
             [
                 'label' => 'Artikel',
-                'value' => 0,
+                'value' => Article::query()->count(),
                 'description' => 'Konten edukasi batik dan fashion.',
             ],
             [
                 'label' => 'Gallery',
                 'value' => Gallery::query()->count(),
                 'description' => 'Dokumentasi karya dan produksi.',
-            ],
-            [
-                'label' => 'Koleksi',
-                'value' => 0,
-                'description' => 'Katalog pakaian dan motif batik.',
             ],
             [
                 'label' => 'Partner',
