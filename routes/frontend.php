@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FashionCollectionController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PageController as FrontendPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +23,9 @@ Route::middleware('site.maintenance')->group(function () {
         ->name('collections.index');
     Route::get('/collections/{collection:slug}', [FashionCollectionController::class, 'show'])
         ->name('collections.show');
+
+    Route::get('/gallery', [GalleryController::class, 'index'])
+        ->name('galleries.index');
+    Route::get('/gallery/{gallery:slug}', [GalleryController::class, 'show'])
+        ->name('galleries.show');
 });

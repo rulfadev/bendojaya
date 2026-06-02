@@ -50,31 +50,27 @@
 
         <div class="grid gap-8 lg:grid-cols-3">
             @foreach ($collectionItems as $collection)
-                @php
-                    $name = data_get($collection, 'name', 'Bendo Jaya Collection');
-                    $category = data_get($collection, 'category', 'Bendo Jaya Collection');
-                    $shortDescription = data_get(
-                        $collection,
-                        'short_description',
-                        'Koleksi batik Bendo Jaya dengan karakter hangat dan elegan.',
-                    );
-                    $mainImage = data_get($collection, 'main_image');
-
-                    $image = $mainImage ? asset('storage/' . $mainImage) : $defaultImage;
-
-                    $objectPosition = match ($loop->iteration) {
-                        1 => 'object-left',
-                        2 => 'object-center',
-                        default => 'object-right',
-                    };
-                @endphp
-
                 <article class="group">
                     @php
-                        $detailUrl =
-                            is_object($collection) && isset($collection->slug)
-                                ? route('collections.show', $collection)
-                                : '#';
+                        $name = data_get($collection, 'name', 'Bendo Jaya Collection');
+                        $category = data_get($collection, 'category', 'Bendo Jaya Collection');
+                        $shortDescription = data_get(
+                            $collection,
+                            'short_description',
+                            'Koleksi batik Bendo Jaya dengan karakter hangat dan elegan.',
+                        );
+                        $mainImage = data_get($collection, 'main_image');
+                        $slug = data_get($collection, 'slug');
+
+                        $detailUrl = $slug ? route('collections.show', $slug) : route('collections.index');
+
+                        $image = $mainImage ? asset('storage/' . $mainImage) : $defaultImage;
+
+                        $objectPosition = match ($loop->iteration) {
+                            1 => 'object-left',
+                            2 => 'object-center',
+                            default => 'object-right',
+                        };
                     @endphp
 
                     <a href="{{ $detailUrl }}" class="block">

@@ -4,24 +4,6 @@
     @php
         $heroImage = asset('assets/frontend/hero-product.jpg');
         $whatsapp = $setting?->whatsapp_number ?? '6280000000000';
-
-        $collections = [
-            [
-                'name' => 'Batik Dress Coklat Klasik',
-                'category' => 'Signature Collection',
-                'desc' => 'Nuansa coklat hangat dengan motif batik klasik untuk tampilan harian yang anggun.',
-            ],
-            [
-                'name' => 'Batik Dress Abu Natural',
-                'category' => 'Soft Traditional',
-                'desc' => 'Warna natural dengan karakter lembut, cocok untuk gaya santai maupun semi-formal.',
-            ],
-            [
-                'name' => 'Batik Dress Maroon Elegan',
-                'category' => 'Elegant Series',
-                'desc' => 'Pilihan warna maroon yang tegas, feminin, dan tetap membawa sentuhan tradisional.',
-            ],
-        ];
     @endphp
 
     @include('partials.frontend.home.hero')

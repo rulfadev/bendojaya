@@ -26,10 +26,11 @@
                     $height = $loop->first ? 'h-[520px]' : 'h-[250px] md:h-[520px]';
                 @endphp
 
-                <div class="{{ $span }}">
+                <a href="{{ route('galleries.show', $gallery) }}"
+                    class="{{ $span }} group overflow-hidden rounded-[2.5rem]">
                     <img src="{{ $image }}" alt="{{ $gallery->title }}"
-                        class="{{ $height }} w-full rounded-[2.5rem] object-cover">
-                </div>
+                        class="{{ $height }} w-full rounded-[2.5rem] object-cover transition duration-700 group-hover:scale-105">
+                </a>
             @empty
                 <div class="md:col-span-2">
                     <img src="{{ $defaultImage }}" class="h-[520px] w-full rounded-[2.5rem] object-cover object-left"
@@ -42,6 +43,12 @@
                 <img src="{{ $defaultImage }}" class="h-[520px] w-full rounded-[2.5rem] object-cover object-right"
                     alt="Gallery">
             @endforelse
+        </div>
+        <div class="mt-12 text-center">
+            <a href="{{ route('galleries.index') }}"
+                class="inline-flex rounded-full border border-[#FBE9CB]/35 px-7 py-4 text-sm font-black text-[#FBE9CB] transition hover:bg-white/10">
+                Lihat Semua Gallery
+            </a>
         </div>
     </div>
 </section>

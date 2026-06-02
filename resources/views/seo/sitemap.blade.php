@@ -31,4 +31,20 @@
             <priority>0.7</priority>
         </url>
     @endforeach
+
+    <url>
+        <loc>{{ route('galleries.index') }}</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    @foreach ($galleries ?? [] as $gallery)
+        <url>
+            <loc>{{ route('galleries.show', $gallery) }}</loc>
+            <lastmod>{{ ($gallery->updated_at ?? now())->toAtomString() }}</lastmod>
+            <changefreq>monthly</changefreq>
+            <priority>0.6</priority>
+        </url>
+    @endforeach
 </urlset>

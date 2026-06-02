@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\FashionCollection;
+use App\Models\Gallery;
 use App\Models\Page;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
@@ -30,10 +31,16 @@ Route::get('/sitemap.xml', function () {
         ->orderBy('sort_order')
         ->get();
 
+    $galleries = Gallery::query()
+        ->active()
+        ->orderBy('sort_order')
+        ->get();
+
     return response()
         ->view('seo.sitemap', [
             'pages' => $pages,
             'collections' => $collections,
+            'galleries' => $galleries,
         ], 200)
         ->header('Content-Type', 'application/xml');
 })->name('seo.sitemap');
