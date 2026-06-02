@@ -15,4 +15,20 @@
             <priority>0.7</priority>
         </url>
     @endforeach
+
+    <url>
+        <loc>{{ route('collections.index') }}</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    @foreach ($collections ?? [] as $collection)
+        <url>
+            <loc>{{ route('collections.show', $collection) }}</loc>
+            <lastmod>{{ ($collection->updated_at ?? now())->toAtomString() }}</lastmod>
+            <changefreq>monthly</changefreq>
+            <priority>0.7</priority>
+        </url>
+    @endforeach
 </urlset>

@@ -42,7 +42,10 @@
                 </h2>
             </div>
 
-            <x-frontend.consultation-link label="Tanya Koleksi" variant="outline-brown" />
+            <a href="{{ route('collections.index') }}"
+                class="inline-flex rounded-full border border-[#765A4F] px-7 py-4 text-sm font-black text-[#765A4F] transition hover:bg-[#765A4F] hover:text-white">
+                Lihat Semua Koleksi
+            </a>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-3">
@@ -67,24 +70,15 @@
                 @endphp
 
                 <article class="group">
-                    <div class="overflow-hidden rounded-[2.5rem] bg-[#F6EFE4] p-3">
-                        <img src="{{ $image }}" alt="{{ $name }}"
-                            class="h-[520px] w-full rounded-[2rem] object-cover transition duration-700 group-hover:scale-105 {{ $objectPosition }}">
-                    </div>
+                    @php
+                        $detailUrl =
+                            is_object($collection) && isset($collection->slug)
+                                ? route('collections.show', $collection)
+                                : '#';
+                    @endphp
 
-                    <div class="pt-6">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-[#8A3F35]">
-                            {{ $category ?: 'Bendo Jaya Collection' }}
-                        </p>
-
-                        <h3 class="mt-3 font-['Playfair_Display'] text-3xl font-black text-[#3C3B39]">
-                            {{ $name }}
-                        </h3>
-
-                        <p class="mt-3 text-sm leading-7 text-[#7F756D]">
-                            {{ $shortDescription }}
-                        </p>
-                    </div>
+                    <a href="{{ $detailUrl }}" class="block">
+                    </a>
                 </article>
             @endforeach
         </div>

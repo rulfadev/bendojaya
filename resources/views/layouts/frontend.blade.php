@@ -41,6 +41,23 @@
 
         @include('partials.layout.footer')
     </div>
+    <script>
+        document.addEventListener('click', function(event) {
+            const link = event.target.closest('a[href="#home"], a[href$="/#home"]');
+
+            if (!link) {
+                return;
+            }
+
+            event.preventDefault();
+
+            history.pushState(null, '', '{{ route('home') }}');
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 
 </html>

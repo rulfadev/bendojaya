@@ -67,7 +67,7 @@ class NavigationMenu extends Model
         return match ($this->type) {
             'page' => $this->page ? route('pages.show', $this->page) : '#',
             'article' => $this->article ? route('articles.show', $this->article) : '#',
-            'anchor' => route('home').($this->anchor ? '#'.ltrim($this->anchor, '#') : ''),
+            'anchor' => $this->formatAnchorUrl(),
             default => $this->formatCustomUrl(),
         };
     }
@@ -91,5 +91,16 @@ class NavigationMenu extends Model
         }
 
         return url('/'.$this->url);
+    }
+
+    private function formatAnchorUrl(): string
+    {
+        $anchor = ltrim((string) $this->anchor, '#');
+
+        if ($anchor === '' || $anchor === 'home') {
+            return route('home');
+        }
+
+        return route('home').'#'.$anchor;
     }
 }
