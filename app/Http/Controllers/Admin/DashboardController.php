@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FashionCollection;
+use App\Models\Gallery;
 use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\View\View;
@@ -28,7 +29,7 @@ class DashboardController extends Controller
             ],
             [
                 'label' => 'Gallery',
-                'value' => 0,
+                'value' => Gallery::query()->count(),
                 'description' => 'Dokumentasi karya dan produksi.',
             ],
             [

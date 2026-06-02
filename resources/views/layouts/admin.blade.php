@@ -35,6 +35,12 @@
             'icon' => '✤',
         ],
         [
+            'label' => 'Gallery',
+            'route' => 'admin.galleries.index',
+            'active' => 'admin.galleries.*',
+            'icon' => '✹',
+        ],
+        [
             'label' => 'Profil Admin',
             'route' => 'admin.profile.edit',
             'active' => 'admin.profile.*',
@@ -42,7 +48,7 @@
         ],
     ];
 
-    $futureItems = ['Artikel', 'Gallery', 'Partner / Kerja Sama', 'Pesan Kontak'];
+    $futureItems = ['Artikel', 'Partner / Kerja Sama', 'Pesan Kontak'];
 @endphp
 
 <!DOCTYPE html>

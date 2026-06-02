@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FashionCollectionController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -47,4 +48,7 @@ Route::prefix('admin')
             ->name('profile.update');
         Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
             ->name('profile.password.update');
+
+        Route::resource('galleries', GalleryController::class)
+            ->except(['show']);
     });
