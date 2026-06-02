@@ -88,6 +88,24 @@
                     <input type="checkbox" name="is_featured" value="1" @checked(old('is_featured', $service->is_featured))
                         class="rounded border-stone-300 text-stone-950 focus:ring-amber-300">
                 </label>
+                <label class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
+                    <span class="text-sm font-black text-stone-800">Tampilkan Tombol</span>
+                    <input type="checkbox" name="show_button" value="1" @checked(old('show_button', $service->show_button ?? true))>
+                </label>
+
+                <div class="mt-4">
+                    <label for="button_label" class="{{ $labelClass }}">Label Tombol</label>
+                    <input type="text" id="button_label" name="button_label"
+                        value="{{ old('button_label', $service->button_label) }}" class="{{ $inputClass }}"
+                        placeholder="Konsultasi">
+                </div>
+
+                <div class="mt-4">
+                    <label for="button_url" class="{{ $labelClass }}">URL Tombol</label>
+                    <input type="text" id="button_url" name="button_url"
+                        value="{{ old('button_url', $service->button_url) }}" class="{{ $inputClass }}"
+                        placeholder="/pages/kerja-sama atau https://wa.me/628...">
+                </div>
             </div>
         </section>
 

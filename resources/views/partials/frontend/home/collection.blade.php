@@ -43,8 +43,8 @@
             </div>
 
             <a href="{{ route('collections.index') }}"
-                class="inline-flex rounded-full border border-[#765A4F] px-7 py-4 text-sm font-black text-[#765A4F] transition hover:bg-[#765A4F] hover:text-white">
-                Lihat Semua Koleksi
+                class="group inline-flex items-center gap-4 rounded-full border border-[#765A4F]/40 bg-[#FFF8ED] px-6 py-4 text-sm font-black text-[#58433D] shadow-sm transition hover:-translate-y-1 hover:border-[#3C3B39] hover:bg-[#3C3B39] hover:text-[#FBE9CB] sm:px-7">
+                <span>Lihat Semua Koleksi</span>
             </a>
         </div>
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-#[Fillable(['title', 'slug', 'icon', 'image', 'short_description', 'description', 'is_featured', 'is_active', 'sort_order'])]
+#[Fillable(['title', 'slug', 'icon', 'image', 'short_description', 'description', 'is_featured', 'is_active', 'sort_order', 'show_button', 'button_label', 'button_url'])]
 class Service extends Model
 {
     protected function casts(): array
@@ -16,6 +16,7 @@ class Service extends Model
             'is_featured' => 'boolean',
             'is_active' => 'boolean',
             'sort_order' => 'integer',
+            'show_button' => 'boolean',
         ];
     }
 

@@ -51,6 +51,7 @@ class ServiceController extends Controller
         $validated['is_active'] = $request->boolean('is_active');
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['sort_order'] = $validated['sort_order'] ?? 0;
+        $validated['show_button'] = $request->boolean('show_button');
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('services', 'public');
@@ -84,6 +85,7 @@ class ServiceController extends Controller
         $validated['is_active'] = $request->boolean('is_active');
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['sort_order'] = $validated['sort_order'] ?? 0;
+        $validated['show_button'] = $request->boolean('show_button');
 
         if ($request->hasFile('image')) {
             if ($service->image) {
@@ -131,6 +133,9 @@ class ServiceController extends Controller
                 'sort_order' => ['nullable', 'integer', 'min:0'],
                 'is_featured' => ['nullable', 'boolean'],
                 'is_active' => ['nullable', 'boolean'],
+                'show_button' => ['nullable', 'boolean'],
+                'button_label' => ['nullable', 'string', 'max:120'],
+                'button_url' => ['nullable', 'string', 'max:255'],
             ],
             [
                 'title.required' => 'Judul layanan wajib diisi.',

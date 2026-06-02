@@ -41,6 +41,25 @@
                             <textarea id="short_description" name="short_description" rows="5" class="{{ $inputClass }}">{{ old('short_description', $setting->short_description) }}</textarea>
                         </div>
                     </div>
+
+                    <label class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
+                        <span class="text-sm font-black text-stone-800">Tampilkan Tombol About</span>
+                        <input type="checkbox" name="show_about_button" value="1" @checked(old('show_about_button', $setting->show_about_button ?? true))>
+                    </label>
+
+                    <div>
+                        <label class="{{ $labelClass }}">Label Tombol About</label>
+                        <input type="text" name="about_button_label"
+                            value="{{ old('about_button_label', $setting->about_button_label) }}"
+                            class="{{ $inputClass }}" placeholder="Selengkapnya">
+                    </div>
+
+                    <div>
+                        <label class="{{ $labelClass }}">URL Tombol About</label>
+                        <input type="text" name="about_button_url"
+                            value="{{ old('about_button_url', $setting->about_button_url) }}" class="{{ $inputClass }}"
+                            placeholder="/pages/tentang-bendo-jaya">
+                    </div>
                 </section>
 
                 <section class="{{ $cardClass }}">
@@ -101,14 +120,10 @@
                     </div>
 
                     <div class="grid gap-5 md:grid-cols-2">
-                        @foreach ([
-            'instagram_url' => 'Instagram URL',
-            'tiktok_url' => 'TikTok URL',
-            'facebook_url' => 'Facebook URL',
-            'youtube_url' => 'YouTube URL',
-        ] as $field => $label)
+                        @foreach (['instagram_url' => 'Instagram URL', 'tiktok_url' => 'TikTok URL', 'facebook_url' => 'Facebook URL', 'youtube_url' => 'YouTube URL'] as $field => $label)
                             <div>
-                                <label for="{{ $field }}" class="{{ $labelClass }}">{{ $label }}</label>
+                                <label for="{{ $field }}"
+                                    class="{{ $labelClass }}">{{ $label }}</label>
                                 <input type="url" id="{{ $field }}" name="{{ $field }}"
                                     value="{{ old($field, $setting->{$field}) }}" placeholder="https://..."
                                     class="{{ $inputClass }}">

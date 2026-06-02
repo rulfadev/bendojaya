@@ -73,10 +73,14 @@ class SiteSettingController extends Controller
             'default_og_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'google_site_verification' => ['nullable', 'string', 'max:255'],
             'bing_site_verification' => ['nullable', 'string', 'max:255'],
+            'show_about_button' => ['nullable', 'boolean'],
+            'about_button_label' => ['nullable', 'string', 'max:120'],
+            'about_button_url' => ['nullable', 'string', 'max:255'],
         ]);
 
         $validated['is_maintenance_mode'] = $request->boolean('is_maintenance_mode');
         $validated['allow_search_indexing'] = $request->boolean('allow_search_indexing');
+        $validated['show_about_button'] = $request->boolean('show_about_button');
 
         if ($request->hasFile('maintenance_image')) {
             if ($setting->maintenance_image) {

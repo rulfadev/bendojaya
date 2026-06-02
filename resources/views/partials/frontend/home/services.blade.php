@@ -58,10 +58,23 @@
                         </p>
                     </div>
 
-                    <a href="https://wa.me/{{ $whatsapp }}" target="_blank"
-                        class="inline-flex text-sm font-black text-[#8A3F35] transition hover:text-[#3C3B39]">
-                        Konsultasi →
-                    </a>
+                    @php
+                        $showButton = data_get($service, 'show_button', true);
+                        $buttonLabel = data_get($service, 'button_label') ?: 'Konsultasi';
+                        $buttonUrl =
+                            data_get($service, 'button_url') ?:
+                            ($setting?->consultation_url ?:
+                            'https://wa.me/' . $whatsapp);
+
+                        $buttonHref = str_starts_with($buttonUrl, '/') ? url($buttonUrl) : $buttonUrl;
+                    @endphp
+
+                    @if ($showButton)
+                        <a href="{{ $buttonHref }}"
+                            class="inline-flex text-sm font-black text-[#8A3F35] transition hover:text-[#3C3B39]">
+                            {{ $buttonLabel }} →
+                        </a>
+                    @endif
                 </div>
             @endforeach
         </div>

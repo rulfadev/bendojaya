@@ -7,3 +7,23 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@keyframes partner-marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.partner-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: partner-marquee 90s linear infinite;
+}
+
+.partner-marquee-wrap:hover .partner-marquee-track {
+    animation-play-state: paused;
+}

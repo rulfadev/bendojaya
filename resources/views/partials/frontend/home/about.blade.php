@@ -34,6 +34,18 @@
                     nyaman, indah, dan berkarakter.
                 </p>
 
+                @if ($setting?->show_about_button)
+                    @php
+                        $aboutUrl = $setting?->about_button_url ?: '/pages/tentang-bendo-jaya';
+                        $aboutHref = str_starts_with($aboutUrl, '/') ? url($aboutUrl) : $aboutUrl;
+                    @endphp
+
+                    <a href="{{ $aboutHref }}"
+                        class="mt-8 inline-flex rounded-full border border-[#765A4F] px-7 py-4 text-sm font-black text-[#765A4F] transition hover:bg-[#765A4F] hover:text-white">
+                        {{ $setting?->about_button_label ?: 'Selengkapnya Tentang Kami' }}
+                    </a>
+                @endif
+
                 <div class="mt-10 space-y-6 border-l border-[#D8C5AF] pl-6">
                     <div>
                         <h3 class="text-lg font-black text-[#3C3B39]">Produksi yang Rapi</h3>

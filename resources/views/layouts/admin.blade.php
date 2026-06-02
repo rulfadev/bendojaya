@@ -41,6 +41,12 @@
             'icon' => '✧',
         ],
         [
+            'label' => 'Partner Bisnis',
+            'route' => 'admin.partners.index',
+            'active' => 'admin.partners.*',
+            'icon' => '⊕',
+        ],
+        [
             'label' => 'Pesan Kontak',
             'route' => 'admin.contact-messages.index',
             'active' => 'admin.contact-messages.*',
