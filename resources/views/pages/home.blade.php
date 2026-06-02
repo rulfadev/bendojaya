@@ -22,11 +22,6 @@
                 'desc' => 'Pilihan warna maroon yang tegas, feminin, dan tetap membawa sentuhan tradisional.',
             ],
         ];
-
-        $articles = [
-            'Mengenal Karakter Motif Batik dalam Fashion Modern',
-            'Cara Merawat Pakaian Batik agar Tetap Indah',
-        ];
     @endphp
 
     @include('partials.frontend.home.hero')

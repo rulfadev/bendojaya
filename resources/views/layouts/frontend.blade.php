@@ -33,13 +33,13 @@
     </div>
 
     <div class="relative z-10">
-        @include('partials.frontend.navbar')
+        @include('partials.layout.navbar')
 
         <main>
             @yield('content')
         </main>
 
-        @include('partials.frontend.footer')
+        @include('partials.layout.footer')
     </div>
 </body>
 

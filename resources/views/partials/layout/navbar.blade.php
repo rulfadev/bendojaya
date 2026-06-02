@@ -1,5 +1,6 @@
 @php
     $logo = $setting?->logo ? asset('storage/' . $setting->logo) : asset('assets/frontend/logo-bendo-jaya.jpg');
+    $headerMenus = \App\Models\NavigationMenu::query()->active()->forHeader()->orderBy('sort_order')->get();
 @endphp
 
 <header class="sticky top-0 z-50 border-b border-white/10 bg-[#3C3B39]/95 backdrop-blur-xl">
@@ -9,12 +10,17 @@
         </a>
 
         <nav class="hidden items-center gap-8 text-sm font-bold text-[#FBE9CB]/85 lg:flex">
-            <a href="{{ route('home') }}/#home" class="transition hover:text-[#EEBDB5]">Beranda</a>
-            <a href="{{ route('home') }}/#about" class="transition hover:text-[#EEBDB5]">Tentang</a>
-            <a href="{{ route('home') }}/#services" class="transition hover:text-[#EEBDB5]">Layanan</a>
-            <a href="{{ route('home') }}/#collection" class="transition hover:text-[#EEBDB5]">Koleksi</a>
-            <a href="{{ route('home') }}/#gallery" class="transition hover:text-[#EEBDB5]">Gallery</a>
-            <a href="{{ route('home') }}/#articles" class="transition hover:text-[#EEBDB5]">Artikel</a>
+            @forelse ($headerMenus as $menu)
+                <a href="{{ $menu->href }}" target="{{ $menu->target }}" class="transition hover:text-[#EEBDB5]">
+                    {{ $menu->label }}
+                </a>
+            @empty
+                <a href="{{ route('home') }}" class="transition hover:text-[#EEBDB5]">Beranda</a>
+                <a href="{{ route('home') }}#about" class="transition hover:text-[#EEBDB5]">Tentang</a>
+                <a href="{{ route('home') }}#services" class="transition hover:text-[#EEBDB5]">Layanan</a>
+                <a href="{{ route('home') }}#collection" class="transition hover:text-[#EEBDB5]">Koleksi</a>
+                <a href="{{ route('articles.index') }}" class="transition hover:text-[#EEBDB5]">Artikel</a>
+            @endforelse
         </nav>
 
         <div class="flex items-center gap-3">

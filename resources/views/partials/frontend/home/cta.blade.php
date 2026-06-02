@@ -16,15 +16,17 @@
 
                     <p class="mx-auto mt-6 max-w-2xl text-sm leading-7 text-[#E6D8C8]">
                         Diskusikan kebutuhan custom pakaian, seragam, koleksi fashion, atau kerja sama brand bersama
-                        Bendo
-                        Jaya.
+                        kami.
                     </p>
 
+                    <div class="mx-auto mt-10 max-w-2xl rounded-[2rem] bg-[#FFF8ED] p-6 text-left">
+                        @include('partials.frontend.contact-form')
+                    </div>
+                    <p class="mx-auto my-6 max-w-2xl text-sm leading-7 text-[#E6D8C8]">
+                        atau
+                    </p>
                     <x-frontend.consultation-link label="Konsultasi Sekarang" variant="light" />
                 </div>
             </div>
-        </div>
-        <div class="mx-auto mt-10 max-w-2xl rounded-[2rem] bg-[#FFF8ED] p-6 text-left">
-            @include('partials.frontend.contact-form')
         </div>
     </section>

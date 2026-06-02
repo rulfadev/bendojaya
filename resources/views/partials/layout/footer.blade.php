@@ -1,7 +1,7 @@
 @php
     $logo = $setting?->logo ? asset('storage/' . $setting->logo) : asset('assets/frontend/logo-bendo-jaya.jpg');
-
     $whatsapp = $setting?->whatsapp_number ?? '6280000000000';
+    $footerMenus = \App\Models\NavigationMenu::query()->active()->forFooter()->orderBy('sort_order')->get();
 @endphp
 
 <footer class="bg-[#3C3B39] text-[#FBE9CB]">
@@ -17,11 +17,15 @@
             <div>
                 <h3 class="mb-5 text-sm font-black uppercase tracking-[0.25em] text-[#EEBDB5]">Menu</h3>
                 <div class="space-y-3 text-sm text-[#E6D8C8]">
-                    <a href="#home" class="block hover:text-white">Beranda</a>
-                    <a href="#about" class="block hover:text-white">Tentang</a>
-                    <a href="#services" class="block hover:text-white">Layanan</a>
-                    <a href="#collection" class="block hover:text-white">Koleksi</a>
-                    <a href="#gallery" class="block hover:text-white">Gallery</a>
+                    @forelse ($footerMenus as $menu)
+                        <a href="{{ $menu->href }}" target="{{ $menu->target }}" class="block hover:text-white">
+                            {{ $menu->label }}
+                        </a>
+                    @empty
+                        <a href="{{ route('home') }}" class="block hover:text-white">Beranda</a>
+                        <a href="{{ route('articles.index') }}" class="block hover:text-white">Artikel</a>
+                        <a href="{{ route('home') }}#contact" class="block hover:text-white">Kontak</a>
+                    @endforelse
                 </div>
             </div>
 

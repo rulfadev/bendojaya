@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\NavigationMenuController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\PartnerController;
@@ -70,4 +71,7 @@ Route::prefix('admin')
             ->name('contact-messages.read');
         Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
             ->name('contact-messages.destroy');
+
+        Route::resource('navigation-menus', NavigationMenuController::class)
+            ->except(['show']);
     });

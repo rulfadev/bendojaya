@@ -41,6 +41,18 @@
             'icon' => '✧',
         ],
         [
+            'label' => 'Pesan Kontak',
+            'route' => 'admin.contact-messages.index',
+            'active' => 'admin.contact-messages.*',
+            'icon' => 'ℳ',
+        ],
+        [
+            'label' => 'Menu Navigasi',
+            'route' => 'admin.navigation-menus.index',
+            'active' => 'admin.navigation-menus.*',
+            'icon' => '☰',
+        ],
+        [
             'label' => 'Pengaturan Website',
             'route' => 'admin.site-settings.index',
             'active' => 'admin.site-settings.*',
@@ -51,12 +63,6 @@
             'route' => 'admin.profile.edit',
             'active' => 'admin.profile.*',
             'icon' => '◈',
-        ],
-        [
-            'label' => 'Pesan Kontak',
-            'route' => 'admin.contact-messages.index',
-            'active' => 'admin.contact-messages.*',
-            'icon' => 'ℳ',
         ],
     ];
 @endphp
