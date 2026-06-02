@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\ContactMessage;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\Partner;
@@ -51,6 +52,11 @@ class DashboardController extends Controller
                 'label' => 'Koleksi',
                 'value' => FashionCollection::query()->count(),
                 'description' => 'Katalog pakaian dan motif batik.',
+            ],
+            [
+                'label' => 'Pesan Baru',
+                'value' => ContactMessage::query()->unread()->count(),
+                'description' => 'Pesan kontak belum dibaca.',
             ],
         ];
 

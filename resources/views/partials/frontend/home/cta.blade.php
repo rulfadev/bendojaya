@@ -24,4 +24,7 @@
                 </div>
             </div>
         </div>
+        <div class="mx-auto mt-10 max-w-2xl rounded-[2rem] bg-[#FFF8ED] p-6 text-left">
+            @include('partials.frontend.contact-form')
+        </div>
     </section>

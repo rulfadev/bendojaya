@@ -52,9 +52,13 @@
             'active' => 'admin.profile.*',
             'icon' => '◈',
         ],
+        [
+            'label' => 'Pesan Kontak',
+            'route' => 'admin.contact-messages.index',
+            'active' => 'admin.contact-messages.*',
+            'icon' => 'ℳ',
+        ],
     ];
-
-    $futureItems = ['Pesan Kontak'];
 @endphp
 
 <!DOCTYPE html>
@@ -114,7 +118,7 @@
                     @endforeach
                 </nav>
 
-                <div class="mt-8">
+                {{-- <div class="mt-8">
                     <p class="px-4 text-xs font-black uppercase tracking-[0.25em] text-stone-400">Segera Dibuat</p>
 
                     <div class="mt-3 space-y-1">
@@ -127,7 +131,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </div> --}}
             </div>
         </aside>
 

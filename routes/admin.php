@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -59,4 +60,14 @@ Route::prefix('admin')
 
         Route::resource('articles', ArticleController::class)
             ->except(['show']);
+
+        Route::get('/contact-messages', [ContactMessageController::class, 'index'])
+            ->name('contact-messages.index');
+
+        Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
+            ->name('contact-messages.show');
+        Route::patch('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])
+            ->name('contact-messages.read');
+        Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
+            ->name('contact-messages.destroy');
     });

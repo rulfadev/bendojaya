@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\PageController as FrontendPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,4 +13,7 @@ Route::middleware('site.maintenance')->group(function () {
         ->name('articles.index');
     Route::get('/articles/{article:slug}', [ArticleController::class, 'show'])
         ->name('articles.show');
+
+    Route::post('/contact-messages', [ContactMessageController::class, 'store'])
+        ->name('contact-messages.store');
 });
