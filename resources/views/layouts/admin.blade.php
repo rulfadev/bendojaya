@@ -34,9 +34,15 @@
             'active' => 'admin.collections.*',
             'icon' => '✤',
         ],
+        [
+            'label' => 'Profil Admin',
+            'route' => 'admin.profile.edit',
+            'active' => 'admin.profile.*',
+            'icon' => '◈',
+        ],
     ];
 
-    $futureItems = ['Artikel', 'Gallery', 'Koleksi', 'Partner / Kerja Sama', 'Custom Page', 'Pesan Kontak'];
+    $futureItems = ['Artikel', 'Gallery', 'Partner / Kerja Sama', 'Pesan Kontak'];
 @endphp
 
 <!DOCTYPE html>
