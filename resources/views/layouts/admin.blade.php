@@ -2,96 +2,108 @@
     $globalSetting = $setting ?? \App\Models\SiteSetting::query()->first();
 
     $siteName = $globalSetting?->site_name ?? 'Bendo Jaya';
+    $currentUser = auth()->user();
 
     $navItems = [
         [
             'label' => 'Dashboard',
             'route' => 'admin.dashboard',
             'active' => 'admin.dashboard',
-            'icon' => '◇',
+            'icon' => 'fa-solid fa-chart-line',
+            'roles' => ['admin', 'editor', 'staff'],
         ],
         [
             'label' => 'Artikel',
             'route' => 'admin.articles.index',
             'active' => 'admin.articles.*',
-            'icon' => '✎',
+            'icon' => 'fa-solid fa-newspaper',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'Custom Page',
             'route' => 'admin.pages.index',
             'active' => 'admin.pages.*',
-            'icon' => '✺',
+            'icon' => 'fa-solid fa-file-lines',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'Koleksi',
             'route' => 'admin.collections.index',
             'active' => 'admin.collections.*',
-            'icon' => '✤',
+            'icon' => 'fa-solid fa-shirt',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'Gallery',
             'route' => 'admin.galleries.index',
             'active' => 'admin.galleries.*',
-            'icon' => '✹',
+            'icon' => 'fa-solid fa-images',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'Layanan',
             'route' => 'admin.services.index',
             'active' => 'admin.services.*',
-            'icon' => '✧',
+            'icon' => 'fa-solid fa-diamond',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'Partner Bisnis',
             'route' => 'admin.partners.index',
             'active' => 'admin.partners.*',
-            'icon' => '⊕',
+            'icon' => 'fa-solid fa-handshake',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'Pesan Kontak',
             'route' => 'admin.contact-messages.index',
             'active' => 'admin.contact-messages.*',
-            'icon' => 'ℳ',
+            'icon' => 'fa-solid fa-envelope-open-text',
+            'roles' => ['admin', 'editor', 'staff'],
         ],
         [
             'label' => 'Testimoni',
             'route' => 'admin.testimonials.index',
             'active' => 'admin.testimonials.*',
-            'icon' => '★',
+            'icon' => 'fa-solid fa-star',
+            'roles' => ['admin', 'editor', 'staff'],
         ],
         [
             'label' => 'Homepage',
             'route' => 'admin.homepage-settings.edit',
             'active' => 'admin.homepage-settings.*',
-            'icon' => '▣',
+            'icon' => 'fa-solid fa-house-laptop',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'User Management',
             'route' => 'admin.users.index',
             'active' => 'admin.users.*',
-            'icon' => '👤',
-            'admin_only' => true,
+            'icon' => 'fa-solid fa-users-gear',
+            'roles' => ['admin'],
         ],
         [
             'label' => 'Menu Navigasi',
             'route' => 'admin.navigation-menus.index',
             'active' => 'admin.navigation-menus.*',
-            'icon' => '☰',
+            'icon' => 'fa-solid fa-bars-staggered',
+            'roles' => ['admin', 'editor'],
         ],
         [
             'label' => 'Pengaturan Website',
             'route' => 'admin.site-settings.index',
             'active' => 'admin.site-settings.*',
-            'icon' => '✦',
+            'icon' => 'fa-solid fa-gear',
+            'roles' => ['admin'],
         ],
         [
             'label' => 'Profil',
             'route' => 'admin.profile.edit',
             'active' => 'admin.profile.*',
-            'icon' => '◈',
+            'icon' => 'fa-solid fa-user',
+            'roles' => ['admin', 'editor', 'staff'],
         ],
     ];
-
-    $currentUser = auth()->user();
 @endphp
 
 <!DOCTYPE html>
@@ -134,16 +146,23 @@
             <div class="h-[calc(100vh-6rem)] overflow-y-auto px-5 py-6">
                 <nav class="space-y-1">
                     @foreach ($navItems as $item)
-                        @if (($item['admin_only'] ?? false) && $currentUser?->role !== 'admin')
+                        @if (!in_array($currentUser?->role, $item['roles'] ?? [], true))
                             @continue
                         @endif
 
                         <a href="{{ route($item['route']) }}"
                             class="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition
-                           {{ request()->routeIs($item['active'])
-                               ? 'bg-stone-950 text-amber-200 shadow-xl shadow-stone-900/10'
-                               : 'text-stone-600 hover:bg-white hover:text-stone-950 hover:shadow-sm' }}">
-                            <span class="text-lg">{{ $item['icon'] }}</span>
+       {{ request()->routeIs($item['active'])
+           ? 'bg-stone-950 text-amber-200 shadow-xl shadow-stone-900/10'
+           : 'text-stone-600 hover:bg-white hover:text-stone-950 hover:shadow-sm' }}">
+                            <span
+                                class="flex h-8 w-8 items-center justify-center rounded-xl text-base
+            {{ request()->routeIs($item['active'])
+                ? 'bg-amber-200 text-stone-950'
+                : 'bg-stone-100 text-stone-500 group-hover:bg-amber-100 group-hover:text-stone-950' }}">
+                                <i class="{{ $item['icon'] }}"></i>
+                            </span>
+
                             <span>{{ $item['label'] }}</span>
                         </a>
                     @endforeach
@@ -188,14 +207,15 @@
 
                 <div class="flex gap-2 overflow-x-auto border-t border-stone-200/80 px-5 py-3 lg:hidden">
                     @foreach ($navItems as $item)
-                        @if (($item['admin_only'] ?? false) && $currentUser?->role !== 'admin')
+                        @if (!in_array($currentUser?->role, $item['roles'] ?? [], true))
                             @continue
                         @endif
 
                         <a href="{{ route($item['route']) }}"
-                            class="shrink-0 rounded-full px-4 py-2 text-xs font-bold
-                           {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
-                            {{ $item['label'] }}
+                            class="flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs font-bold
+           {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
+                            <i class="{{ $item['icon'] }}"></i>
+                            <span>{{ $item['label'] }}</span>
                         </a>
                     @endforeach
                 </div>

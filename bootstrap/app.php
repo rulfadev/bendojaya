@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureRole;
 use App\Http\Middleware\EnsureUserCanAccessPanel;
 use App\Http\Middleware\HandleSiteMaintenance;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'panel' => EnsureUserCanAccessPanel::class,
             'site.maintenance' => HandleSiteMaintenance::class,
+            'role' => EnsureRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

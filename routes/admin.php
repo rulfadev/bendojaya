@@ -23,71 +23,87 @@ Route::prefix('admin')
     ->group(function () {
         Route::redirect('/', '/admin/dashboard')->name('home');
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])
-            ->name('dashboard');
+        Route::middleware('role:admin,editor,staff')->group(function () {
+            Route::get('/dashboard', [DashboardController::class, 'index'])
+                ->name('dashboard');
 
-        Route::get('/site-settings', [SiteSettingController::class, 'index'])
-            ->name('site-settings.index');
-        Route::put('/site-settings', [SiteSettingController::class, 'update'])
-            ->name('site-settings.update');
+            Route::get('/profile', [ProfileController::class, 'edit'])
+                ->name('profile.edit');
 
-        Route::resource('services', ServiceController::class)
-            ->except(['show']);
+            Route::put('/profile', [ProfileController::class, 'update'])
+                ->name('profile.update');
 
-        Route::resource('collections', FashionCollectionController::class)
-            ->parameters([
-                'collections' => 'collection',
-            ])
-            ->except(['show']);
+            Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
+                ->name('profile.password.update');
+        });
 
-        Route::resource('pages', AdminPageController::class)
-            ->except(['show']);
-        Route::prefix('pages/{page}')
-            ->name('pages.')
-            ->group(function () {
-                Route::resource('sections', PageSectionController::class)
-                    ->except(['show']);
-            });
+        Route::middleware('role:admin,editor')->group(function () {
+            Route::resource('articles', ArticleController::class)
+                ->except(['show']);
 
-        Route::get('/profile', [ProfileController::class, 'edit'])
-            ->name('profile.edit');
-        Route::put('/profile', [ProfileController::class, 'update'])
-            ->name('profile.update');
-        Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
-            ->name('profile.password.update');
+            Route::resource('pages', AdminPageController::class)
+                ->except(['show']);
 
-        Route::resource('galleries', GalleryController::class)
-            ->except(['show']);
+            Route::prefix('pages/{page}')
+                ->name('pages.')
+                ->group(function () {
+                    Route::resource('sections', PageSectionController::class)
+                        ->except(['show']);
+                });
 
-        Route::resource('partners', PartnerController::class)
-            ->except(['show']);
+            Route::resource('collections', FashionCollectionController::class)
+                ->parameters([
+                    'collections' => 'collection',
+                ])
+                ->except(['show']);
 
-        Route::resource('articles', ArticleController::class)
-            ->except(['show']);
+            Route::resource('galleries', GalleryController::class)
+                ->except(['show']);
 
-        Route::get('/contact-messages', [ContactMessageController::class, 'index'])
-            ->name('contact-messages.index');
+            Route::resource('services', ServiceController::class)
+                ->except(['show']);
 
-        Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
-            ->name('contact-messages.show');
-        Route::patch('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])
-            ->name('contact-messages.read');
-        Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
-            ->name('contact-messages.destroy');
+            Route::resource('partners', PartnerController::class)
+                ->except(['show']);
 
-        Route::resource('navigation-menus', NavigationMenuController::class)
-            ->except(['show']);
+            Route::get('/homepage-settings', [HomepageSettingController::class, 'edit'])
+                ->name('homepage-settings.edit');
 
-        Route::resource('testimonials', TestimonialController::class)
-            ->except(['show']);
-        Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
-            ->name('testimonials.approve');
+            Route::put('/homepage-settings', [HomepageSettingController::class, 'update'])
+                ->name('homepage-settings.update');
 
-        Route::get('/homepage-settings', [HomepageSettingController::class, 'edit'])
-            ->name('homepage-settings.edit');
-        Route::put('/homepage-settings', [HomepageSettingController::class, 'update'])
-            ->name('homepage-settings.update');
+            Route::resource('navigation-menus', NavigationMenuController::class)
+                ->except(['show']);
+        });
 
-        Route::resource('users', UserController::class)
-            ->except(['show']);
+        Route::middleware('role:admin,editor,staff')->group(function () {
+            Route::get('/contact-messages', [ContactMessageController::class, 'index'])
+                ->name('contact-messages.index');
+
+            Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
+                ->name('contact-messages.show');
+
+            Route::patch('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])
+                ->name('contact-messages.read');
+
+            Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
+                ->name('contact-messages.destroy');
+
+            Route::resource('testimonials', TestimonialController::class)
+                ->except(['show']);
+
+            Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
+                ->name('testimonials.approve');
+        });
+
+        Route::middleware('role:admin')->group(function () {
+            Route::resource('users', UserController::class)
+                ->except(['show']);
+
+            Route::get('/site-settings', [SiteSettingController::class, 'index'])
+                ->name('site-settings.index');
+
+            Route::put('/site-settings', [SiteSettingController::class, 'update'])
+                ->name('site-settings.update');
+        });
     });
