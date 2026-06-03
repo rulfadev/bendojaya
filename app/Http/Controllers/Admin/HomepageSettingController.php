@@ -68,6 +68,10 @@ class HomepageSettingController extends Controller
             'articles_title' => ['nullable', 'string', 'max:255'],
             'articles_description' => ['nullable', 'string'],
 
+            'faq_eyebrow' => ['nullable', 'string', 'max:180'],
+            'faq_title' => ['nullable', 'string', 'max:255'],
+            'faq_description' => ['nullable', 'string'],
+
             'cta_eyebrow' => ['nullable', 'string', 'max:180'],
             'cta_title' => ['nullable', 'string', 'max:255'],
             'cta_description' => ['nullable', 'string'],
@@ -87,6 +91,7 @@ class HomepageSettingController extends Controller
             'show_partners',
             'show_testimonials',
             'show_articles',
+            'show_faq',
             'show_cta',
         ] as $field) {
             $validated[$field] = $request->boolean($field);

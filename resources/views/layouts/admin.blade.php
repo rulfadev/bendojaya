@@ -62,6 +62,13 @@
             'roles' => ['admin', 'editor', 'staff'],
         ],
         [
+            'label' => 'FAQ',
+            'route' => 'admin.faqs.index',
+            'active' => 'admin.faqs.*',
+            'icon' => 'fa-solid fa-circle-question',
+            'roles' => ['admin', 'editor'],
+        ],
+        [
             'label' => 'Testimoni',
             'route' => 'admin.testimonials.index',
             'active' => 'admin.testimonials.*',

@@ -60,6 +60,11 @@ use Illuminate\Support\Facades\Storage;
     'articles_title',
     'articles_description',
 
+    'show_faq',
+    'faq_eyebrow',
+    'faq_title',
+    'faq_description',
+
     'show_cta',
     'cta_eyebrow',
     'cta_title',
@@ -83,6 +88,7 @@ class HomepageSetting extends Model
             'show_partners' => 'boolean',
             'show_testimonials' => 'boolean',
             'show_articles' => 'boolean',
+            'show_faq' => 'boolean',
             'show_cta' => 'boolean',
             'value_items' => 'array',
         ];
@@ -149,6 +155,11 @@ class HomepageSetting extends Model
             'articles_eyebrow' => 'Artikel',
             'articles_title' => 'Cerita, inspirasi, dan edukasi batik.',
             'articles_description' => 'Artikel seputar batik, fashion, perawatan, dan inspirasi gaya.',
+
+            'show_faq' => true,
+            'faq_eyebrow' => 'FAQ',
+            'faq_title' => 'Pertanyaan yang sering diajukan.',
+            'faq_description' => 'Informasi singkat seputar layanan, custom batik, kerja sama, dan pemesanan.',
 
             'show_cta' => true,
             'cta_eyebrow' => 'Mulai Diskusi',

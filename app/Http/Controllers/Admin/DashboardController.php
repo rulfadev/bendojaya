@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\ContactMessage;
+use App\Models\Faq;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\Partner;
@@ -68,6 +69,11 @@ class DashboardController extends Controller
                 'label' => 'Testimoni Pending',
                 'value' => Testimonial::query()->where('status', 'pending')->count(),
                 'description' => 'Menunggu review admin.',
+            ],
+            [
+                'label' => 'FAQ',
+                'value' => Faq::query()->count(),
+                'description' => 'Pertanyaan yang sering diajukan.',
             ],
         ];
 

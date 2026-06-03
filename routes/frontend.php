@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FashionCollectionController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PageController as FrontendPageController;
@@ -36,4 +37,7 @@ Route::middleware('site.maintenance')->group(function () {
         ->name('testimonial-form.submit');
     Route::get('/testimonial-form/{testimonial:token}/thank-you', [TestimonialFormController::class, 'thankYou'])
         ->name('testimonial-form.thank-you');
+
+    Route::get('/faq', [FaqController::class, 'index'])
+        ->name('faqs.index');
 });

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             NavigationMenuSeeder::class,
             HomepageSettingSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Faq;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\HomepageSetting;
@@ -66,6 +67,13 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
+        $faqs = Faq::query()
+            ->active()
+            ->featured()
+            ->orderBy('sort_order')
+            ->take(6)
+            ->get();
+
         return view('pages.home', [
             'setting' => $setting,
             'homepage' => $homepage,
@@ -76,6 +84,7 @@ class HomeController extends Controller
             'partners' => $partners,
             'articles' => $articles,
             'testimonials' => $testimonials,
+            'faqs' => $faqs,
             'metaDescription' => $setting?->meta_description
                 ?? 'Bendo Jaya Batik Fashion menghadirkan koleksi batik elegan, custom pakaian, dan kerja sama brand fashion.',
         ]);

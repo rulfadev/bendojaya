@@ -47,4 +47,11 @@
             <priority>0.6</priority>
         </url>
     @endforeach
+
+    <url>
+        <loc>{{ route('faqs.index') }}</loc>
+        <lastmod>{{ now()->toAtomString() }}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\HomepageSettingController;
@@ -35,6 +36,27 @@ Route::prefix('admin')
 
             Route::put('/profile/password', [ProfileController::class, 'updatePassword'])
                 ->name('profile.password.update');
+
+            Route::get('/contact-messages', [ContactMessageController::class, 'index'])
+                ->name('contact-messages.index');
+
+            Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
+                ->name('contact-messages.show');
+
+            Route::patch('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])
+                ->name('contact-messages.read');
+
+            Route::patch('/contact-messages/{contactMessage}/status', [ContactMessageController::class, 'updateStatus'])
+                ->name('contact-messages.status');
+
+            Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
+                ->name('contact-messages.destroy');
+
+            Route::resource('testimonials', TestimonialController::class)
+                ->except(['show']);
+
+            Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
+                ->name('testimonials.approve');
         });
 
         Route::middleware('role:admin,editor')->group(function () {
@@ -74,29 +96,9 @@ Route::prefix('admin')
 
             Route::resource('navigation-menus', NavigationMenuController::class)
                 ->except(['show']);
-        });
 
-        Route::middleware('role:admin,editor,staff')->group(function () {
-            Route::get('/contact-messages', [ContactMessageController::class, 'index'])
-                ->name('contact-messages.index');
-
-            Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
-                ->name('contact-messages.show');
-
-            Route::patch('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])
-                ->name('contact-messages.read');
-
-            Route::patch('/contact-messages/{contactMessage}/status', [ContactMessageController::class, 'updateStatus'])
-                ->name('contact-messages.status');
-
-            Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
-                ->name('contact-messages.destroy');
-
-            Route::resource('testimonials', TestimonialController::class)
+            Route::resource('faqs', FaqController::class)
                 ->except(['show']);
-
-            Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
-                ->name('testimonials.approve');
         });
 
         Route::middleware('role:admin')->group(function () {

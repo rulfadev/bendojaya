@@ -96,6 +96,7 @@
             'partners' => 'Partners',
             'testimonials' => 'Testimonials',
             'articles' => 'Articles',
+            'faq' => 'FAQ',
             'cta' => 'CTA',
         ] as $key => $sectionLabel)
                 <section class="{{ $cardClass }}">

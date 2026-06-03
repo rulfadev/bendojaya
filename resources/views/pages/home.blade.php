@@ -45,6 +45,10 @@
         @include('partials.frontend.home.articles')
     @endif
 
+    @if ($homepage?->show_faq)
+        @include('partials.frontend.home.faqs')
+    @endif
+
     @if ($homepage?->show_cta)
         @include('partials.frontend.home.cta')
     @endif
