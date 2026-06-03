@@ -151,7 +151,7 @@
                         @endif
 
                         <a href="{{ route($item['route']) }}"
-                            class="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition
+                            class="group flex items-center gap-3 rounded-2xl px-4 py-2 text-sm font-bold transition
        {{ request()->routeIs($item['active'])
            ? 'bg-stone-950 text-amber-200 shadow-xl shadow-stone-900/10'
            : 'text-stone-600 hover:bg-white hover:text-stone-950 hover:shadow-sm' }}">

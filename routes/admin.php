@@ -86,6 +86,9 @@ Route::prefix('admin')
             Route::patch('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])
                 ->name('contact-messages.read');
 
+            Route::patch('/contact-messages/{contactMessage}/status', [ContactMessageController::class, 'updateStatus'])
+                ->name('contact-messages.status');
+
             Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
                 ->name('contact-messages.destroy');
 

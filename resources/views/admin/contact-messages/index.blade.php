@@ -1,10 +1,26 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="mb-6 flex justify-between">
+    <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <p class="text-sm font-semibold text-stone-500">
             Total pesan: {{ $messages->total() }}
         </p>
+
+        <form method="GET" class="flex gap-3">
+            <select name="status"
+                class="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-800 outline-none">
+                <option value="">Semua Status</option>
+                @foreach (\App\Models\ContactMessage::STATUSES as $value => $label)
+                    <option value="{{ $value }}" @selected(request('status') === $value)>
+                        {{ $label }}
+                    </option>
+                @endforeach
+            </select>
+
+            <button class="rounded-2xl bg-stone-950 px-5 py-3 text-sm font-black text-amber-200">
+                Filter
+            </button>
+        </form>
     </div>
 
     <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-[#fbf7ef] shadow-sm">
@@ -38,9 +54,19 @@
                             </td>
 
                             <td class="px-6 py-5">
-                                <span
-                                    class="rounded-full px-3 py-1 text-xs font-black {{ $message->is_read ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800' }}">
-                                    {{ $message->is_read ? 'Dibaca' : 'Baru' }}
+                                @php
+                                    $statusClass = match ($message->status) {
+                                        'new' => 'bg-amber-100 text-amber-800',
+                                        'read' => 'bg-blue-100 text-blue-700',
+                                        'contacted' => 'bg-purple-100 text-purple-700',
+                                        'completed' => 'bg-emerald-100 text-emerald-700',
+                                        'archived' => 'bg-stone-100 text-stone-500',
+                                        default => 'bg-stone-100 text-stone-500',
+                                    };
+                                @endphp
+
+                                <span class="rounded-full px-3 py-1 text-xs font-black {{ $statusClass }}">
+                                    {{ \App\Models\ContactMessage::STATUSES[$message->status] ?? 'Baru' }}
                                 </span>
                             </td>
 

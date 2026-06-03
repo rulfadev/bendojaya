@@ -56,8 +56,13 @@ class DashboardController extends Controller
             ],
             [
                 'label' => 'Pesan Baru',
-                'value' => ContactMessage::query()->unread()->count(),
-                'description' => 'Pesan kontak belum dibaca.',
+                'value' => ContactMessage::query()->where('status', 'new')->count(),
+                'description' => 'Pesan kontak belum ditindaklanjuti.',
+            ],
+            [
+                'label' => 'Perlu Follow Up',
+                'value' => ContactMessage::query()->whereIn('status', ['new', 'read', 'contacted'])->count(),
+                'description' => 'Pesan yang masih perlu diproses.',
             ],
             [
                 'label' => 'Testimoni Pending',
