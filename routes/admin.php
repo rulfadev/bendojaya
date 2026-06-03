@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WhatsappTemplateController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
@@ -123,5 +124,10 @@ Route::prefix('admin')
                 ->name('seo-settings.edit');
             Route::put('/seo-settings', [SeoSettingController::class, 'update'])
                 ->name('seo-settings.update');
+
+            Route::get('/whatsapp-templates', [WhatsappTemplateController::class, 'index'])
+                ->name('whatsapp-templates.index');
+            Route::put('/whatsapp-templates', [WhatsappTemplateController::class, 'update'])
+                ->name('whatsapp-templates.update');
         });
     });

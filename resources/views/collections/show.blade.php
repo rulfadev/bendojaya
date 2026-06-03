@@ -45,7 +45,10 @@
                 </div>
 
                 <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <x-frontend.consultation-link label="Tanya Koleksi Ini" />
+                    <x-frontend.consultation-link label="Tanya Koleksi Ini" template="collection" :data="[
+                        'collection_name' => $collection->name,
+                        'collection_category' => $collection->category,
+                    ]" />
                     <a href="{{ route('collections.index') }}"
                         class="inline-flex justify-center rounded-full border border-[#765A4F] px-7 py-4 text-sm font-black text-[#765A4F]">
                         Kembali ke Koleksi

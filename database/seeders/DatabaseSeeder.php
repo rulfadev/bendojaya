@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             NavigationMenuSeeder::class,
             HomepageSettingSeeder::class,
             FaqSeeder::class,
+            WhatsappTemplateSeeder::class,
         ]);
     }
 }

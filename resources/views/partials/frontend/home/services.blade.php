@@ -36,11 +36,25 @@
 
                     $showButton = data_get($service, 'show_button', true);
                     $buttonLabel = data_get($service, 'button_label') ?: 'Konsultasi';
-                    $buttonUrl =
-                        data_get($service, 'button_url') ?:
-                        ($setting?->consultation_url ?:
-                        'https://wa.me/' . ($setting?->whatsapp_number ?? '6280000000000'));
-                    $buttonHref = str_starts_with($buttonUrl, '/') ? url($buttonUrl) : $buttonUrl;
+
+                    $customButtonUrl = data_get($service, 'button_url');
+                    $settingButtonUrl = $setting?->consultation_url;
+
+                    if ($customButtonUrl) {
+                        $buttonHref = str_starts_with($customButtonUrl, '/') ? url($customButtonUrl) : $customButtonUrl;
+                    } elseif ($settingButtonUrl) {
+                        $buttonHref = str_starts_with($settingButtonUrl, '/')
+                            ? url($settingButtonUrl)
+                            : $settingButtonUrl;
+                    } else {
+                        $buttonHref = \App\Support\WhatsappMessage::url('service', [
+                            'service_title' => data_get(
+                                $service,
+                                'title',
+                                data_get($service, 'name', 'Layanan Bendo Jaya'),
+                            ),
+                        ]);
+                    }
                 @endphp
 
                 <article

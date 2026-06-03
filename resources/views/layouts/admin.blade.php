@@ -125,6 +125,13 @@
             'roles' => ['admin'],
         ],
         [
+            'label' => 'WA Templates',
+            'route' => 'admin.whatsapp-templates.index',
+            'active' => 'admin.whatsapp-templates.*',
+            'icon' => 'fa-brands fa-whatsapp',
+            'roles' => ['admin'],
+        ],
+        [
             'label' => 'Backup Data',
             'route' => 'admin.backups.index',
             'active' => 'admin.backups.*',
