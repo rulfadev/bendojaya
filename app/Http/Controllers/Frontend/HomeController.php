@@ -9,6 +9,7 @@ use App\Models\Gallery;
 use App\Models\Partner;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use App\Models\Testimonial;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -54,6 +55,15 @@ class HomeController extends Controller
             ->take(2)
             ->get();
 
+        $testimonials = Testimonial::query()
+            ->approved()
+            ->featured()
+            ->where('consent_to_publish', true)
+            ->orderBy('sort_order')
+            ->latest('approved_at')
+            ->take(6)
+            ->get();
+
         return view('pages.home', [
             'setting' => $setting,
             'services' => $services,
@@ -62,6 +72,7 @@ class HomeController extends Controller
             'galleries' => $galleries,
             'partners' => $partners,
             'articles' => $articles,
+            'testimonials' => $testimonials,
             'metaDescription' => $setting?->meta_description
                 ?? 'Bendo Jaya Batik Fashion menghadirkan koleksi batik elegan, custom pakaian, dan kerja sama brand fashion.',
         ]);

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
@@ -74,4 +75,9 @@ Route::prefix('admin')
 
         Route::resource('navigation-menus', NavigationMenuController::class)
             ->except(['show']);
+
+        Route::resource('testimonials', TestimonialController::class)
+            ->except(['show']);
+        Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
+            ->name('testimonials.approve');
     });

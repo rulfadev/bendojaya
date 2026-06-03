@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FashionCollectionController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PageController as FrontendPageController;
+use App\Http\Controllers\TestimonialFormController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('site.maintenance')->group(function () {
@@ -28,4 +29,11 @@ Route::middleware('site.maintenance')->group(function () {
         ->name('galleries.index');
     Route::get('/gallery/{gallery:slug}', [GalleryController::class, 'show'])
         ->name('galleries.show');
+
+    Route::get('/testimonial-form/{testimonial:token}', [TestimonialFormController::class, 'show'])
+        ->name('testimonial-form.show');
+    Route::post('/testimonial-form/{testimonial:token}', [TestimonialFormController::class, 'submit'])
+        ->name('testimonial-form.submit');
+    Route::get('/testimonial-form/{testimonial:token}/thank-you', [TestimonialFormController::class, 'thankYou'])
+        ->name('testimonial-form.thank-you');
 });

@@ -9,6 +9,7 @@ use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\Partner;
 use App\Models\SiteSetting;
+use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\View\View;
 
@@ -57,6 +58,11 @@ class DashboardController extends Controller
                 'label' => 'Pesan Baru',
                 'value' => ContactMessage::query()->unread()->count(),
                 'description' => 'Pesan kontak belum dibaca.',
+            ],
+            [
+                'label' => 'Testimoni Pending',
+                'value' => Testimonial::query()->where('status', 'pending')->count(),
+                'description' => 'Menunggu review admin.',
             ],
         ];
 

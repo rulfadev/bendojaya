@@ -53,6 +53,12 @@
             'icon' => 'ℳ',
         ],
         [
+            'label' => 'Testimoni',
+            'route' => 'admin.testimonials.index',
+            'active' => 'admin.testimonials.*',
+            'icon' => '★',
+        ],
+        [
             'label' => 'Menu Navigasi',
             'route' => 'admin.navigation-menus.index',
             'active' => 'admin.navigation-menus.*',

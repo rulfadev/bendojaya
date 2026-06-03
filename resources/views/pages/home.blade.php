@@ -13,6 +13,7 @@
     @include('partials.frontend.home.collection')
     @include('partials.frontend.home.gallery')
     @include('partials.frontend.home.partners')
+    @include('partials.frontend.home.testimonials')
     @include('partials.frontend.home.articles')
     @include('partials.frontend.home.cta')
 @endsection
