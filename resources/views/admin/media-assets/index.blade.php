@@ -6,8 +6,7 @@
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari media..."
                 class="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-stone-950">
 
-            <select name="folder"
-                class="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-stone-950">
+            <x-admin.form.select name="folder">
                 <option value="">Semua Folder</option>
 
                 @foreach ($folders as $folder)
@@ -15,7 +14,7 @@
                         {{ $folder }}
                     </option>
                 @endforeach
-            </select>
+            </x-admin.form.select>
 
             <button class="rounded-2xl bg-stone-950 px-5 py-3 text-sm font-black text-amber-200">
                 Filter

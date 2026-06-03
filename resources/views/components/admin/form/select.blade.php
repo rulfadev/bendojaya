@@ -3,7 +3,7 @@
     'name',
 ])
 
-<div>
+<div class="w-full">
     @if ($label)
         <label for="{{ $name }}" class="mb-2 block text-sm font-black text-stone-800">
             {{ $label }}
@@ -14,12 +14,13 @@
         <select id="{{ $name }}" name="{{ $name }}" data-admin-select
             {{ $attributes->merge([
                 'class' =>
-                    'w-full appearance-none rounded-2xl border border-stone-200 bg-white px-4 py-3 pr-11 text-sm font-semibold text-stone-800 outline-none transition focus:border-stone-950 focus:ring-4 focus:ring-amber-200',
+                    'h-[50px] w-full appearance-none rounded-[1.25rem] border border-stone-200 bg-white px-4 pr-12 text-sm font-black text-stone-900 outline-none transition hover:bg-[#fffaf2] focus:border-stone-950 focus:ring-4 focus:ring-amber-200 disabled:cursor-not-allowed disabled:opacity-60',
             ]) }}>
             {{ $slot }}
         </select>
 
-        <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-stone-400">
+        <span data-native-select-icon
+            class="pointer-events-none absolute right-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-stone-100 text-stone-500">
             <i class="fa-solid fa-chevron-down text-xs"></i>
         </span>
     </div>

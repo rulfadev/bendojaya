@@ -7,15 +7,14 @@
         </p>
 
         <form method="GET" class="flex gap-3">
-            <select name="status"
-                class="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-800 outline-none">
+            <x-admin.form.select name="status">
                 <option value="">Semua Status</option>
                 @foreach (\App\Models\ContactMessage::STATUSES as $value => $label)
                     <option value="{{ $value }}" @selected(request('status') === $value)>
                         {{ $label }}
                     </option>
                 @endforeach
-            </select>
+            </x-admin.form.select>
 
             <button class="rounded-2xl bg-stone-950 px-5 py-3 text-sm font-black text-amber-200">
                 Filter

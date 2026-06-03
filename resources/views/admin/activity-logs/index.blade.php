@@ -1,57 +1,65 @@
 @extends('layouts.admin')
 
 @section('content')
-    <section class="mb-8 rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
-        <div class="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
-            <form method="GET" class="grid flex-1 gap-3 md:grid-cols-2 xl:grid-cols-[1fr_180px_220px_220px_auto]">
-                <x-admin.form.input name="search" label="Cari" :value="request('search')" placeholder="Cari deskripsi, URL, IP..." />
-
-                <x-admin.form.select name="action" label="Aksi">
-                    <option value="">Semua Aksi</option>
-                    @foreach (\App\Models\ActivityLog::ACTIONS as $value => $label)
-                        <option value="{{ $value }}" @selected(request('action') === $value)>
-                            {{ $label }}
-                        </option>
-                    @endforeach
-                </x-admin.form.select>
-
-                <x-admin.form.select name="user_id" label="User">
-                    <option value="">Semua User</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}" @selected((int) request('user_id') === $user->id)>
-                            {{ $user->name }}
-                        </option>
-                    @endforeach
-                </x-admin.form.select>
-
-                <x-admin.form.select name="subject_type" label="Modul">
-                    <option value="">Semua Modul</option>
-                    @foreach ($subjects as $subject)
-                        <option value="{{ $subject }}" @selected(request('subject_type') === $subject)>
-                            {{ class_basename($subject) }}
-                        </option>
-                    @endforeach
-                </x-admin.form.select>
-
-                <div class="flex items-end">
-                    <x-admin.button class="w-full">
-                        <i class="fa-solid fa-filter"></i>
-                        Filter
-                    </x-admin.button>
-                </div>
-            </form>
+    <section class="admin-filter-card mb-8 rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-5 shadow-sm">
+        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                    Filter Log
+                </p>
+                <h3 class="mt-1 text-lg font-black text-stone-950">
+                    Cari aktivitas berdasarkan aksi, user, dan modul.
+                </h3>
+            </div>
 
             <form action="{{ route('admin.activity-logs.clear-old') }}" method="POST"
                 onsubmit="return confirm('Hapus activity log lebih dari 90 hari?')">
                 @csrf
                 @method('DELETE')
 
-                <x-admin.button variant="danger" type="submit">
+                <x-admin.button variant="danger" type="submit" class="w-full sm:w-auto">
                     <i class="fa-solid fa-trash"></i>
                     Hapus Log Lama
                 </x-admin.button>
             </form>
         </div>
+
+        <form method="GET" class="grid gap-3 lg:grid-cols-[1.4fr_0.8fr_0.9fr_0.9fr_auto] lg:items-end">
+            <x-admin.form.input name="search" :value="request('search')" placeholder="Cari deskripsi, URL, IP..."
+                class="py-3 font-semibold" />
+
+            <x-admin.form.select name="action">
+                <option value="">Semua Aksi</option>
+                @foreach (\App\Models\ActivityLog::ACTIONS as $value => $label)
+                    <option value="{{ $value }}" @selected(request('action') === $value)>
+                        {{ $label }}
+                    </option>
+                @endforeach
+            </x-admin.form.select>
+
+            <x-admin.form.select name="user_id">
+                <option value="">Semua User</option>
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}" @selected((int) request('user_id') === $user->id)>
+                        {{ $user->name }}
+                    </option>
+                @endforeach
+            </x-admin.form.select>
+
+            <x-admin.form.select name="subject_type">
+                <option value="">Semua Modul</option>
+                @foreach ($subjects as $subject)
+                    <option value="{{ $subject }}" @selected(request('subject_type') === $subject)>
+                        {{ class_basename($subject) }}
+                    </option>
+                @endforeach
+            </x-admin.form.select>
+
+            <x-admin.button class="h-full w-full px-6">
+                <i class="fa-solid fa-filter"></i>
+                Filter
+            </x-admin.button>
+        </form>
     </section>
 
     <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-[#fbf7ef] shadow-sm">

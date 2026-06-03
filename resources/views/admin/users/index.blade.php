@@ -3,18 +3,17 @@
 @section('content')
     <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <form method="GET" class="grid gap-3 sm:grid-cols-[1fr_180px_auto]">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, username, email..."
-                class="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-stone-950">
+            <x-admin.form.input name="search" :value="request('search')" placeholder="Cari nama, username, email..."
+                class="h-full rounded-[1.25rem] border border-stone-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-stone-950" />
 
-            <select name="role"
-                class="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-stone-950">
+            <x-admin.form.select name="role">
                 <option value="">Semua Role</option>
                 @foreach (\App\Models\User::ROLES as $value => $label)
-                    <option value="{{ $value }}" @selected(request('role') === $value)>
+                    <option value="{{ $value }}" @selected(request('status') === $value)>
                         {{ $label }}
                     </option>
                 @endforeach
-            </select>
+            </x-admin.form.select>
 
             <button class="rounded-2xl bg-stone-950 px-5 py-3 text-sm font-black text-amber-200">
                 Filter
