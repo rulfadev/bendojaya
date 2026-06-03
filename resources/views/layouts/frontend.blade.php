@@ -10,11 +10,7 @@
 <html lang="id" class="scroll-smooth">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? $siteName }}</title>
-    <meta name="description"
-        content="{{ $metaDescription ?? ($setting?->meta_description ?? 'Bendo Jaya Batik Fashion.') }}">
+    @include('partials.seo')
 
     @if ($favicon)
         <link rel="icon" href="{{ $favicon }}">

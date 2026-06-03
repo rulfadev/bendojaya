@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SeoSettingController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
@@ -117,5 +118,10 @@ Route::prefix('admin')
                 ->name('activity-logs.clear-old');
             Route::resource('activity-logs', ActivityLogController::class)
                 ->only(['index', 'show', 'destroy']);
+
+            Route::get('/seo-settings', [SeoSettingController::class, 'edit'])
+                ->name('seo-settings.edit');
+            Route::put('/seo-settings', [SeoSettingController::class, 'update'])
+                ->name('seo-settings.update');
         });
     });

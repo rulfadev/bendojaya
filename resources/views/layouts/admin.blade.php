@@ -111,6 +111,13 @@
             'roles' => ['admin'],
         ],
         [
+            'label' => 'SEO Settings',
+            'route' => 'admin.seo-settings.edit',
+            'active' => 'admin.seo-settings.*',
+            'icon' => 'fa-solid fa-magnifying-glass-chart',
+            'roles' => ['admin'],
+        ],
+        [
             'label' => 'Pengaturan Website',
             'route' => 'admin.site-settings.index',
             'active' => 'admin.site-settings.*',

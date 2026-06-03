@@ -33,10 +33,38 @@ class ArticleController extends Controller
         $setting = SiteSetting::query()->first();
 
         return view('articles.show', [
-            'setting' => $setting,
             'article' => $article,
+
             'title' => $article->meta_title ?: $article->title,
             'metaDescription' => $article->meta_description ?: $article->excerpt,
+            'metaKeywords' => $article->meta_keywords ?? null,
+
+            'ogImage' => $article->featured_image
+                ? asset('storage/'.$article->featured_image)
+                : null,
+
+            'ogType' => 'article',
+
+            'schema' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'Article',
+                'headline' => $article->title,
+                'description' => $article->meta_description ?: $article->excerpt,
+                'image' => $article->featured_image
+                    ? asset('storage/'.$article->featured_image)
+                    : null,
+                'datePublished' => $article->published_at?->toAtomString(),
+                'dateModified' => $article->updated_at?->toAtomString(),
+                'author' => [
+                    '@type' => 'Organization',
+                    'name' => 'Bendo Jaya Batik Fashion',
+                ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => 'Bendo Jaya Batik Fashion',
+                ],
+                'mainEntityOfPage' => url()->current(),
+            ],
         ]);
     }
 }
