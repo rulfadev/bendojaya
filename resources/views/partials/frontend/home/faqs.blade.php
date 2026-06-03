@@ -27,22 +27,7 @@
 
             <div class="space-y-4">
                 @foreach ($faqItems as $faq)
-                    <details class="group rounded-[2rem] border border-[#E6D8C8] bg-white p-6 shadow-sm">
-                        <summary class="flex cursor-pointer list-none items-center justify-between gap-5">
-                            <span class="font-black text-[#3C3B39]">
-                                {{ $faq->question }}
-                            </span>
-
-                            <span
-                                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#3C3B39] text-[#FBE9CB] transition group-open:rotate-45">
-                                <i class="fa-solid fa-plus text-xs"></i>
-                            </span>
-                        </summary>
-
-                        <div class="mt-5 border-t border-[#E6D8C8] pt-5 text-sm leading-7 text-[#7F756D]">
-                            {!! nl2br(e($faq->answer)) !!}
-                        </div>
-                    </details>
+                    <x-frontend.faq-item :question="$faq->question" :answer="$faq->answer" />
                 @endforeach
             </div>
         </div>

@@ -2,16 +2,47 @@
 
 @section('content')
     @php
-        $inputClass =
-            'w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-800 outline-none transition focus:border-stone-950 focus:ring-4 focus:ring-amber-200';
-        $labelClass = 'mb-2 block text-sm font-black text-stone-800';
-        $cardClass = 'rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm';
         $valueItemsText = old(
             'value_items_text',
             $homepage->value_items
                 ? json_encode($homepage->value_items, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
                 : '',
         );
+
+        $sectionFields = [
+            'about' => [
+                'label' => 'About',
+                'image' => true,
+                'button' => true,
+            ],
+            'services' => [
+                'label' => 'Services',
+            ],
+            'collections' => [
+                'label' => 'Collections',
+            ],
+            'gallery' => [
+                'label' => 'Gallery',
+            ],
+            'partners' => [
+                'label' => 'Partners',
+                'image' => true,
+            ],
+            'testimonials' => [
+                'label' => 'Testimonials',
+            ],
+            'articles' => [
+                'label' => 'Articles',
+            ],
+            'faq' => [
+                'label' => 'FAQ',
+            ],
+            'cta' => [
+                'label' => 'CTA',
+                'image' => true,
+                'button' => true,
+            ],
+        ];
     @endphp
 
     <form action="{{ route('admin.homepage-settings.update') }}" method="POST" enctype="multipart/form-data">
@@ -19,164 +50,121 @@
         @method('PUT')
 
         <div class="space-y-8">
-            <section class="{{ $cardClass }}">
-                <label class="mb-6 flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
-                    <span class="text-sm font-black">Tampilkan Hero</span>
-                    <input type="checkbox" name="show_hero" value="1" @checked(old('show_hero', $homepage->show_hero))>
-                </label>
+            <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
+                <div class="mb-6 flex items-center justify-between gap-5">
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                            Hero
+                        </p>
+                        <h3 class="mt-2 text-xl font-black text-stone-950">
+                            Section Utama Landing Page
+                        </h3>
+                    </div>
+
+                    <x-admin.form.toggle name="show_hero" label="Tampilkan" :checked="$homepage->show_hero" />
+                </div>
 
                 <div class="grid gap-5 md:grid-cols-2">
-                    <div>
-                        <label class="{{ $labelClass }}">Hero Eyebrow</label>
-                        <input name="hero_eyebrow" value="{{ old('hero_eyebrow', $homepage->hero_eyebrow) }}"
-                            class="{{ $inputClass }}">
-                    </div>
+                    <x-admin.form.input name="hero_eyebrow" label="Hero Eyebrow" :value="$homepage->hero_eyebrow" />
 
-                    <div>
-                        <label class="{{ $labelClass }}">Hero Image</label>
-                        <input type="file" name="hero_image" class="{{ $inputClass }}">
+                    <x-admin.form.file name="hero_image" label="Hero Image" accept=".jpg,.jpeg,.png,.webp" :preview="$homepage->hero_image ? asset('storage/' . $homepage->hero_image) : null"
+                        preview-alt="Hero Image" />
+
+                    <div class="md:col-span-2">
+                        <x-admin.form.input name="hero_title" label="Hero Title" :value="$homepage->hero_title" />
                     </div>
 
                     <div class="md:col-span-2">
-                        <label class="{{ $labelClass }}">Hero Title</label>
-                        <input name="hero_title" value="{{ old('hero_title', $homepage->hero_title) }}"
-                            class="{{ $inputClass }}">
+                        <x-admin.form.textarea name="hero_subtitle" label="Hero Subtitle" :value="$homepage->hero_subtitle"
+                            rows="3" />
                     </div>
 
-                    <div class="md:col-span-2">
-                        <label class="{{ $labelClass }}">Hero Subtitle</label>
-                        <textarea name="hero_subtitle" rows="3" class="{{ $inputClass }}">{{ old('hero_subtitle', $homepage->hero_subtitle) }}</textarea>
-                    </div>
+                    <x-admin.form.input name="hero_primary_label" label="Primary Button Label" :value="$homepage->hero_primary_label" />
 
-                    <div>
-                        <label class="{{ $labelClass }}">Primary Button Label</label>
-                        <input name="hero_primary_label"
-                            value="{{ old('hero_primary_label', $homepage->hero_primary_label) }}"
-                            class="{{ $inputClass }}">
-                    </div>
+                    <x-admin.form.input name="hero_primary_url" label="Primary Button URL" :value="$homepage->hero_primary_url" />
 
-                    <div>
-                        <label class="{{ $labelClass }}">Primary Button URL</label>
-                        <input name="hero_primary_url" value="{{ old('hero_primary_url', $homepage->hero_primary_url) }}"
-                            class="{{ $inputClass }}">
-                    </div>
+                    <x-admin.form.input name="hero_secondary_label" label="Secondary Button Label" :value="$homepage->hero_secondary_label" />
 
-                    <div>
-                        <label class="{{ $labelClass }}">Secondary Button Label</label>
-                        <input name="hero_secondary_label"
-                            value="{{ old('hero_secondary_label', $homepage->hero_secondary_label) }}"
-                            class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Secondary Button URL</label>
-                        <input name="hero_secondary_url"
-                            value="{{ old('hero_secondary_url', $homepage->hero_secondary_url) }}"
-                            class="{{ $inputClass }}">
-                    </div>
+                    <x-admin.form.input name="hero_secondary_url" label="Secondary Button URL" :value="$homepage->hero_secondary_url" />
                 </div>
             </section>
 
-            <section class="{{ $cardClass }}">
-                <label
-                    class="mb-6 flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
-                    <span class="text-sm font-black">Tampilkan Value Strip</span>
-                    <input type="checkbox" name="show_value_strip" value="1" @checked(old('show_value_strip', $homepage->show_value_strip))>
-                </label>
+            <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
+                <div class="mb-6 flex items-center justify-between gap-5">
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                            Value Strip
+                        </p>
+                        <h3 class="mt-2 text-xl font-black text-stone-950">
+                            Highlight Singkat
+                        </h3>
+                    </div>
 
-                <label class="{{ $labelClass }}">Value Items JSON</label>
-                <textarea name="value_items_text" rows="10" class="{{ $inputClass }}">{{ $valueItemsText }}</textarea>
+                    <x-admin.form.toggle name="show_value_strip" label="Tampilkan" :checked="$homepage->show_value_strip" />
+                </div>
+
+                <x-admin.form.textarea name="value_items_text" label="Value Items JSON" :value="$valueItemsText" rows="10" />
             </section>
 
-            @foreach ([
-            'about' => 'About',
-            'services' => 'Services',
-            'collections' => 'Collections',
-            'gallery' => 'Gallery',
-            'partners' => 'Partners',
-            'testimonials' => 'Testimonials',
-            'articles' => 'Articles',
-            'faq' => 'FAQ',
-            'cta' => 'CTA',
-        ] as $key => $sectionLabel)
-                <section class="{{ $cardClass }}">
-                    <label
-                        class="mb-6 flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
-                        <span class="text-sm font-black">Tampilkan {{ $sectionLabel }}</span>
-                        <input type="checkbox" name="show_{{ $key }}" value="1" @checked(old('show_' . $key, $homepage->{'show_' . $key}))>
-                    </label>
+            @foreach ($sectionFields as $key => $section)
+                <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
+                    <div class="mb-6 flex items-center justify-between gap-5">
+                        <div>
+                            <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                                {{ $section['label'] }}
+                            </p>
+                            <h3 class="mt-2 text-xl font-black text-stone-950">
+                                Pengaturan Section {{ $section['label'] }}
+                            </h3>
+                        </div>
+
+                        <x-admin.form.toggle name="show_{{ $key }}" label="Tampilkan" :checked="$homepage->{'show_' . $key}" />
+                    </div>
 
                     <div class="grid gap-5 md:grid-cols-2">
-                        <div>
-                            <label class="{{ $labelClass }}">Eyebrow</label>
-                            <input name="{{ $key }}_eyebrow"
-                                value="{{ old($key . '_eyebrow', $homepage->{$key . '_eyebrow'} ?? null) }}"
-                                class="{{ $inputClass }}">
-                        </div>
+                        <x-admin.form.input name="{{ $key }}_eyebrow" label="Eyebrow" :value="$homepage->{$key . '_eyebrow'} ?? null" />
 
-                        <div>
-                            <label class="{{ $labelClass }}">Title</label>
-                            <input name="{{ $key }}_title"
-                                value="{{ old($key . '_title', $homepage->{$key . '_title'} ?? null) }}"
-                                class="{{ $inputClass }}">
-                        </div>
+                        <x-admin.form.input name="{{ $key }}_title" label="Title" :value="$homepage->{$key . '_title'} ?? null" />
 
                         <div class="md:col-span-2">
-                            <label class="{{ $labelClass }}">Description</label>
-                            <textarea name="{{ $key }}_description" rows="3" class="{{ $inputClass }}">{{ old($key . '_description', $homepage->{$key . '_description'} ?? null) }}</textarea>
+                            <x-admin.form.textarea name="{{ $key }}_description" label="Description"
+                                :value="$homepage->{$key . '_description'} ?? null" rows="3" />
                         </div>
 
-                        @if (in_array($key, ['about', 'partners', 'cta']))
-                            <div>
-                                <label class="{{ $labelClass }}">Image</label>
-                                <input type="file" name="{{ $key }}_image" class="{{ $inputClass }}">
+                        @if ($section['image'] ?? false)
+                            <div class="md:col-span-2">
+                                <x-admin.form.file name="{{ $key }}_image" label="Image"
+                                    accept=".jpg,.jpeg,.png,.webp" :preview="$homepage->{$key . '_image'}
+                                        ? asset('storage/' . $homepage->{$key . '_image'})
+                                        : null" preview-alt="Section Image" />
                             </div>
                         @endif
 
                         @if ($key === 'about')
-                            <div>
-                                <label class="{{ $labelClass }}">Button Label</label>
-                                <input name="about_button_label"
-                                    value="{{ old('about_button_label', $homepage->about_button_label) }}"
-                                    class="{{ $inputClass }}">
-                            </div>
+                            <x-admin.form.input name="about_button_label" label="Button Label" :value="$homepage->about_button_label" />
 
-                            <div>
-                                <label class="{{ $labelClass }}">Button URL</label>
-                                <input name="about_button_url"
-                                    value="{{ old('about_button_url', $homepage->about_button_url) }}"
-                                    class="{{ $inputClass }}">
-                            </div>
+                            <x-admin.form.input name="about_button_url" label="Button URL" :value="$homepage->about_button_url" />
 
-                            <label
-                                class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
-                                <span class="text-sm font-black">Tampilkan Button About</span>
-                                <input type="checkbox" name="show_about_button" value="1" @checked(old('show_about_button', $homepage->show_about_button))>
-                            </label>
+                            <div class="md:col-span-2">
+                                <x-admin.form.toggle name="show_about_button" label="Tampilkan Button About"
+                                    :checked="$homepage->show_about_button" />
+                            </div>
                         @endif
 
                         @if ($key === 'cta')
-                            <div>
-                                <label class="{{ $labelClass }}">Button Label</label>
-                                <input name="cta_button_label"
-                                    value="{{ old('cta_button_label', $homepage->cta_button_label) }}"
-                                    class="{{ $inputClass }}">
-                            </div>
+                            <x-admin.form.input name="cta_button_label" label="Button Label" :value="$homepage->cta_button_label" />
 
-                            <div>
-                                <label class="{{ $labelClass }}">Button URL</label>
-                                <input name="cta_button_url" value="{{ old('cta_button_url', $homepage->cta_button_url) }}"
-                                    class="{{ $inputClass }}">
-                            </div>
+                            <x-admin.form.input name="cta_button_url" label="Button URL" :value="$homepage->cta_button_url" />
                         @endif
                     </div>
                 </section>
             @endforeach
 
             <section class="rounded-[2rem] bg-stone-950 p-6">
-                <button class="w-full rounded-2xl bg-amber-300 px-5 py-4 text-sm font-black text-stone-950">
+                <x-admin.button variant="gold" class="w-full">
+                    <i class="fa-solid fa-save"></i>
                     Simpan Homepage Settings
-                </button>
+                </x-admin.button>
             </section>
         </div>
     </form>

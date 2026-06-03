@@ -71,49 +71,43 @@
                     @csrf
                     @method('PATCH')
 
-                    <div>
-                        <label class="mb-2 block text-sm font-black text-stone-800">Status</label>
-                        <select name="status"
-                            class="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-800 outline-none">
-                            @foreach (\App\Models\ContactMessage::STATUSES as $value => $label)
-                                <option value="{{ $value }}" @selected($message->status === $value)>
-                                    {{ $label }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <x-admin.form.select name="status" label="Status">
+                        @foreach (\App\Models\ContactMessage::STATUSES as $value => $label)
+                            <option value="{{ $value }}" @selected(old('status', $message->status) === $value)>
+                                {{ $label }}
+                            </option>
+                        @endforeach
+                    </x-admin.form.select>
 
-                    <div>
-                        <label class="mb-2 block text-sm font-black text-stone-800">Catatan Follow Up</label>
-                        <textarea name="follow_up_note" rows="5"
-                            class="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-800 outline-none"
-                            placeholder="Contoh: Sudah dibalas via WhatsApp, menunggu konfirmasi ukuran.">{{ old('follow_up_note', $message->follow_up_note) }}</textarea>
-                    </div>
+                    <x-admin.form.textarea name="follow_up_note" label="Catatan Follow Up" :value="$message->follow_up_note" rows="5"
+                        placeholder="Contoh: Sudah dibalas via WhatsApp, menunggu konfirmasi ukuran." />
 
-                    <button class="w-full rounded-2xl bg-stone-950 px-5 py-3 text-sm font-black text-amber-200">
+                    <x-admin.button class="w-full">
+                        <i class="fa-solid fa-save"></i>
                         Simpan Status
-                    </button>
+                    </x-admin.button>
                 </form>
             </section>
 
             <section class="rounded-[2rem] border border-stone-200 bg-stone-950 p-6 shadow-sm">
-                <a href="{{ route('admin.contact-messages.index') }}"
-                    class="inline-flex w-full justify-center rounded-2xl border border-white/10 px-5 py-3 text-sm font-black text-stone-200">
+                <x-admin.link-button :href="route('admin.contact-messages.index')" variant="light" class="w-full">
+                    <i class="fa-solid fa-arrow-left"></i>
                     Kembali
-                </a>
+                </x-admin.link-button>
 
                 @if ($message->phone)
-                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $message->phone) }}" target="_blank"
-                        class="mt-3 inline-flex w-full justify-center rounded-2xl bg-amber-300 px-5 py-3 text-sm font-black text-stone-950">
+                    <x-admin.link-button href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $message->phone) }}"
+                        variant="gold" target="_blank" class="mt-3 w-full">
+                        <i class="fa-brands fa-whatsapp"></i>
                         Balas via WhatsApp
-                    </a>
+                    </x-admin.link-button>
                 @endif
 
                 @if ($message->email)
-                    <a href="mailto:{{ $message->email }}"
-                        class="mt-3 inline-flex w-full justify-center rounded-2xl bg-white px-5 py-3 text-sm font-black text-stone-950">
+                    <x-admin.link-button href="mailto:{{ $message->email }}" variant="light" class="mt-3 w-full">
+                        <i class="fa-solid fa-envelope"></i>
                         Balas via Email
-                    </a>
+                    </x-admin.link-button>
                 @endif
             </section>
         </div>

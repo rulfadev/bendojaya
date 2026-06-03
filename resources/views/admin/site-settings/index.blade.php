@@ -1,291 +1,135 @@
 @extends('layouts.admin')
 
 @section('content')
-    @php
-        $inputClass =
-            'w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-stone-950 focus:ring-4 focus:ring-amber-200';
-        $labelClass = 'mb-2 block text-sm font-black text-stone-800';
-        $cardClass = 'rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm';
-    @endphp
-
-    <form action="{{ route('admin.site-settings.update') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+    <form action="{{ route('admin.site-settings.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div class="grid gap-8 xl:grid-cols-3">
             <div class="space-y-8 xl:col-span-2">
-                <section class="{{ $cardClass }}">
+                <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
                     <div class="mb-6">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">Identitas Brand</p>
-                        <h3 class="mt-2 text-xl font-black text-stone-950">Informasi Utama</h3>
-                        <p class="mt-2 text-sm leading-6 text-stone-500">
-                            Data ini akan digunakan untuk homepage, meta default, dan bagian footer.
+                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                            Identitas Website
                         </p>
+                        <h3 class="mt-2 text-xl font-black text-stone-950">
+                            Informasi Brand
+                        </h3>
                     </div>
 
                     <div class="grid gap-5 md:grid-cols-2">
-                        <div>
-                            <label for="site_name" class="{{ $labelClass }}">Nama Website</label>
-                            <input type="text" id="site_name" name="site_name"
-                                value="{{ old('site_name', $setting->site_name) }}" class="{{ $inputClass }}">
-                        </div>
+                        <x-admin.form.input name="site_name" label="Nama Website" :value="$setting->site_name"
+                            placeholder="Bendo Jaya" />
 
-                        <div>
-                            <label for="tagline" class="{{ $labelClass }}">Tagline</label>
-                            <input type="text" id="tagline" name="tagline"
-                                value="{{ old('tagline', $setting->tagline) }}" class="{{ $inputClass }}">
-                        </div>
+                        <x-admin.form.input name="site_tagline" label="Tagline" :value="$setting->site_tagline ?? null"
+                            placeholder="Batik Fashion" />
 
                         <div class="md:col-span-2">
-                            <label for="short_description" class="{{ $labelClass }}">Deskripsi Singkat</label>
-                            <textarea id="short_description" name="short_description" rows="5" class="{{ $inputClass }}">{{ old('short_description', $setting->short_description) }}</textarea>
-                        </div>
-                    </div>
-
-                    <label class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
-                        <span class="text-sm font-black text-stone-800">Tampilkan Tombol About</span>
-                        <input type="checkbox" name="show_about_button" value="1" @checked(old('show_about_button', $setting->show_about_button ?? true))>
-                    </label>
-
-                    <div>
-                        <label class="{{ $labelClass }}">Label Tombol About</label>
-                        <input type="text" name="about_button_label"
-                            value="{{ old('about_button_label', $setting->about_button_label) }}"
-                            class="{{ $inputClass }}" placeholder="Selengkapnya">
-                    </div>
-
-                    <div>
-                        <label class="{{ $labelClass }}">URL Tombol About</label>
-                        <input type="text" name="about_button_url"
-                            value="{{ old('about_button_url', $setting->about_button_url) }}" class="{{ $inputClass }}"
-                            placeholder="/pages/tentang-bendo-jaya">
-                    </div>
-                </section>
-
-                <section class="{{ $cardClass }}">
-                    <div class="mb-6">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">Kontak</p>
-                        <h3 class="mt-2 text-xl font-black text-stone-950">Informasi Kontak</h3>
-                    </div>
-
-                    <div class="grid gap-5 md:grid-cols-2">
-                        <div>
-                            <label for="email" class="{{ $labelClass }}">Email</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', $setting->email) }}"
-                                class="{{ $inputClass }}">
-                        </div>
-
-                        <div>
-                            <label for="phone" class="{{ $labelClass }}">Telepon</label>
-                            <input type="text" id="phone" name="phone" value="{{ old('phone', $setting->phone) }}"
-                                class="{{ $inputClass }}">
-                        </div>
-
-                        <div>
-                            <label for="whatsapp_number" class="{{ $labelClass }}">Nomor WhatsApp</label>
-                            <input type="text" id="whatsapp_number" name="whatsapp_number"
-                                value="{{ old('whatsapp_number', $setting->whatsapp_number) }}" placeholder="628xxxxxxxxxx"
-                                class="{{ $inputClass }}">
-                            <p class="mt-2 text-xs font-semibold text-stone-500">Gunakan format 628..., tanpa tanda +.</p>
-                        </div>
-
-                        <div>
-                            <label for="consultation_label" class="{{ $labelClass }}">Label Tombol Konsultasi</label>
-                            <input type="text" id="consultation_label" name="consultation_label"
-                                value="{{ old('consultation_label', $setting->consultation_label) }}"
-                                placeholder="Konsultasi" class="{{ $inputClass }}">
-                        </div>
-
-                        <div>
-                            <label for="consultation_url" class="{{ $labelClass }}">Link Tombol Konsultasi</label>
-                            <input type="text" id="consultation_url" name="consultation_url"
-                                value="{{ old('consultation_url', $setting->consultation_url) }}"
-                                placeholder="/pages/kerja-sama atau https://wa.me/628..." class="{{ $inputClass }}">
-                            <p class="mt-2 text-xs font-semibold text-stone-500">
-                                Bisa isi link internal seperti /pages/kerja-sama atau link eksternal seperti WhatsApp.
-                            </p>
-                        </div>
-
-                        <div class="md:col-span-2">
-                            <label for="address" class="{{ $labelClass }}">Alamat</label>
-                            <textarea id="address" name="address" rows="4" class="{{ $inputClass }}">{{ old('address', $setting->address) }}</textarea>
+                            <x-admin.form.textarea name="site_description" label="Deskripsi Website" :value="$setting->site_description ?? null"
+                                rows="4" />
                         </div>
                     </div>
                 </section>
 
-                <section class="{{ $cardClass }}">
+                <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
                     <div class="mb-6">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">Sosial Media</p>
-                        <h3 class="mt-2 text-xl font-black text-stone-950">Channel Digital</h3>
-                    </div>
-
-                    <div class="grid gap-5 md:grid-cols-2">
-                        @foreach (['instagram_url' => 'Instagram URL', 'tiktok_url' => 'TikTok URL', 'facebook_url' => 'Facebook URL', 'youtube_url' => 'YouTube URL'] as $field => $label)
-                            <div>
-                                <label for="{{ $field }}"
-                                    class="{{ $labelClass }}">{{ $label }}</label>
-                                <input type="url" id="{{ $field }}" name="{{ $field }}"
-                                    value="{{ old($field, $setting->{$field}) }}" placeholder="https://..."
-                                    class="{{ $inputClass }}">
-                            </div>
-                        @endforeach
-                    </div>
-                </section>
-
-                <section class="{{ $cardClass }}">
-                    <div class="mb-6">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">SEO</p>
-                        <h3 class="mt-2 text-xl font-black text-stone-950">Metadata Default</h3>
-                    </div>
-
-                    <div class="space-y-5">
-                        <div>
-                            <label for="meta_title" class="{{ $labelClass }}">Meta Title</label>
-                            <input type="text" id="meta_title" name="meta_title"
-                                value="{{ old('meta_title', $setting->meta_title) }}" class="{{ $inputClass }}">
-                        </div>
-
-                        <div>
-                            <label for="meta_description" class="{{ $labelClass }}">Meta Description</label>
-                            <textarea id="meta_description" name="meta_description" rows="4" class="{{ $inputClass }}">{{ old('meta_description', $setting->meta_description) }}</textarea>
-                        </div>
-
-                        <div>
-                            <label for="meta_keywords" class="{{ $labelClass }}">Meta Keywords</label>
-                            <textarea id="meta_keywords" name="meta_keywords" rows="4" class="{{ $inputClass }}">{{ old('meta_keywords', $setting->meta_keywords) }}</textarea>
-                        </div>
-                    </div>
-
-                    <label
-                        class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3">
-                        <span class="text-sm font-black text-stone-800">Izinkan Indexing Mesin Pencarian</span>
-                        <input type="checkbox" name="allow_search_indexing" value="1" @checked(old('allow_search_indexing', $setting->allow_search_indexing ?? true))
-                            class="rounded border-stone-300 text-stone-950 focus:ring-amber-300">
-                    </label>
-
-                    <div>
-                        <label for="site_author" class="{{ $labelClass }}">Site Author</label>
-                        <input type="text" id="site_author" name="site_author"
-                            value="{{ old('site_author', $setting->site_author) }}" class="{{ $inputClass }}"
-                            placeholder="Bendo Jaya">
-                    </div>
-
-                    <div>
-                        <label for="google_site_verification" class="{{ $labelClass }}">Google Site
-                            Verification</label>
-                        <input type="text" id="google_site_verification" name="google_site_verification"
-                            value="{{ old('google_site_verification', $setting->google_site_verification) }}"
-                            class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label for="bing_site_verification" class="{{ $labelClass }}">Bing Site Verification</label>
-                        <input type="text" id="bing_site_verification" name="bing_site_verification"
-                            value="{{ old('bing_site_verification', $setting->bing_site_verification) }}"
-                            class="{{ $inputClass }}">
-                    </div>
-
-                    <div>
-                        <label for="default_og_image" class="{{ $labelClass }}">Default OG Image</label>
-                        <input type="file" id="default_og_image" name="default_og_image"
-                            accept=".jpg,.jpeg,.png,.webp"
-                            class="block w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-600 file:mr-4 file:rounded-xl file:border-0 file:bg-stone-950 file:px-4 file:py-2 file:text-sm file:font-black file:text-amber-200">
-                    </div>
-                </section>
-
-                <section class="{{ $cardClass }}">
-                    <div class="mb-6">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">Maintenance</p>
-                        <h3 class="mt-2 text-xl font-black text-stone-950">Mode Maintenance Website</h3>
-                        <p class="mt-2 text-sm leading-6 text-stone-500">
-                            Aktifkan saat website sedang dibangun ulang. Admin tetap bisa login dan mengakses panel.
+                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                            Kontak
                         </p>
+                        <h3 class="mt-2 text-xl font-black text-stone-950">
+                            Informasi Kontak & Konsultasi
+                        </h3>
                     </div>
 
                     <div class="grid gap-5 md:grid-cols-2">
-                        <label
-                            class="flex items-center justify-between rounded-2xl border border-stone-200 bg-white px-4 py-3 md:col-span-2">
-                            <span class="text-sm font-black text-stone-800">Aktifkan Maintenance Mode</span>
-                            <input type="checkbox" name="is_maintenance_mode" value="1" @checked(old('is_maintenance_mode', $setting->is_maintenance_mode))
-                                class="rounded border-stone-300 text-stone-950 focus:ring-amber-300">
-                        </label>
+                        <x-admin.form.input name="email" label="Email" type="email" :value="$setting->email ?? null"
+                            placeholder="admin@bendojaya.id" />
+
+                        <x-admin.form.input name="whatsapp_number" label="Nomor WhatsApp" :value="$setting->whatsapp_number"
+                            placeholder="628..." />
 
                         <div class="md:col-span-2">
-                            <label for="maintenance_title" class="{{ $labelClass }}">Judul Maintenance</label>
-                            <input type="text" id="maintenance_title" name="maintenance_title"
-                                value="{{ old('maintenance_title', $setting->maintenance_title) }}"
-                                class="{{ $inputClass }}" placeholder="Bendo Jaya Batik Fashion Sedang Diperbarui">
+                            <x-admin.form.textarea name="address" label="Alamat" :value="$setting->address ?? null" rows="3" />
                         </div>
 
-                        <div class="md:col-span-2">
-                            <label for="maintenance_description" class="{{ $labelClass }}">Deskripsi
-                                Maintenance</label>
-                            <textarea id="maintenance_description" name="maintenance_description" rows="4" class="{{ $inputClass }}">{{ old('maintenance_description', $setting->maintenance_description) }}</textarea>
-                        </div>
+                        <x-admin.form.input name="instagram_url" label="Instagram URL" type="url" :value="$setting->instagram_url ?? null" />
 
-                        <div class="md:col-span-2">
-                            <label for="maintenance_image" class="{{ $labelClass }}">Gambar Background
-                                Maintenance</label>
-                            <input type="file" id="maintenance_image" name="maintenance_image"
-                                accept=".jpg,.jpeg,.png,.webp"
-                                class="block w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-600 file:mr-4 file:rounded-xl file:border-0 file:bg-stone-950 file:px-4 file:py-2 file:text-sm file:font-black file:text-amber-200">
-                        </div>
+                        <x-admin.form.input name="tiktok_url" label="TikTok URL" type="url" :value="$setting->tiktok_url ?? null" />
+
+                        <x-admin.form.input name="consultation_label" label="Label Tombol Konsultasi" :value="$setting->consultation_label"
+                            placeholder="Konsultasi" />
+
+                        <x-admin.form.input name="consultation_url" label="URL Konsultasi" :value="$setting->consultation_url"
+                            placeholder="https://wa.me/628..." />
+                    </div>
+                </section>
+
+                <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
+                    <div class="mb-6">
+                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                            SEO
+                        </p>
+                        <h3 class="mt-2 text-xl font-black text-stone-950">
+                            Metadata Website
+                        </h3>
+                    </div>
+
+                    <div class="grid gap-5">
+                        <x-admin.form.input name="meta_title" label="Meta Title" :value="$setting->meta_title" />
+
+                        <x-admin.form.textarea name="meta_description" label="Meta Description" :value="$setting->meta_description"
+                            rows="3" />
+
+                        <x-admin.form.textarea name="meta_keywords" label="Meta Keywords" :value="$setting->meta_keywords"
+                            rows="3" />
+
+                        <x-admin.form.file name="og_image" label="OG Image" accept=".jpg,.jpeg,.png,.webp"
+                            :preview="$setting->og_image ? asset('storage/' . $setting->og_image) : null" preview-alt="OG Image" />
+                    </div>
+                </section>
+
+                <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
+                    <div class="mb-6">
+                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                            Maintenance
+                        </p>
+                        <h3 class="mt-2 text-xl font-black text-stone-950">
+                            Mode Perawatan Website
+                        </h3>
+                    </div>
+
+                    <div class="grid gap-5">
+                        <x-admin.form.toggle name="is_maintenance" label="Aktifkan Maintenance" :checked="$setting->is_maintenance ?? false" />
+
+                        <x-admin.form.input name="maintenance_title" label="Judul Maintenance" :value="$setting->maintenance_title ?? null"
+                            placeholder="Website sedang dalam perawatan" />
+
+                        <x-admin.form.textarea name="maintenance_message" label="Pesan Maintenance" :value="$setting->maintenance_message ?? null"
+                            rows="4" />
                     </div>
                 </section>
             </div>
 
             <div class="space-y-8">
-                <section class="{{ $cardClass }}">
-                    <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">Logo</p>
-                    <h3 class="mt-2 text-xl font-black text-stone-950">Logo Website</h3>
-
-                    <div class="mt-6 rounded-3xl border border-stone-200 bg-white/70 p-5">
-                        @if ($setting->logo)
-                            <img src="{{ asset('storage/' . $setting->logo) }}" alt="{{ $setting->site_name }}"
-                                class="max-h-24 rounded-2xl object-contain">
-                        @else
-                            <div
-                                class="flex h-24 items-center justify-center rounded-2xl bg-stone-950 text-2xl font-black text-amber-300">
-                                BJ
-                            </div>
-                        @endif
-                    </div>
-
-                    <input type="file" name="logo" accept=".jpg,.jpeg,.png,.webp,.svg"
-                        class="mt-5 block w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-600 file:mr-4 file:rounded-xl file:border-0 file:bg-stone-950 file:px-4 file:py-2 file:text-sm file:font-black file:text-amber-200">
-                </section>
-
-                <section class="{{ $cardClass }}">
-                    <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">Favicon</p>
-                    <h3 class="mt-2 text-xl font-black text-stone-950">Ikon Browser</h3>
-
-                    <div class="mt-6 rounded-3xl border border-stone-200 bg-white/70 p-5">
-                        @if ($setting->favicon)
-                            <img src="{{ asset('storage/' . $setting->favicon) }}" alt="Favicon"
-                                class="h-14 w-14 rounded-2xl object-contain">
-                        @else
-                            <div
-                                class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-sm font-black text-amber-800">
-                                Icon
-                            </div>
-                        @endif
-                    </div>
-
-                    <input type="file" name="favicon" accept=".jpg,.jpeg,.png,.webp,.ico,.svg"
-                        class="mt-5 block w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-600 file:mr-4 file:rounded-xl file:border-0 file:bg-stone-950 file:px-4 file:py-2 file:text-sm file:font-black file:text-amber-200">
-                </section>
-
-                <section class="rounded-[2rem] border border-stone-200 bg-stone-950 p-6 shadow-xl shadow-stone-900/10">
-                    <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-300">Simpan</p>
-                    <h3 class="mt-2 text-xl font-black text-white">Perbarui Website</h3>
-                    <p class="mt-3 text-sm leading-6 text-stone-300">
-                        Simpan perubahan identitas, kontak, sosial media, dan SEO website.
+                <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
+                    <p class="mb-5 text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                        Logo
                     </p>
 
-                    <button type="submit"
-                        class="mt-6 w-full rounded-2xl bg-amber-300 px-5 py-3.5 text-sm font-black text-stone-950 transition hover:bg-amber-200">
+                    <x-admin.form.file name="logo" label="Logo Website" accept=".jpg,.jpeg,.png,.webp,.svg"
+                        :preview="$setting->logo ? asset('storage/' . $setting->logo) : null" preview-alt="Logo Website" />
+
+                    <div class="mt-6">
+                        <x-admin.form.file name="favicon" label="Favicon" accept=".jpg,.jpeg,.png,.webp,.ico,.svg"
+                            :preview="$setting->favicon ? asset('storage/' . $setting->favicon) : null" preview-alt="Favicon" />
+                    </div>
+                </section>
+
+                <section class="rounded-[2rem] bg-stone-950 p-6">
+                    <x-admin.button variant="gold" class="w-full">
+                        <i class="fa-solid fa-save"></i>
                         Simpan Pengaturan
-                    </button>
+                    </x-admin.button>
                 </section>
             </div>
         </div>

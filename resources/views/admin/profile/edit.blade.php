@@ -1,16 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    @php
-        $inputClass =
-            'w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-stone-950 focus:ring-4 focus:ring-amber-200';
-        $labelClass = 'mb-2 block text-sm font-black text-stone-800';
-        $cardClass = 'rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm';
-    @endphp
-
     <div class="grid gap-8 xl:grid-cols-3">
-        <div class="xl:col-span-2 space-y-8">
-            <section class="{{ $cardClass }}">
+        <div class="space-y-8 xl:col-span-2">
+            <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
                 <div class="mb-6">
                     <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
                         Informasi Akun
@@ -29,38 +22,24 @@
 
                     <div class="grid gap-5 md:grid-cols-2">
                         <div class="md:col-span-2">
-                            <label for="name" class="{{ $labelClass }}">Nama Lengkap</label>
-                            <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}"
-                                class="{{ $inputClass }}" placeholder="Nama pengelola">
+                            <x-admin.form.input name="name" label="Nama Lengkap" :value="$user->name" />
                         </div>
 
-                        <div>
-                            <label for="username" class="{{ $labelClass }}">Username</label>
-                            <input type="text" id="username" name="username"
-                                value="{{ old('username', $user->username) }}" class="{{ $inputClass }}"
-                                placeholder="admin">
-                            <p class="mt-2 text-xs font-semibold text-stone-500">
-                                Digunakan untuk login selain email.
-                            </p>
-                        </div>
+                        <x-admin.form.input name="username" label="Username" :value="$user->username" />
 
-                        <div>
-                            <label for="email" class="{{ $labelClass }}">Email</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}"
-                                class="{{ $inputClass }}" placeholder="admin@bendojaya.id">
-                        </div>
+                        <x-admin.form.input name="email" label="Email" type="email" :value="$user->email" />
                     </div>
 
                     <div class="flex justify-end">
-                        <button type="submit"
-                            class="rounded-2xl bg-stone-950 px-6 py-3 text-sm font-black text-amber-200 transition hover:bg-stone-800">
+                        <x-admin.button>
+                            <i class="fa-solid fa-save"></i>
                             Simpan Profil
-                        </button>
+                        </x-admin.button>
                     </div>
                 </form>
             </section>
 
-            <section class="{{ $cardClass }}">
+            <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
                 <div class="mb-6">
                     <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
                         Keamanan
@@ -69,7 +48,7 @@
                         Ubah Password
                     </h3>
                     <p class="mt-2 text-sm leading-6 text-stone-500">
-                        Gunakan password yang kuat, minimal 8 karakter, mengandung huruf dan angka.
+                        Gunakan password minimal 8 karakter, mengandung huruf dan angka.
                     </p>
                 </div>
 
@@ -77,31 +56,22 @@
                     @csrf
                     @method('PUT')
 
-                    <div>
-                        <label for="current_password" class="{{ $labelClass }}">Password Lama</label>
-                        <input type="password" id="current_password" name="current_password" class="{{ $inputClass }}"
-                            autocomplete="current-password" placeholder="Masukkan password lama">
-                    </div>
+                    <x-admin.form.input name="current_password" label="Password Lama" type="password"
+                        autocomplete="current-password" />
 
                     <div class="grid gap-5 md:grid-cols-2">
-                        <div>
-                            <label for="password" class="{{ $labelClass }}">Password Baru</label>
-                            <input type="password" id="password" name="password" class="{{ $inputClass }}"
-                                autocomplete="new-password" placeholder="Minimal 8 karakter">
-                        </div>
+                        <x-admin.form.input name="password" label="Password Baru" type="password"
+                            autocomplete="new-password" />
 
-                        <div>
-                            <label for="password_confirmation" class="{{ $labelClass }}">Konfirmasi Password Baru</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation"
-                                class="{{ $inputClass }}" autocomplete="new-password" placeholder="Ulangi password baru">
-                        </div>
+                        <x-admin.form.input name="password_confirmation" label="Konfirmasi Password Baru" type="password"
+                            autocomplete="new-password" />
                     </div>
 
                     <div class="flex justify-end">
-                        <button type="submit"
-                            class="rounded-2xl bg-amber-300 px-6 py-3 text-sm font-black text-stone-950 transition hover:bg-amber-200">
+                        <x-admin.button variant="gold">
+                            <i class="fa-solid fa-key"></i>
                             Ubah Password
-                        </button>
+                        </x-admin.button>
                     </div>
                 </form>
             </section>
@@ -128,27 +98,19 @@
 
                 <div class="mt-8 space-y-4">
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <p class="text-xs font-black uppercase tracking-[0.2em] text-amber-300">
-                            Email
-                        </p>
+                        <p class="text-xs font-black uppercase tracking-[0.2em] text-amber-300">Email</p>
+                        <p class="mt-2 text-sm font-semibold text-stone-200">{{ $user->email }}</p>
+                    </div>
+
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                        <p class="text-xs font-black uppercase tracking-[0.2em] text-amber-300">Role</p>
                         <p class="mt-2 text-sm font-semibold text-stone-200">
-                            {{ $user->email }}
+                            {{ \App\Models\User::ROLES[$user->role] ?? ucfirst($user->role) }}
                         </p>
                     </div>
 
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <p class="text-xs font-black uppercase tracking-[0.2em] text-amber-300">
-                            Role
-                        </p>
-                        <p class="mt-2 text-sm font-semibold text-stone-200">
-                            {{ ucfirst($user->role) }}
-                        </p>
-                    </div>
-
-                    <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                        <p class="text-xs font-black uppercase tracking-[0.2em] text-amber-300">
-                            Status
-                        </p>
+                        <p class="text-xs font-black uppercase tracking-[0.2em] text-amber-300">Status</p>
                         <p class="mt-2 text-sm font-semibold {{ $user->is_active ? 'text-emerald-300' : 'text-red-300' }}">
                             {{ $user->is_active ? 'Aktif' : 'Nonaktif' }}
                         </p>
@@ -156,22 +118,16 @@
                 </div>
             </section>
 
-            <section class="{{ $cardClass }}">
+            <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
                 <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
                     Catatan Keamanan
                 </p>
 
                 <div class="mt-5 space-y-4 text-sm leading-7 text-stone-600">
-                    <p>
-                        Setelah website masuk hosting, segera ganti password default akun admin.
+                    <p>Segera ganti password default setelah website masuk hosting.</p>
+                    <p>Jangan gunakan password sederhana seperti <strong>password</strong> atau <strong>admin123</strong>.
                     </p>
-                    <p>
-                        Jangan gunakan password seperti <strong>password</strong>, <strong>admin123</strong>, atau tanggal
-                        lahir.
-                    </p>
-                    <p>
-                        Gunakan kombinasi huruf dan angka agar akun panel lebih aman.
-                    </p>
+                    <p>Gunakan kombinasi huruf dan angka agar akun lebih aman.</p>
                 </div>
             </section>
         </div>
