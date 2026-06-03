@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\HomepageSettingController;
 use App\Http\Controllers\Admin\NavigationMenuController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
@@ -80,4 +81,9 @@ Route::prefix('admin')
             ->except(['show']);
         Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
             ->name('testimonials.approve');
+
+        Route::get('/homepage-settings', [HomepageSettingController::class, 'edit'])
+            ->name('homepage-settings.edit');
+        Route::put('/homepage-settings', [HomepageSettingController::class, 'update'])
+            ->name('homepage-settings.update');
     });

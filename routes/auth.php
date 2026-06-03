@@ -3,15 +3,15 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+    ->name('login');
 
+Route::get('/admin/login', fn () => redirect()->route('login'))
+    ->name('admin.login');
+
+Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])
         ->name('login.store');
-
-    Route::get('/admin/login', fn () => redirect()->route('login'))
-        ->name('admin.login');
 });
 
 Route::middleware('auth')->group(function () {

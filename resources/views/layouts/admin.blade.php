@@ -59,6 +59,12 @@
             'icon' => '★',
         ],
         [
+            'label' => 'Homepage',
+            'route' => 'admin.homepage-settings.edit',
+            'active' => 'admin.homepage-settings.*',
+            'icon' => '▣',
+        ],
+        [
             'label' => 'Menu Navigasi',
             'route' => 'admin.navigation-menus.index',
             'active' => 'admin.navigation-menus.*',

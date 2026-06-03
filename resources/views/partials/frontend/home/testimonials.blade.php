@@ -6,10 +6,19 @@
     <section id="testimonials" class="bg-[#F6EFE4] py-24 lg:py-32">
         <div class="mx-auto max-w-7xl px-5 lg:px-8">
             <div class="mb-12 max-w-3xl">
-                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">Testimoni</p>
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
+                    {{ $homepage?->testimonials_eyebrow ?: 'Testimoni' }}
+                </p>
+
                 <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39] sm:text-5xl">
-                    Cerita client yang pernah bekerja sama.
+                    {{ $homepage?->testimonials_title ?: 'Cerita client yang pernah bekerja sama.' }}
                 </h2>
+
+                @if ($homepage?->testimonials_description)
+                    <p class="mt-5 text-base leading-8 text-[#7F756D]">
+                        {{ $homepage->testimonials_description }}
+                    </p>
+                @endif
             </div>
 
             <div class="grid gap-6 md:grid-cols-3">

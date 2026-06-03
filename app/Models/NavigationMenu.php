@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable(['label', 'type', 'url', 'page_id', 'article_id', 'anchor', 'position', 'target', 'is_active', 'sort_order'])]
-
 class NavigationMenu extends Model
 {
     protected function casts(): array

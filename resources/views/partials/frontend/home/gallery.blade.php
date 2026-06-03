@@ -7,14 +7,17 @@
     <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="mb-14 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#EEBDB5]">Gallery</p>
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#EEBDB5]">
+                    {{ $homepage?->gallery_eyebrow ?: 'Gallery' }}
+                </p>
+
                 <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight sm:text-5xl">
-                    Detail motif, koleksi, dan cerita visual Bendo Jaya.
+                    {{ $homepage?->gallery_title ?: 'Detail motif, koleksi, dan cerita visual Bendo Jaya.' }}
                 </h2>
             </div>
 
             <p class="text-sm leading-7 text-[#E6D8C8]">
-                Dokumentasi produk, motif, photoshoot, dan proses kreatif Bendo Jaya Batik Fashion.
+                {{ $homepage?->gallery_description ?: 'Dokumentasi produk, motif, photoshoot, dan proses kreatif Bendo Jaya Batik Fashion.' }}
             </p>
         </div>
 
@@ -39,14 +42,14 @@
 
                 <img src="{{ $defaultImage }}" class="h-[520px] w-full rounded-[2.5rem] object-cover object-center"
                     alt="Gallery">
-
                 <img src="{{ $defaultImage }}" class="h-[520px] w-full rounded-[2.5rem] object-cover object-right"
                     alt="Gallery">
             @endforelse
         </div>
+
         <div class="mt-12 text-center">
             <a href="{{ route('galleries.index') }}"
-                class="inline-flex rounded-full border border-[#FBE9CB]/35 px-7 py-4 text-sm font-black text-[#FBE9CB] transition hover:bg-white/10">
+                class="inline-flex rounded-full border border-[#FBE9CB]/35 px-7 py-4 text-sm font-black text-[#FBE9CB] transition hover:-translate-y-1 hover:bg-white/10">
                 Lihat Semua Gallery
             </a>
         </div>

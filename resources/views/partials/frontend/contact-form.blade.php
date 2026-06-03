@@ -18,7 +18,8 @@
     <textarea name="message" rows="5" placeholder="Pesan"
         class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">{{ old('message') }}</textarea>
 
-    <button type="submit" class="rounded-2xl bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB]">
+    <button type="submit"
+        class="rounded-2xl bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB] transition hover:-translate-y-1 hover:bg-[#58433D]">
         Kirim Pesan
     </button>
 </form>

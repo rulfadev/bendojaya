@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
+use App\Models\HomepageSetting;
 use App\Models\Partner;
 use App\Models\Service;
 use App\Models\SiteSetting;
@@ -17,6 +18,7 @@ class HomeController extends Controller
     public function index(): View
     {
         $setting = SiteSetting::query()->first();
+        $homepage = HomepageSetting::current();
 
         $services = Service::query()
             ->active()
@@ -66,6 +68,7 @@ class HomeController extends Controller
 
         return view('pages.home', [
             'setting' => $setting,
+            'homepage' => $homepage,
             'services' => $services,
             'collections' => $collections,
             'title' => $setting?->meta_title ?? 'Bendo Jaya Batik Fashion',
