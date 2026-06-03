@@ -31,4 +31,15 @@ class User extends Authenticatable
             'staff',
         ], true);
     }
+
+    public const ROLES = [
+        'admin' => 'Admin',
+        'editor' => 'Editor',
+        'staff' => 'Staff',
+    ];
+
+    public function canManageUsers(): bool
+    {
+        return $this->is_active && $this->role === 'admin';
+    }
 }

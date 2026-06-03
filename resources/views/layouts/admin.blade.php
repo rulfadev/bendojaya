@@ -65,6 +65,13 @@
             'icon' => '▣',
         ],
         [
+            'label' => 'User Management',
+            'route' => 'admin.users.index',
+            'active' => 'admin.users.*',
+            'icon' => '👤',
+            'admin_only' => true,
+        ],
+        [
             'label' => 'Menu Navigasi',
             'route' => 'admin.navigation-menus.index',
             'active' => 'admin.navigation-menus.*',
@@ -77,12 +84,14 @@
             'icon' => '✦',
         ],
         [
-            'label' => 'Profil Admin',
+            'label' => 'Profil',
             'route' => 'admin.profile.edit',
             'active' => 'admin.profile.*',
             'icon' => '◈',
         ],
     ];
+
+    $currentUser = auth()->user();
 @endphp
 
 <!DOCTYPE html>
@@ -114,6 +123,7 @@
                         class="flex h-12 w-12 items-center justify-center rounded-2xl bg-stone-900 text-xl font-bold text-amber-300 shadow-lg shadow-stone-900/10">
                         B
                     </div>
+
                     <div>
                         <h1 class="text-lg font-black tracking-tight text-stone-950">{{ $siteName }}</h1>
                         <p class="text-xs font-medium uppercase tracking-[0.25em] text-amber-700">CMS Batik</p>
@@ -121,9 +131,13 @@
                 </div>
             </div>
 
-            <div class="px-5 py-6">
+            <div class="h-[calc(100vh-6rem)] overflow-y-auto px-5 py-6">
                 <nav class="space-y-1">
                     @foreach ($navItems as $item)
+                        @if (($item['admin_only'] ?? false) && $currentUser?->role !== 'admin')
+                            @continue
+                        @endif
+
                         <a href="{{ route($item['route']) }}"
                             class="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition
                            {{ request()->routeIs($item['active'])
@@ -134,21 +148,6 @@
                         </a>
                     @endforeach
                 </nav>
-
-                {{-- <div class="mt-8">
-                    <p class="px-4 text-xs font-black uppercase tracking-[0.25em] text-stone-400">Segera Dibuat</p>
-
-                    <div class="mt-3 space-y-1">
-                        @foreach ($futureItems as $item)
-                            <div
-                                class="flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-semibold text-stone-400">
-                                <span>{{ $item }}</span>
-                                <span
-                                    class="rounded-full bg-stone-100 px-2 py-1 text-[10px] uppercase tracking-wider">Soon</span>
-                            </div>
-                        @endforeach
-                    </div>
-                </div> --}}
             </div>
         </aside>
 
@@ -157,10 +156,17 @@
                 <div
                     class="flex min-h-20 flex-col gap-4 px-5 py-5 sm:flex-row sm:items-center sm:justify-between lg:px-8">
                     <div>
-                        <p class="mb-1 text-xs font-black uppercase tracking-[0.25em] text-amber-700">Bendo Jaya Admin
+                        <p class="mb-1 text-xs font-black uppercase tracking-[0.25em] text-amber-700">
+                            Bendo Jaya Admin
                         </p>
-                        <h2 class="text-2xl font-black tracking-tight text-stone-950">{{ $title ?? 'Dashboard' }}</h2>
-                        <p class="mt-1 text-sm text-stone-500">{{ $subtitle ?? 'Kelola website Bendo Jaya.' }}</p>
+
+                        <h2 class="text-2xl font-black tracking-tight text-stone-950">
+                            {{ $title ?? 'Dashboard' }}
+                        </h2>
+
+                        <p class="mt-1 text-sm text-stone-500">
+                            {{ $subtitle ?? 'Kelola website Bendo Jaya.' }}
+                        </p>
                     </div>
 
                     <div class="flex items-center gap-3">
@@ -182,6 +188,10 @@
 
                 <div class="flex gap-2 overflow-x-auto border-t border-stone-200/80 px-5 py-3 lg:hidden">
                     @foreach ($navItems as $item)
+                        @if (($item['admin_only'] ?? false) && $currentUser?->role !== 'admin')
+                            @continue
+                        @endif
+
                         <a href="{{ route($item['route']) }}"
                             class="shrink-0 rounded-full px-4 py-2 text-xs font-bold
                            {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
@@ -199,9 +209,17 @@
                     </div>
                 @endif
 
+                @if (session('error'))
+                    <div
+                        class="mb-6 rounded-3xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-bold text-red-700">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 @if ($errors->any())
                     <div class="mb-6 rounded-3xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
                         <div class="mb-2 font-black">Ada data yang perlu diperbaiki:</div>
+
                         <ul class="list-inside list-disc space-y-1">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')
@@ -86,4 +87,7 @@ Route::prefix('admin')
             ->name('homepage-settings.edit');
         Route::put('/homepage-settings', [HomepageSettingController::class, 'update'])
             ->name('homepage-settings.update');
+
+        Route::resource('users', UserController::class)
+            ->except(['show']);
     });
