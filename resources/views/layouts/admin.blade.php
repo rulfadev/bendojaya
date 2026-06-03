@@ -111,6 +111,13 @@
             'roles' => ['admin'],
         ],
         [
+            'label' => 'Backup Data',
+            'route' => 'admin.backups.index',
+            'active' => 'admin.backups.*',
+            'icon' => 'fa-solid fa-file-export',
+            'roles' => ['admin'],
+        ],
+        [
             'label' => 'Profil',
             'route' => 'admin.profile.edit',
             'active' => 'admin.profile.*',

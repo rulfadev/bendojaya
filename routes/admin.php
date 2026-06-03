@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\BackupExportController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController;
@@ -31,7 +32,6 @@ Route::prefix('admin')
 
             Route::get('/profile', [ProfileController::class, 'edit'])
                 ->name('profile.edit');
-
             Route::put('/profile', [ProfileController::class, 'update'])
                 ->name('profile.update');
 
@@ -40,22 +40,17 @@ Route::prefix('admin')
 
             Route::get('/contact-messages', [ContactMessageController::class, 'index'])
                 ->name('contact-messages.index');
-
             Route::get('/contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])
                 ->name('contact-messages.show');
-
             Route::patch('/contact-messages/{contactMessage}/read', [ContactMessageController::class, 'markAsRead'])
                 ->name('contact-messages.read');
-
             Route::patch('/contact-messages/{contactMessage}/status', [ContactMessageController::class, 'updateStatus'])
                 ->name('contact-messages.status');
-
             Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])
                 ->name('contact-messages.destroy');
 
             Route::resource('testimonials', TestimonialController::class)
                 ->except(['show']);
-
             Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
                 ->name('testimonials.approve');
         });
@@ -66,7 +61,6 @@ Route::prefix('admin')
 
             Route::resource('pages', AdminPageController::class)
                 ->except(['show']);
-
             Route::prefix('pages/{page}')
                 ->name('pages.')
                 ->group(function () {
@@ -91,7 +85,6 @@ Route::prefix('admin')
 
             Route::get('/homepage-settings', [HomepageSettingController::class, 'edit'])
                 ->name('homepage-settings.edit');
-
             Route::put('/homepage-settings', [HomepageSettingController::class, 'update'])
                 ->name('homepage-settings.update');
 
@@ -111,8 +104,12 @@ Route::prefix('admin')
 
             Route::get('/site-settings', [SiteSettingController::class, 'index'])
                 ->name('site-settings.index');
-
             Route::put('/site-settings', [SiteSettingController::class, 'update'])
                 ->name('site-settings.update');
+
+            Route::get('/backups', [BackupExportController::class, 'index'])
+                ->name('backups.index');
+            Route::get('/backups/export/{type}', [BackupExportController::class, 'export'])
+                ->name('backups.export');
         });
     });
