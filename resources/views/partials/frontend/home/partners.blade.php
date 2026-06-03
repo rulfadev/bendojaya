@@ -13,31 +13,29 @@
         ? asset('storage/' . $homepage->partners_image)
         : asset('assets/frontend/hero-product.jpg');
 @endphp
-
-<section id="partners" class="bg-[#FFF8ED] py-24 lg:py-32">
+@if ($partnerItems->isNotEmpty())
+    <div class="partner-marquee-wrap mb-14 overflow-hidden border-y border-[#E6D8C8] py-7">
+        <div class="partner-marquee-track gap-12 pr-12">
+            @foreach ($loopItems as $partner)
+                <a href="{{ $partner->website_url ?: 'javascript:void(0)' }}"
+                    target="{{ $partner->website_url ? '_blank' : '_self' }}"
+                    class="group flex h-20 min-w-44 shrink-0 items-center justify-center px-4">
+                    @if ($partner->logo)
+                        <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}"
+                            class="max-h-12 max-w-40 object-contain grayscale opacity-70 transition duration-500 group-hover:grayscale-0 group-hover:opacity-100">
+                    @else
+                        <span
+                            class="whitespace-nowrap text-center text-base font-black uppercase tracking-[0.18em] text-[#3C3B39]/55 transition group-hover:text-[#8A3F35]">
+                            {{ $partner->name }}
+                        </span>
+                    @endif
+                </a>
+            @endforeach
+        </div>
+    </div>
+@endif
+<section id="partners" class="bg-[#FFF8ED] pb-24">
     <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        @if ($partnerItems->isNotEmpty())
-            <div class="partner-marquee-wrap mb-14 overflow-hidden border-y border-[#E6D8C8] py-7">
-                <div class="partner-marquee-track gap-12 pr-12">
-                    @foreach ($loopItems as $partner)
-                        <a href="{{ $partner->website_url ?: 'javascript:void(0)' }}"
-                            target="{{ $partner->website_url ? '_blank' : '_self' }}"
-                            class="group flex h-20 min-w-44 shrink-0 items-center justify-center px-4">
-                            @if ($partner->logo)
-                                <img src="{{ asset('storage/' . $partner->logo) }}" alt="{{ $partner->name }}"
-                                    class="max-h-12 max-w-40 object-contain grayscale opacity-70 transition duration-500 group-hover:grayscale-0 group-hover:opacity-100">
-                            @else
-                                <span
-                                    class="whitespace-nowrap text-center text-base font-black uppercase tracking-[0.18em] text-[#3C3B39]/55 transition group-hover:text-[#8A3F35]">
-                                    {{ $partner->name }}
-                                </span>
-                            @endif
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        @endif
-
         <div
             class="grid overflow-hidden rounded-[2.5rem] border border-[#E6D8C8] bg-[#F6EFE4] lg:grid-cols-[1.1fr_0.9fr]">
             <div class="p-8 sm:p-12 lg:p-16">

@@ -112,7 +112,7 @@
                 <div class="flex items-center gap-4">
                     <div
                         class="flex h-12 w-12 items-center justify-center rounded-2xl bg-stone-900 text-xl font-bold text-amber-300 shadow-lg shadow-stone-900/10">
-                        BJ
+                        B
                     </div>
                     <div>
                         <h1 class="text-lg font-black tracking-tight text-stone-950">{{ $siteName }}</h1>
@@ -122,13 +122,6 @@
             </div>
 
             <div class="px-5 py-6">
-                <div class="mb-6 rounded-3xl border border-amber-200/70 bg-amber-50/70 p-4">
-                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-amber-800">Admin Panel</p>
-                    <p class="mt-2 text-sm leading-6 text-stone-600">
-                        Kelola identitas, karya, koleksi, dan konten digital Bendo Jaya.
-                    </p>
-                </div>
-
                 <nav class="space-y-1">
                     @foreach ($navItems as $item)
                         <a href="{{ route($item['route']) }}"

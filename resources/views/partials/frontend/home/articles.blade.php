@@ -3,7 +3,7 @@
 @endphp
 
 <section id="articles" class="bg-[#FFF8ED] pb-24 lg:pb-32">
-    <div class="mx-auto max-w-7xl border-t border-[#E6D8C8] px-5 pt-20 lg:px-8">
+    <div class="mx-auto max-w-7xl border-b border-[#E6D8C8] px-5 py-20 lg:px-8">
         <div class="mb-12 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div class="max-w-2xl">
                 <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
@@ -40,15 +40,22 @@
                 @endphp
 
                 <article
-                    class="grid overflow-hidden rounded-[2rem] border border-[#E6D8C8] bg-white shadow-sm sm:grid-cols-[0.85fr_1.15fr]">
-                    <img src="{{ $image }}" alt="{{ $title }}" class="h-72 w-full object-cover sm:h-full">
+                    class="group grid overflow-hidden rounded-[2.5rem] border border-[#E6D8C8] bg-white p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-xl sm:grid-cols-[0.85fr_1.15fr]">
+                    <div class="overflow-hidden rounded-[2rem]">
+                        <img src="{{ $image }}" alt="{{ $title }}"
+                            class="h-64 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-full">
+                    </div>
 
-                    <div class="p-7">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-[#8A3F35]">
-                            {{ $category }}
-                        </p>
+                    <div class="p-5 sm:p-7">
+                        <div class="mb-5 flex items-center justify-between">
+                            <p class="text-xs font-black uppercase tracking-[0.25em] text-[#8A3F35]">
+                                {{ $category }}
+                            </p>
 
-                        <h3 class="mt-4 font-['Playfair_Display'] text-2xl font-black leading-tight text-[#3C3B39]">
+                            <span class="h-px flex-1 bg-[#E6D8C8] ml-4"></span>
+                        </div>
+
+                        <h3 class="font-['Playfair_Display'] text-2xl font-black leading-tight text-[#3C3B39]">
                             {{ $title }}
                         </h3>
 
@@ -56,8 +63,10 @@
                             {{ $excerpt }}
                         </p>
 
-                        <a href="{{ $url }}" class="mt-6 inline-flex text-sm font-black text-[#8A3F35]">
-                            Baca Artikel →
+                        <a href="{{ $url }}"
+                            class="mt-7 inline-flex items-center gap-3 rounded-full border border-[#765A4F]/35 px-5 py-3 text-sm font-black text-[#765A4F] transition hover:bg-[#765A4F] hover:text-white">
+                            Baca Artikel
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
                         </a>
                     </div>
                 </article>

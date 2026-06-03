@@ -8,7 +8,7 @@
     );
 @endphp
 
-<section class="bg-[#3C3B39] pb-10 text-[#FBE9CB]">
+<section class="bg-[#3C3B39] py-10 text-[#FBE9CB]">
     <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div
             class="grid overflow-hidden rounded-[2rem] border border-[#FBE9CB]/15 bg-[#FBE9CB]/8 backdrop-blur md:grid-cols-3">

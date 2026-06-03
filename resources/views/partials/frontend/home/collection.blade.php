@@ -23,16 +23,16 @@
             </div>
 
             <a href="{{ route('collections.index') }}"
-                class="group inline-flex w-fit items-center gap-4 rounded-full border border-[#765A4F]/40 bg-[#FFF8ED] px-6 py-4 text-sm font-black text-[#58433D] shadow-sm transition hover:-translate-y-1 hover:border-[#3C3B39] hover:bg-[#3C3B39] hover:text-[#FBE9CB] sm:px-7">
+                class="group inline-flex w-fit items-center gap-4 rounded-full bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB] shadow-xl shadow-[#3C3B39]/10 transition hover:-translate-y-1 hover:bg-[#58433D] sm:px-7">
                 <span>Lihat Semua Koleksi</span>
                 <span
-                    class="flex h-9 w-9 items-center justify-center rounded-full bg-[#3C3B39] text-[#FBE9CB] transition group-hover:bg-[#FBE9CB] group-hover:text-[#3C3B39]">
-                    →
+                    class="flex h-9 w-9 items-center justify-center rounded-full bg-[#FBE9CB] text-[#3C3B39] transition group-hover:translate-x-1">
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
                 </span>
             </a>
         </div>
 
-        <div class="grid gap-8 lg:grid-cols-3">
+        <div class="grid gap-8 lg:grid-cols-12">
             @forelse ($collectionItems as $collection)
                 @php
                     $name = data_get($collection, 'name', 'Bendo Jaya Collection');
@@ -46,40 +46,49 @@
                     $slug = data_get($collection, 'slug');
 
                     $detailUrl = $slug ? route('collections.show', $slug) : route('collections.index');
-
                     $image = $mainImage ? asset('storage/' . $mainImage) : $defaultImage;
 
-                    $objectPosition = match ($loop->iteration) {
-                        1 => 'object-left',
-                        2 => 'object-center',
-                        default => 'object-right',
-                    };
+                    $spanClass = $loop->first ? 'lg:col-span-6' : 'lg:col-span-3';
+                    $heightClass = $loop->first ? 'h-[620px]' : 'h-[520px]';
+                    $titleClass = $loop->first ? 'text-4xl' : 'text-3xl';
                 @endphp
 
-                <article class="group">
-                    <a href="{{ $detailUrl }}" class="block">
-                        <div class="overflow-hidden rounded-[2.5rem] bg-[#F6EFE4] p-3">
+                <article class="{{ $spanClass }} group my-auto">
+                    <a href="{{ $detailUrl }}" class="block h-auto">
+                        <div
+                            class="relative h-full overflow-hidden rounded-[2.5rem] bg-[#F6EFE4] p-3 shadow-sm transition duration-300 group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-[#3C3B39]/10">
                             <img src="{{ $image }}" alt="{{ $name }}"
-                                class="h-[520px] w-full rounded-[2rem] object-cover transition duration-700 group-hover:scale-105 {{ $objectPosition }}">
-                        </div>
+                                class="{{ $heightClass }} w-full rounded-[2rem] object-cover transition duration-700 group-hover:scale-105">
 
-                        <div class="pt-6">
-                            <p class="text-xs font-black uppercase tracking-[0.25em] text-[#8A3F35]">
-                                {{ $category ?: 'Bendo Jaya Collection' }}
-                            </p>
+                            <div
+                                class="absolute inset-3 flex rounded-[2rem] bg-gradient-to-t from-[#2F2D2B]/95 via-[#2F2D2B]/50 to-transparent p-6 text-[#FBE9CB]">
+                                <div class="mt-auto">
+                                    <p class="text-xs font-black uppercase tracking-[0.25em] text-[#EEBDB5]">
+                                        {{ $category ?: 'Bendo Jaya Collection' }}
+                                    </p>
 
-                            <h3 class="mt-3 font-['Playfair_Display'] text-3xl font-black text-[#3C3B39]">
-                                {{ $name }}
-                            </h3>
+                                    <h3
+                                        class="mt-1 font-['Playfair_Display'] {{ $titleClass }} font-black leading-tight">
+                                        {{ $name }}
+                                    </h3>
 
-                            <p class="mt-3 text-sm leading-7 text-[#7F756D]">
-                                {{ $shortDescription }}
-                            </p>
+                                    <p class="mt-1 line-clamp-3 text-sm leading-4 text-[#E6D8C8]">
+                                        {{ $shortDescription }}
+                                    </p>
+
+                                    <div
+                                        class="mt-3 inline-flex items-center gap-3 rounded-full bg-[#FBE9CB] px-5 py-3 text-sm font-black text-[#3C3B39] transition group-hover:bg-white">
+                                        Detail Koleksi
+                                        <i
+                                            class="fa-solid fa-arrow-right text-xs transition group-hover:translate-x-1"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </a>
                 </article>
             @empty
-                <div class="rounded-[2rem] border border-[#E6D8C8] bg-white p-10 text-[#7F756D] lg:col-span-3">
+                <div class="rounded-[2rem] border border-[#E6D8C8] bg-white p-10 text-[#7F756D] lg:col-span-12">
                     Belum ada koleksi aktif.
                 </div>
             @endforelse
