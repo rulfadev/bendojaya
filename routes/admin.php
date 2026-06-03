@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FashionCollectionController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\HomepageSettingController;
+use App\Http\Controllers\Admin\MediaAssetController;
 use App\Http\Controllers\Admin\NavigationMenuController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
@@ -98,6 +99,9 @@ Route::prefix('admin')
                 ->except(['show']);
 
             Route::resource('faqs', FaqController::class)
+                ->except(['show']);
+
+            Route::resource('media-assets', MediaAssetController::class)
                 ->except(['show']);
         });
 

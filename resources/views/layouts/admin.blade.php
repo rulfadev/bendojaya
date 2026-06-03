@@ -69,6 +69,13 @@
             'roles' => ['admin', 'editor'],
         ],
         [
+            'label' => 'Media Library',
+            'route' => 'admin.media-assets.index',
+            'active' => 'admin.media-assets.*',
+            'icon' => 'fa-solid fa-photo-film',
+            'roles' => ['admin', 'editor'],
+        ],
+        [
             'label' => 'Testimoni',
             'route' => 'admin.testimonials.index',
             'active' => 'admin.testimonials.*',
@@ -128,7 +135,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen bg-[#f8f2e8] text-stone-900 antialiased">
+<body data-admin-layout class="min-h-screen bg-[#f8f2e8] text-stone-900 antialiased">
     <div class="pointer-events-none fixed inset-0 opacity-[0.06]"
         style="background-image: radial-gradient(circle at 1px 1px, #3b2415 1px, transparent 0); background-size: 22px 22px;">
     </div>

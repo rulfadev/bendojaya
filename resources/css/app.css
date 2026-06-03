@@ -28,3 +28,137 @@
 .partner-marquee-wrap:hover .partner-marquee-track {
     animation-play-state: paused;
 }
+
+.bj-select-hidden {
+    display: none !important;
+}
+
+.bj-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.bj-select-button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border-radius: 1rem;
+    border: 1px solid #e7e5e4;
+    background: #ffffff;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #292524;
+    outline: none;
+    transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.bj-select-button:hover {
+    background: #fffaf2;
+}
+
+.bj-select-button:focus {
+    border-color: #1c1917;
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.28);
+}
+
+.bj-select-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.bj-select-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bj-select-icon {
+    display: inline-flex;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #f5f5f4;
+    color: #78716c;
+    transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.bj-select-wrapper.is-open .bj-select-icon {
+    transform: rotate(180deg);
+    background: #1c1917;
+    color: #fcd34d;
+}
+
+.bj-select-menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 0.45rem);
+    z-index: 80;
+    max-height: 17rem;
+    overflow-y: auto;
+    border-radius: 1.25rem;
+    border: 1px solid #e7e5e4;
+    background: #ffffff;
+    padding: 0.45rem;
+    box-shadow: 0 22px 60px rgba(28, 25, 23, 0.16);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-0.35rem) scale(0.98);
+    transform-origin: top;
+    transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+}
+
+.bj-select-wrapper.is-open .bj-select-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.bj-select-option {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border: 0;
+    border-radius: 0.9rem;
+    background: transparent;
+    padding: 0.75rem 0.9rem;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #44403c;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+}
+
+.bj-select-option:hover {
+    background: #fef3c7;
+    color: #1c1917;
+}
+
+.bj-select-option.is-selected {
+    background: #1c1917;
+    color: #fde68a;
+}
+
+.bj-select-option.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.bj-select-option-check {
+    font-size: 0.75rem;
+    opacity: 0;
+}
+
+.bj-select-option.is-selected .bj-select-option-check {
+    opacity: 1;
+}

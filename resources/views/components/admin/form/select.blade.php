@@ -11,7 +11,7 @@
     @endif
 
     <div class="relative">
-        <select id="{{ $name }}" name="{{ $name }}"
+        <select id="{{ $name }}" name="{{ $name }}" data-admin-select
             {{ $attributes->merge([
                 'class' =>
                     'w-full appearance-none rounded-2xl border border-stone-200 bg-white px-4 py-3 pr-11 text-sm font-semibold text-stone-800 outline-none transition focus:border-stone-950 focus:ring-4 focus:ring-amber-200',
