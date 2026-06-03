@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\BackupExportController;
 use App\Http\Controllers\Admin\ContactMessageController;
@@ -111,5 +112,10 @@ Route::prefix('admin')
                 ->name('backups.index');
             Route::get('/backups/export/{type}', [BackupExportController::class, 'export'])
                 ->name('backups.export');
+
+            Route::delete('/activity-logs/clear-old', [ActivityLogController::class, 'clearOld'])
+                ->name('activity-logs.clear-old');
+            Route::resource('activity-logs', ActivityLogController::class)
+                ->only(['index', 'show', 'destroy']);
         });
     });

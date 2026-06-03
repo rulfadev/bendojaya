@@ -1,0 +1,155 @@
+@extends('layouts.admin')
+
+@section('content')
+    <section class="mb-8 rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
+        <div class="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+            <form method="GET" class="grid flex-1 gap-3 md:grid-cols-2 xl:grid-cols-[1fr_180px_220px_220px_auto]">
+                <x-admin.form.input name="search" label="Cari" :value="request('search')" placeholder="Cari deskripsi, URL, IP..." />
+
+                <x-admin.form.select name="action" label="Aksi">
+                    <option value="">Semua Aksi</option>
+                    @foreach (\App\Models\ActivityLog::ACTIONS as $value => $label)
+                        <option value="{{ $value }}" @selected(request('action') === $value)>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </x-admin.form.select>
+
+                <x-admin.form.select name="user_id" label="User">
+                    <option value="">Semua User</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}" @selected((int) request('user_id') === $user->id)>
+                            {{ $user->name }}
+                        </option>
+                    @endforeach
+                </x-admin.form.select>
+
+                <x-admin.form.select name="subject_type" label="Modul">
+                    <option value="">Semua Modul</option>
+                    @foreach ($subjects as $subject)
+                        <option value="{{ $subject }}" @selected(request('subject_type') === $subject)>
+                            {{ class_basename($subject) }}
+                        </option>
+                    @endforeach
+                </x-admin.form.select>
+
+                <div class="flex items-end">
+                    <x-admin.button class="w-full">
+                        <i class="fa-solid fa-filter"></i>
+                        Filter
+                    </x-admin.button>
+                </div>
+            </form>
+
+            <form action="{{ route('admin.activity-logs.clear-old') }}" method="POST"
+                onsubmit="return confirm('Hapus activity log lebih dari 90 hari?')">
+                @csrf
+                @method('DELETE')
+
+                <x-admin.button variant="danger" type="submit">
+                    <i class="fa-solid fa-trash"></i>
+                    Hapus Log Lama
+                </x-admin.button>
+            </form>
+        </div>
+    </section>
+
+    <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-[#fbf7ef] shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-[1100px] text-left text-sm">
+                <thead
+                    class="border-b border-stone-200 bg-[#f6efe4] text-xs font-black uppercase tracking-[0.18em] text-stone-500">
+                    <tr>
+                        <th class="px-6 py-4">Aktivitas</th>
+                        <th class="px-6 py-4">User</th>
+                        <th class="px-6 py-4">Modul</th>
+                        <th class="px-6 py-4">IP</th>
+                        <th class="px-6 py-4">Waktu</th>
+                        <th class="px-6 py-4 text-right">Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-stone-200">
+                    @forelse ($logs as $log)
+                        @php
+                            $badgeClass = match ($log->action) {
+                                'created' => 'bg-emerald-100 text-emerald-700',
+                                'updated' => 'bg-blue-100 text-blue-700',
+                                'deleted' => 'bg-red-100 text-red-700',
+                                'login' => 'bg-amber-100 text-amber-800',
+                                'logout' => 'bg-stone-100 text-stone-600',
+                                default => 'bg-stone-100 text-stone-600',
+                            };
+                        @endphp
+
+                        <tr class="align-top">
+                            <td class="px-6 py-5">
+                                <span class="rounded-full px-3 py-1 text-xs font-black {{ $badgeClass }}">
+                                    {{ $log->action_label }}
+                                </span>
+
+                                <p class="mt-3 font-black text-stone-950">
+                                    {{ $log->description ?: '-' }}
+                                </p>
+
+                                <p class="mt-1 max-w-xl truncate text-xs font-semibold text-stone-500">
+                                    {{ $log->method }} {{ $log->url }}
+                                </p>
+                            </td>
+
+                            <td class="px-6 py-5">
+                                <p class="font-black text-stone-800">
+                                    {{ $log->user?->name ?: 'System' }}
+                                </p>
+
+                                <p class="mt-1 text-xs font-semibold text-stone-500">
+                                    {{ $log->user?->email ?: '-' }}
+                                </p>
+                            </td>
+
+                            <td class="px-6 py-5 font-bold text-stone-700">
+                                {{ $log->subject_name }}
+                            </td>
+
+                            <td class="px-6 py-5 text-stone-600">
+                                {{ $log->ip_address ?: '-' }}
+                            </td>
+
+                            <td class="px-6 py-5 text-stone-600">
+                                {{ $log->created_at?->format('d M Y H:i') }}
+                            </td>
+
+                            <td class="px-6 py-5">
+                                <div class="flex justify-end gap-2">
+                                    <x-admin.link-button :href="route('admin.activity-logs.show', $log)" variant="light" class="px-4 py-2 text-xs">
+                                        Detail
+                                    </x-admin.link-button>
+
+                                    <form action="{{ route('admin.activity-logs.destroy', $log) }}" method="POST"
+                                        onsubmit="return confirm('Yakin hapus activity log ini?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <x-admin.button variant="danger" class="px-4 py-2 text-xs">
+                                            Hapus
+                                        </x-admin.button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-6 py-12 text-center text-stone-500">
+                                Belum ada activity log.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <div class="border-t border-stone-200 px-6 py-4">
+            {{ $logs->links() }}
+        </div>
+    </div>
+@endsection

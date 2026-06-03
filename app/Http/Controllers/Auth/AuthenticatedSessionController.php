@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Support\ActivityLogger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,7 @@ class AuthenticatedSessionController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        ActivityLogger::record('login', null, [], [], 'Login ke admin panel');
         $validated = $request->validate(
             [
                 'login' => ['required', 'string', 'max:150'],
@@ -57,6 +59,7 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::logout();
+        ActivityLogger::record('logout', null, [], [], 'Logout dari admin panel');
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

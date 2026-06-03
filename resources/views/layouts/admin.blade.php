@@ -104,6 +104,13 @@
             'roles' => ['admin', 'editor'],
         ],
         [
+            'label' => 'Activity Log',
+            'route' => 'admin.activity-logs.index',
+            'active' => 'admin.activity-logs.*',
+            'icon' => 'fa-solid fa-clock-rotate-left',
+            'roles' => ['admin'],
+        ],
+        [
             'label' => 'Pengaturan Website',
             'route' => 'admin.site-settings.index',
             'active' => 'admin.site-settings.*',
