@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\NavigationMenuController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\PartnershipInquiryController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SeoSettingController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -66,6 +67,15 @@ Route::prefix('admin')
                 ->name('collection-inquiries.status');
             Route::delete('/collection-inquiries/{collectionInquiry}', [CollectionInquiryController::class, 'destroy'])
                 ->name('collection-inquiries.destroy');
+
+            Route::get('/partnership-inquiries', [PartnershipInquiryController::class, 'index'])
+                ->name('partnership-inquiries.index');
+            Route::get('/partnership-inquiries/{partnershipInquiry}', [PartnershipInquiryController::class, 'show'])
+                ->name('partnership-inquiries.show');
+            Route::patch('/partnership-inquiries/{partnershipInquiry}/status', [PartnershipInquiryController::class, 'updateStatus'])
+                ->name('partnership-inquiries.status');
+            Route::delete('/partnership-inquiries/{partnershipInquiry}', [PartnershipInquiryController::class, 'destroy'])
+                ->name('partnership-inquiries.destroy');
         });
 
         Route::middleware('role:admin,editor')->group(function () {

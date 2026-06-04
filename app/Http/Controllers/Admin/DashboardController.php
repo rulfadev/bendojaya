@@ -10,6 +10,7 @@ use App\Models\Faq;
 use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\Partner;
+use App\Models\PartnershipInquiry;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use App\Models\User;
@@ -80,6 +81,11 @@ class DashboardController extends Controller
                 'label' => 'Inquiry Koleksi',
                 'value' => CollectionInquiry::query()->where('status', 'new')->count(),
                 'description' => 'Inquiry koleksi baru yang belum dihubungi.',
+            ],
+            [
+                'label' => 'Inquiry Kerja Sama',
+                'value' => PartnershipInquiry::query()->where('status', 'new')->count(),
+                'description' => 'Inquiry kerja sama baru yang belum dihubungi.',
             ],
         ];
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FashionCollectionController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PageController as FrontendPageController;
+use App\Http\Controllers\PartnershipInquiryController;
 use App\Http\Controllers\TestimonialFormController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +45,7 @@ Route::middleware('site.maintenance')->group(function () {
 
     Route::post('/collections/{collection:slug}/inquiry', [CollectionInquiryController::class, 'store'])
         ->name('collections.inquiries.store');
+
+    Route::post('/partnership-inquiries', [PartnershipInquiryController::class, 'store'])
+        ->name('partnership-inquiries.store');
 });

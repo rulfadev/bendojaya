@@ -125,6 +125,13 @@
             'roles' => ['admin'],
         ],
         [
+            'label' => 'Inquiry Kerja Sama',
+            'route' => 'admin.partnership-inquiries.index',
+            'active' => 'admin.partnership-inquiries.*',
+            'icon' => 'fa-solid fa-handshake-angle',
+            'roles' => ['admin', 'editor', 'staff'],
+        ],
+        [
             'label' => 'Inquiry Koleksi',
             'route' => 'admin.collection-inquiries.index',
             'active' => 'admin.collection-inquiries.*',

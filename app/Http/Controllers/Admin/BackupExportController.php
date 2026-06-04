@@ -12,6 +12,7 @@ use App\Models\MediaAsset;
 use App\Models\NavigationMenu;
 use App\Models\Page;
 use App\Models\Partner;
+use App\Models\PartnershipInquiry;
 use App\Models\Service;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
@@ -115,6 +116,11 @@ class BackupExportController extends Controller
                 'label' => 'Inquiry Koleksi',
                 'description' => 'Export data inquiry koleksi.',
                 'icon' => 'fa-solid fa-clipboard-question',
+            ],
+            'partnership_inquiries' => [
+                'label' => 'Inquiry Kerja Sama',
+                'description' => 'Export data inquiry kerja sama.',
+                'icon' => 'fa-solid fa-handshake-angle',
             ],
         ];
     }
@@ -513,6 +519,44 @@ class BackupExportController extends Controller
                     $item->size,
                     $item->quantity,
                     $item->need_type,
+                    $item->message,
+                    $item->status,
+                    $item->follow_up_note,
+                    $this->date($item->contacted_at),
+                    $this->date($item->completed_at),
+                    $this->date($item->created_at),
+                ]),
+            ],
+
+            'partnership_inquiries' => [
+                $this->filename('partnership-inquiries'),
+                [
+                    'ID',
+                    'Company Name',
+                    'PIC Name',
+                    'Email',
+                    'Phone',
+                    'Partnership Type',
+                    'Estimated Quantity',
+                    'Budget Range',
+                    'Deadline Date',
+                    'Message',
+                    'Status',
+                    'Follow Up Note',
+                    'Contacted At',
+                    'Completed At',
+                    'Created At',
+                ],
+                PartnershipInquiry::query()->latest()->get()->map(fn ($item) => [
+                    $item->id,
+                    $item->company_name,
+                    $item->pic_name,
+                    $item->email,
+                    $item->phone,
+                    $item->partnership_type,
+                    $item->estimated_quantity,
+                    $item->budget_range,
+                    $this->date($item->deadline_date),
                     $item->message,
                     $item->status,
                     $item->follow_up_note,

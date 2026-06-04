@@ -14,6 +14,7 @@ use App\Models\NavigationMenu;
 use App\Models\Page;
 use App\Models\PageSection;
 use App\Models\Partner;
+use App\Models\PartnershipInquiry;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
@@ -53,6 +54,7 @@ class AppServiceProvider extends ServiceProvider
             SiteSetting::class,
             User::class,
             CollectionInquiry::class,
+            PartnershipInquiry::class,
         ];
 
         foreach ($models as $model) {

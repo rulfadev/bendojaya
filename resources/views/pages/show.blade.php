@@ -45,4 +45,32 @@
             </div>
         </section>
     @endif
+    @if ($page->slug === 'kerja-sama')
+        <section class="bg-[#FFF8ED] py-20">
+            <div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+                <div>
+                    <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
+                        Inquiry Kerja Sama
+                    </p>
+
+                    <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39]">
+                        Diskusikan kebutuhan produksi batik Anda.
+                    </h2>
+
+                    <p class="mt-5 text-base leading-8 text-[#7F756D]">
+                        Isi form ini untuk kebutuhan custom seragam, produksi brand, reseller, instansi, komunitas, atau
+                        kerja sama lainnya.
+                    </p>
+
+                    <div class="mt-8">
+                        <x-frontend.consultation-link label="Konsultasi via WhatsApp" template="partnership" />
+                    </div>
+                </div>
+
+                <div class="rounded-[2rem] border border-[#E6D8C8] bg-white p-6 shadow-sm">
+                    @include('partials.frontend.partnership-inquiry-form')
+                </div>
+            </div>
+        </section>
+    @endif
 @endsection
