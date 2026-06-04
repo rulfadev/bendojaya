@@ -45,7 +45,7 @@
             </div>
         </section>
     @endif
-    @if ($page->slug === 'kerja-sama')
+    @if (($page->slug ?? null) === 'kerja-sama')
         <section class="bg-[#FFF8ED] py-20">
             <div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
                 <div>

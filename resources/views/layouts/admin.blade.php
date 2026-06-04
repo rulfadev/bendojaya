@@ -4,6 +4,10 @@
     $siteName = $globalSetting?->site_name ?? 'Bendo Jaya';
     $currentUser = auth()->user();
 
+    $newCollectionInquiriesCount = \App\Models\CollectionInquiry::query()->where('status', 'new')->count();
+
+    $newPartnershipInquiriesCount = \App\Models\PartnershipInquiry::query()->where('status', 'new')->count();
+
     $navItems = [
         [
             'label' => 'Dashboard',
@@ -130,6 +134,7 @@
             'active' => 'admin.partnership-inquiries.*',
             'icon' => 'fa-solid fa-handshake-angle',
             'roles' => ['admin', 'editor', 'staff'],
+            'badge' => $newPartnershipInquiriesCount,
         ],
         [
             'label' => 'Inquiry Koleksi',
@@ -137,6 +142,7 @@
             'active' => 'admin.collection-inquiries.*',
             'icon' => 'fa-solid fa-clipboard-question',
             'roles' => ['admin', 'editor', 'staff'],
+            'badge' => $newCollectionInquiriesCount,
         ],
         [
             'label' => 'WA Templates',
@@ -219,7 +225,13 @@
                                 <i class="{{ $item['icon'] }}"></i>
                             </span>
 
-                            <span>{{ $item['label'] }}</span>
+                            <span class="flex-1">{{ $item['label'] }}</span>
+
+                            @if (($item['badge'] ?? 0) > 0)
+                                <span class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
+                                    {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
+                                </span>
+                            @endif
                         </a>
                     @endforeach
                 </nav>
@@ -272,6 +284,11 @@
            {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
                             <i class="{{ $item['icon'] }}"></i>
                             <span>{{ $item['label'] }}</span>
+                            @if (($item['badge'] ?? 0) > 0)
+                                <span class="rounded-full bg-red-100 px-1.5 py-0.5 text-[10px] font-black text-red-700">
+                                    {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
+                                </span>
+                            @endif
                         </a>
                     @endforeach
                 </div>
