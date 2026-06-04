@@ -125,6 +125,13 @@
             'roles' => ['admin'],
         ],
         [
+            'label' => 'Inquiry Koleksi',
+            'route' => 'admin.collection-inquiries.index',
+            'active' => 'admin.collection-inquiries.*',
+            'icon' => 'fa-solid fa-clipboard-question',
+            'roles' => ['admin', 'editor', 'staff'],
+        ],
+        [
             'label' => 'WA Templates',
             'route' => 'admin.whatsapp-templates.index',
             'active' => 'admin.whatsapp-templates.*',

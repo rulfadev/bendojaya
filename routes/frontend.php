@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CollectionInquiryController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FashionCollectionController;
@@ -40,4 +41,7 @@ Route::middleware('site.maintenance')->group(function () {
 
     Route::get('/faq', [FaqController::class, 'index'])
         ->name('faqs.index');
+
+    Route::post('/collections/{collection:slug}/inquiry', [CollectionInquiryController::class, 'store'])
+        ->name('collections.inquiries.store');
 });

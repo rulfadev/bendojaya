@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\CollectionInquiry;
 use App\Models\ContactMessage;
 use App\Models\Faq;
 use App\Models\FashionCollection;
@@ -74,6 +75,11 @@ class DashboardController extends Controller
                 'label' => 'FAQ',
                 'value' => Faq::query()->count(),
                 'description' => 'Pertanyaan yang sering diajukan.',
+            ],
+            [
+                'label' => 'Inquiry Koleksi',
+                'value' => CollectionInquiry::query()->where('status', 'new')->count(),
+                'description' => 'Inquiry koleksi baru yang belum dihubungi.',
             ],
         ];
 

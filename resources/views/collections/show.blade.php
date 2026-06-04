@@ -72,6 +72,35 @@
         </div>
     </section>
 
+    <section class="bg-[#FFF8ED] py-20">
+        <div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
+            <div>
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
+                    Inquiry Koleksi
+                </p>
+
+                <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39]">
+                    Tertarik dengan koleksi ini?
+                </h2>
+
+                <p class="mt-5 text-base leading-8 text-[#7F756D]">
+                    Isi form ini untuk konsultasi ukuran, bahan, kebutuhan custom, seragam, atau kerja sama produksi.
+                </p>
+
+                <div class="mt-8">
+                    <x-frontend.consultation-link label="Konsultasi via WhatsApp" template="collection" :data="[
+                        'collection_name' => $collection->name,
+                        'collection_category' => $collection->category,
+                    ]" />
+                </div>
+            </div>
+
+            <div class="rounded-[2rem] border border-[#E6D8C8] bg-white p-6 shadow-sm">
+                @include('partials.frontend.collection-inquiry-form')
+            </div>
+        </div>
+    </section>
+
     @if ($relatedCollections->isNotEmpty())
         <section class="bg-[#F6EFE4] py-24">
             <div class="mx-auto max-w-7xl px-5 lg:px-8">

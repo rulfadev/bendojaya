@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Article;
+use App\Models\CollectionInquiry;
 use App\Models\ContactMessage;
 use App\Models\Faq;
 use App\Models\FashionCollection;
@@ -51,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
             HomepageSetting::class,
             SiteSetting::class,
             User::class,
+            CollectionInquiry::class,
         ];
 
         foreach ($models as $model) {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\BackupExportController;
+use App\Http\Controllers\Admin\CollectionInquiryController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController;
@@ -56,6 +57,15 @@ Route::prefix('admin')
                 ->except(['show']);
             Route::patch('/testimonials/{testimonial}/approve', [TestimonialController::class, 'approve'])
                 ->name('testimonials.approve');
+
+            Route::get('/collection-inquiries', [CollectionInquiryController::class, 'index'])
+                ->name('collection-inquiries.index');
+            Route::get('/collection-inquiries/{collectionInquiry}', [CollectionInquiryController::class, 'show'])
+                ->name('collection-inquiries.show');
+            Route::patch('/collection-inquiries/{collectionInquiry}/status', [CollectionInquiryController::class, 'updateStatus'])
+                ->name('collection-inquiries.status');
+            Route::delete('/collection-inquiries/{collectionInquiry}', [CollectionInquiryController::class, 'destroy'])
+                ->name('collection-inquiries.destroy');
         });
 
         Route::middleware('role:admin,editor')->group(function () {

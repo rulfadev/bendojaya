@@ -111,6 +111,11 @@ class BackupExportController extends Controller
                 'description' => 'Export daftar file media.',
                 'icon' => 'fa-solid fa-photo-film',
             ],
+            'collection_inquiries' => [
+                'label' => 'Inquiry Koleksi',
+                'description' => 'Export data inquiry koleksi.',
+                'icon' => 'fa-solid fa-clipboard-question',
+            ],
         ];
     }
 
@@ -478,6 +483,42 @@ class BackupExportController extends Controller
                     $item->size,
                     $this->date($item->created_at),
                     $this->date($item->updated_at),
+                ]),
+            ],
+
+            'collection_inquiries' => [
+                $this->filename('collection-inquiries'),
+                [
+                    'ID',
+                    'Collection',
+                    'Name',
+                    'Email',
+                    'Phone',
+                    'Size',
+                    'Quantity',
+                    'Need Type',
+                    'Message',
+                    'Status',
+                    'Follow Up Note',
+                    'Contacted At',
+                    'Completed At',
+                    'Created At',
+                ],
+                CollectionInquiry::query()->with('collection')->latest()->get()->map(fn ($item) => [
+                    $item->id,
+                    $item->collection?->name,
+                    $item->name,
+                    $item->email,
+                    $item->phone,
+                    $item->size,
+                    $item->quantity,
+                    $item->need_type,
+                    $item->message,
+                    $item->status,
+                    $item->follow_up_note,
+                    $this->date($item->contacted_at),
+                    $this->date($item->completed_at),
+                    $this->date($item->created_at),
                 ]),
             ],
 
