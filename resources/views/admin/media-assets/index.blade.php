@@ -63,8 +63,8 @@
                             Edit
                         </x-admin.link-button>
 
-                        <form action="{{ route('admin.media-assets.destroy', $asset) }}" method="POST" class="flex-1"
-                            onsubmit="return confirm('Yakin hapus media ini?')">
+                        <form action="{{ route('admin.media-assets.destroy', $asset) }}" method="POST" data-confirm-delete
+                            data-confirm-message="Media ini akan dihapus permanen." class="flex-1">
                             @csrf
                             @method('DELETE')
 

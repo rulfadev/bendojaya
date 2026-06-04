@@ -69,8 +69,8 @@
                     Follow Up
                 </p>
 
-                <form action="{{ route('admin.collection-inquiries.status', $inquiry) }}" method="POST"
-                    class="mt-5 space-y-4">
+                <form action="{{ route('admin.collection-inquiries.destroy', $inquiry) }}" method="POST"
+                    data-confirm-delete data-confirm-message="Inquiry ini akan dihapus permanen." class="mt-5 space-y-4">
                     @csrf
                     @method('PATCH')
 

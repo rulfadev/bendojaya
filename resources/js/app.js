@@ -1,4 +1,8 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+window.Swal = Swal;
 
 document.addEventListener('click', function (event) {
     const trigger = event.target.closest('[data-faq-trigger]');
@@ -245,3 +249,81 @@ document.addEventListener('keydown', function (event) {
 });
 
 window.initAdminSelects = initAdminSelects;
+
+document.addEventListener('DOMContentLoaded', function () {
+    const successMessage = document.body.dataset.successMessage;
+    const errorMessage = document.body.dataset.errorMessage;
+    const validationErrors = document.body.dataset.validationErrors;
+
+    if (successMessage) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: successMessage,
+            confirmButtonText: 'Oke',
+            confirmButtonColor: '#1c1917',
+        });
+    }
+
+    if (errorMessage) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: errorMessage,
+            confirmButtonText: 'Oke',
+            confirmButtonColor: '#1c1917',
+        });
+    }
+
+    if (validationErrors) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Ada data yang perlu diperbaiki',
+            html: validationErrors,
+            confirmButtonText: 'Perbaiki',
+            confirmButtonColor: '#1c1917',
+        });
+    }
+
+    document.querySelectorAll('[data-confirm-delete]').forEach((form) => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Yakin ingin menghapus?',
+                text: form.dataset.confirmMessage || 'Data yang dihapus tidak bisa dikembalikan.',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal',
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#78716c',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('[data-confirm-action]').forEach((form) => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            Swal.fire({
+                icon: form.dataset.confirmIcon || 'question',
+                title: form.dataset.confirmTitle || 'Lanjutkan aksi ini?',
+                text: form.dataset.confirmMessage || 'Pastikan data sudah benar.',
+                showCancelButton: true,
+                confirmButtonText: form.dataset.confirmYes || 'Ya, Lanjutkan',
+                cancelButtonText: form.dataset.confirmNo || 'Batal',
+                confirmButtonColor: '#1c1917',
+                cancelButtonColor: '#78716c',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+});

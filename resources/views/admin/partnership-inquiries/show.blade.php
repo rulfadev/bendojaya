@@ -109,8 +109,8 @@
                 </x-admin.link-button>
             </section>
 
-            <form action="{{ route('admin.partnership-inquiries.destroy', $inquiry) }}" method="POST"
-                onsubmit="return confirm('Yakin hapus inquiry ini?')">
+            <form action="{{ route('admin.partnership-inquiries.destroy', $inquiry) }}" method="POST" data-confirm-delete
+                data-confirm-message="Inquiry ini akan dihapus permanen.">
                 @csrf
                 @method('DELETE')
 

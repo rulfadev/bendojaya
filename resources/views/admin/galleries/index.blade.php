@@ -49,7 +49,7 @@
                             </a>
 
                             <form action="{{ route('admin.galleries.destroy', $gallery) }}" method="POST"
-                                onsubmit="return confirm('Yakin hapus gallery ini?')">
+                                data-confirm-delete data-confirm-message="Gallery ini akan dihapus permanen.">
                                 @csrf
                                 @method('DELETE')
 

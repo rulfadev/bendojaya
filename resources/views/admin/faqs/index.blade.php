@@ -63,7 +63,7 @@
                                     </a>
 
                                     <form action="{{ route('admin.faqs.destroy', $faq) }}" method="POST"
-                                        onsubmit="return confirm('Yakin hapus FAQ ini?')">
+                                        data-confirm-delete data-confirm-message="FAQ ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')
 

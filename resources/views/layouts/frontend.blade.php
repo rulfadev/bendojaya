@@ -23,7 +23,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-[#FFF8ED] font-['Plus_Jakarta_Sans'] text-[#3C3B39] antialiased">
+<body data-success-message="{{ session('success') }}" data-error-message="{{ session('error') }}"
+    data-validation-errors="@if ($errors->any()) <ul class='text-left'>@foreach ($errors->all() as $error)<li>{{ e($error) }}</li>@endforeach</ul> @endif"
+    class="{{ $bodyClass ?? '' }}">
     <div class="pointer-events-none fixed inset-0 z-0 opacity-[0.035]"
         style="background-image: radial-gradient(circle at 1px 1px, #3C3B39 1px, transparent 0); background-size: 24px 24px;">
     </div>

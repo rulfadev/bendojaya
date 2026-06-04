@@ -191,7 +191,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body data-admin-layout class="min-h-screen bg-[#f8f2e8] text-stone-900 antialiased">
+<body data-admin-layout data-success-message="{{ session('success') }}" data-error-message="{{ session('error') }}"
+    data-validation-errors="@if ($errors->any()) <ul class='text-left'>@foreach ($errors->all() as $error)<li>{{ e($error) }}</li>@endforeach</ul> @endif"
+    class="min-h-screen bg-[#f8f2e8] text-stone-900 antialiased">
     <div class="pointer-events-none fixed inset-0 opacity-[0.06]"
         style="background-image: radial-gradient(circle at 1px 1px, #3b2415 1px, transparent 0); background-size: 22px 22px;">
     </div>
@@ -303,7 +305,7 @@
             </header>
 
             <main class="px-5 py-8 lg:px-8">
-                @if (session('success'))
+                {{-- @if (session('success'))
                     <div
                         class="mb-6 rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-bold text-emerald-700">
                         {{ session('success') }}
@@ -327,7 +329,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif --}}
 
                 @yield('content')
             </main>

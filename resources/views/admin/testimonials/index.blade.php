@@ -78,7 +78,7 @@
                                     </a>
 
                                     <form action="{{ route('admin.testimonials.destroy', $testimonial) }}" method="POST"
-                                        onsubmit="return confirm('Yakin hapus testimoni ini?')">
+                                        data-confirm-delete data-confirm-message="Testimoni ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')
 

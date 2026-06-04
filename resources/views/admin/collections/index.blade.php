@@ -86,7 +86,7 @@
                                     </a>
 
                                     <form action="{{ route('admin.collections.destroy', $collection) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus koleksi ini?')">
+                                        data-confirm-delete data-confirm-message="Koleksi ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')
 

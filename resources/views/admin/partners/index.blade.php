@@ -74,7 +74,7 @@
                                     </a>
 
                                     <form action="{{ route('admin.partners.destroy', $partner) }}" method="POST"
-                                        onsubmit="return confirm('Yakin hapus partner ini?')">
+                                        data-confirm-delete data-confirm-message="Partner ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')
 

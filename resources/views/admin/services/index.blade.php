@@ -75,7 +75,7 @@
                                     </a>
 
                                     <form action="{{ route('admin.services.destroy', $service) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus layanan ini?')">
+                                        data-confirm-delete data-confirm-message="Layanan ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')
 

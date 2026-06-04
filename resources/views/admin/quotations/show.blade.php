@@ -174,8 +174,8 @@
                 </button>
             </section>
 
-            <form action="{{ route('admin.quotations.destroy', $quotation) }}" method="POST"
-                onsubmit="return confirm('Yakin hapus quotation ini?')">
+            <form action="{{ route('admin.quotations.destroy', $quotation) }}" method="POST" data-confirm-delete
+                data-confirm-message="Quotation ini akan dihapus permanen.">
                 @csrf
                 @method('DELETE')
 

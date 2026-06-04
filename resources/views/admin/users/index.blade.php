@@ -88,7 +88,7 @@
 
                                     @if (auth()->id() !== $item->id)
                                         <form action="{{ route('admin.users.destroy', $item) }}" method="POST"
-                                            onsubmit="return confirm('Yakin hapus user ini?')">
+                                            data-confirm-delete data-confirm-message="User ini akan dihapus permanen.">
                                             @csrf
                                             @method('DELETE')
 

@@ -81,7 +81,7 @@
                                     </a>
 
                                     <form action="{{ route('admin.contact-messages.destroy', $message) }}" method="POST"
-                                        onsubmit="return confirm('Yakin hapus pesan ini?')">
+                                        data-confirm-delete data-confirm-message="Pesan ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')
 

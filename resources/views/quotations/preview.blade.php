@@ -55,7 +55,7 @@
 
             .quotation-table th,
             .quotation-table td {
-                padding: 10px 8px !important;
+                padding: 10px 0px !important;
                 word-break: break-word !important;
                 overflow-wrap: anywhere !important;
                 white-space: normal !important;
@@ -164,7 +164,7 @@
                     </div>
                 </div>
 
-                <div class="mt-8 overflow-hidden rounded-[1.5rem] border border-[#E6D8C8]">
+                <div class="mt-8 overflow-hidden">
                     <table class="quotation-table text-left text-sm">
                         <thead class="bg-[#3C3B39] text-xs font-black uppercase tracking-[0.18em] text-[#FBE9CB]">
                             <tr>
@@ -260,7 +260,10 @@
                 <div class="grid gap-4 sm:grid-cols-2">
                     <form
                         action="{{ route('quotations.preview.approve', [$quotation->quotation_number, $quotation->public_token]) }}"
-                        method="POST" onsubmit="return confirm('Setujui penawaran ini?')">
+                        method="POST" data-confirm-action data-confirm-icon="success"
+                        data-confirm-title="Setujui penawaran ini?"
+                        data-confirm-message="Setelah disetujui, Anda akan diarahkan ke WhatsApp admin untuk konfirmasi."
+                        data-confirm-yes="Ya, Setujui">
                         @csrf
 
                         <button
@@ -272,7 +275,10 @@
 
                     <form
                         action="{{ route('quotations.preview.reject', [$quotation->quotation_number, $quotation->public_token]) }}"
-                        method="POST" onsubmit="return confirm('Tolak penawaran ini?')">
+                        method="POST" data-confirm-action data-confirm-icon="warning"
+                        data-confirm-title="Tolak penawaran ini?"
+                        data-confirm-message="Status penawaran akan ditandai sebagai ditolak."
+                        data-confirm-yes="Ya, Tolak">
                         @csrf
 
                         <button

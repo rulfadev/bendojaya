@@ -12,8 +12,9 @@
                 </h3>
             </div>
 
-            <form action="{{ route('admin.activity-logs.clear-old') }}" method="POST"
-                onsubmit="return confirm('Hapus activity log lebih dari 90 hari?')">
+            <form action="{{ route('admin.activity-logs.clear-old', $log) }}" method="POST" data-confirm-delete
+                data-confirm-message="Hapus activity log lebih dari 90 hari?">
+
                 @csrf
                 @method('DELETE')
 
@@ -134,7 +135,7 @@
                                     </x-admin.link-button>
 
                                     <form action="{{ route('admin.activity-logs.destroy', $log) }}" method="POST"
-                                        onsubmit="return confirm('Yakin hapus activity log ini?')">
+                                        data-confirm-delete data-confirm-message="Activity log ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')
 
