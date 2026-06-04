@@ -145,12 +145,27 @@
                     Edit
                 </x-admin.link-button>
 
+                <x-admin.link-button :href="$quotation->public_url" variant="light" target="_blank" class="mt-3 w-full">
+                    <i class="fa-solid fa-up-right-from-square"></i>
+                    Buka Link Public
+                </x-admin.link-button>
+
                 @if ($quotation->phone)
                     <x-admin.link-button :href="$quotation->whatsapp_url" variant="gold" target="_blank" class="mt-3 w-full">
                         <i class="fa-brands fa-whatsapp"></i>
                         Kirim via WhatsApp
                     </x-admin.link-button>
                 @endif
+
+                <div class="mt-3 rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <p class="mb-2 text-xs font-black uppercase tracking-[0.18em] text-amber-300">
+                        Public Link
+                    </p>
+
+                    <input type="text" readonly value="{{ $quotation->public_url }}"
+                        onclick="this.select(); navigator.clipboard.writeText(this.value);"
+                        class="w-full rounded-xl border border-white/10 bg-white px-3 py-2 text-xs font-semibold text-stone-700">
+                </div>
 
                 <button type="button" onclick="window.print()"
                     class="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white px-5 py-3 text-sm font-black text-stone-800">

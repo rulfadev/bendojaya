@@ -8,6 +8,7 @@ use App\Http\Controllers\FashionCollectionController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PageController as FrontendPageController;
 use App\Http\Controllers\PartnershipInquiryController;
+use App\Http\Controllers\QuotationPreviewController;
 use App\Http\Controllers\TestimonialFormController;
 use Illuminate\Support\Facades\Route;
 
@@ -48,4 +49,11 @@ Route::middleware('site.maintenance')->group(function () {
 
     Route::post('/partnership-inquiries', [PartnershipInquiryController::class, 'store'])
         ->name('partnership-inquiries.store');
+
+    Route::get('/quotations/{quotation}/preview/{token}', [QuotationPreviewController::class, 'show'])
+        ->name('quotations.preview');
+    Route::post('/quotations/{quotation}/preview/{token}/approve', [QuotationPreviewController::class, 'approve'])
+        ->name('quotations.preview.approve');
+    Route::post('/quotations/{quotation}/preview/{token}/reject', [QuotationPreviewController::class, 'reject'])
+        ->name('quotations.preview.reject');
 });

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['user_id', 'collection_inquiry_id', 'partnership_inquiry_id', 'quotation_number', 'title', 'client_name', 'company_name', 'email', 'phone', 'quotation_date', 'valid_until', 'status', 'subtotal', 'discount_amount', 'tax_amount', 'total_amount', 'notes', 'terms', 'sent_at', 'approved_at', 'rejected_at'])]
+#[Fillable(['user_id', 'collection_inquiry_id', 'partnership_inquiry_id', 'quotation_number', 'title', 'client_name', 'company_name', 'email', 'phone', 'quotation_date', 'valid_until', 'status', 'subtotal', 'discount_amount', 'tax_amount', 'total_amount', 'notes', 'terms', 'sent_at', 'approved_at', 'rejected_at', 'public_token', 'viewed_at', 'client_responded_at'])]
 class Quotation extends Model
 {
     protected function casts(): array
@@ -22,6 +22,8 @@ class Quotation extends Model
             'sent_at' => 'datetime',
             'approved_at' => 'datetime',
             'rejected_at' => 'datetime',
+            'viewed_at' => 'datetime',
+            'client_responded_at' => 'datetime',
         ];
     }
 
@@ -80,8 +82,37 @@ class Quotation extends Model
             $message .= "Berlaku sampai: {$this->valid_until->format('d M Y')}\n";
         }
 
-        $message .= "\nSilakan cek dan konfirmasi jika penawaran sudah sesuai.";
+        $message .= "\nLink penawaran:\n{$this->public_url}\n\n";
+        $message .= 'Silakan cek dan konfirmasi jika penawaran sudah sesuai.';
 
         return 'https://wa.me/'.$phone.'?text='.rawurlencode($message);
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (Quotation $quotation) {
+            if (! $quotation->public_token) {
+                $quotation->public_token = Str::random(48);
+            }
+        });
+    }
+
+    public function ensurePublicToken(): string
+    {
+        if (! $this->public_token) {
+            $this->forceFill([
+                'public_token' => Str::random(48),
+            ])->save();
+        }
+
+        return $this->public_token;
+    }
+
+    public function getPublicUrlAttribute(): string
+    {
+        return route('quotations.preview', [
+            'quotation' => $this->quotation_number,
+            'token' => $this->ensurePublicToken(),
+        ]);
     }
 }
