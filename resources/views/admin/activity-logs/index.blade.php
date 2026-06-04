@@ -12,7 +12,7 @@
                 </h3>
             </div>
 
-            <form action="{{ route('admin.activity-logs.clear-old', $log) }}" method="POST" data-confirm-delete
+            <form action="{{ route('admin.activity-logs.clear-old') }}" method="POST" data-confirm-delete
                 data-confirm-message="Hapus activity log lebih dari 90 hari?">
 
                 @csrf

@@ -77,7 +77,7 @@
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('admin.articles.destroy', $faq) }}" method="POST"
+                                    <form action="{{ route('admin.articles.destroy', $article) }}" method="POST"
                                         data-confirm-delete data-confirm-message="Artikel ini akan dihapus permanen.">
                                         @csrf
                                         @method('DELETE')

@@ -3,13 +3,19 @@
         ? asset('storage/' . $homepage->hero_image)
         : $heroImage ?? asset('assets/frontend/hero-product.jpg');
 
-    $primaryUrl =
-        $homepage?->hero_primary_url ?:
-        ($setting?->consultation_url ?:
-        'https://wa.me/' . ($setting?->whatsapp_number ?? '6280000000000'));
+    $primaryUrl = $homepage?->hero_primary_url;
+
+    if ($primaryUrl) {
+        $primaryHref = str_starts_with($primaryUrl, '/') ? url($primaryUrl) : $primaryUrl;
+    } else {
+        $primaryHref = \App\Support\WhatsappMessage::url('hero', [
+            'page_title' => $homepage?->hero_title ?: 'Bendo Jaya Batik Fashion',
+            'current_url' => route('home'),
+        ]);
+    }
+
     $secondaryUrl = $homepage?->hero_secondary_url ?: route('collections.index');
 
-    $primaryHref = str_starts_with($primaryUrl, '/') ? url($primaryUrl) : $primaryUrl;
     $secondaryHref = str_starts_with($secondaryUrl, '/') ? url($secondaryUrl) : $secondaryUrl;
 @endphp
 
@@ -42,15 +48,22 @@
             <div class="mt-10 flex flex-col gap-4 sm:flex-row">
                 @if ($homepage?->hero_primary_label)
                     <a href="{{ $primaryHref }}"
-                        class="inline-flex justify-center rounded-full bg-[#FBE9CB] px-8 py-4 text-sm font-black text-[#3C3B39] transition hover:-translate-y-1 hover:bg-white">
+                        target="{{ str_starts_with($primaryHref, 'http') ? '_blank' : '_self' }}"
+                        rel="{{ str_starts_with($primaryHref, 'http') ? 'noopener' : '' }}"
+                        class="inline-flex items-center justify-center gap-3 rounded-full bg-[#FBE9CB] px-8 py-4 text-sm font-black text-[#3C3B39] transition hover:-translate-y-1 hover:bg-white">
+                        @if (str_contains($primaryHref, 'wa.me'))
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                        @endif
+
                         {{ $homepage->hero_primary_label }}
                     </a>
                 @endif
 
                 @if ($homepage?->hero_secondary_label)
                     <a href="{{ $secondaryHref }}"
-                        class="inline-flex justify-center rounded-full border border-[#FBE9CB]/35 bg-white/5 px-8 py-4 text-sm font-black text-[#FBE9CB] backdrop-blur transition hover:-translate-y-1 hover:bg-white/10">
+                        class="inline-flex items-center justify-center gap-3 rounded-full border border-[#FBE9CB]/35 bg-white/5 px-8 py-4 text-sm font-black text-[#FBE9CB] backdrop-blur transition hover:-translate-y-1 hover:bg-white/10">
                         {{ $homepage->hero_secondary_label }}
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
                     </a>
                 @endif
             </div>

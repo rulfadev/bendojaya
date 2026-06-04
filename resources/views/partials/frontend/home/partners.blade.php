@@ -14,7 +14,7 @@
         : asset('assets/frontend/hero-product.jpg');
 @endphp
 @if ($partnerItems->isNotEmpty())
-    <div class="partner-marquee-wrap mb-14 overflow-hidden border-y border-[#E6D8C8] py-7">
+    <div class="partner-marquee-wrap overflow-hidden border-y border-[#E6D8C8] py-7 bg-[#FFF8ED]">
         <div class="partner-marquee-track gap-12 pr-12">
             @foreach ($loopItems as $partner)
                 <a href="{{ $partner->website_url ?: 'javascript:void(0)' }}"
@@ -34,7 +34,7 @@
         </div>
     </div>
 @endif
-<section id="partners" class="bg-[#FFF8ED] pb-24">
+<section id="partners" class="bg-[#FFF8ED] py-24">
     <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div
             class="grid overflow-hidden rounded-[2.5rem] border border-[#E6D8C8] bg-[#F6EFE4] lg:grid-cols-[1.1fr_0.9fr]">
@@ -68,7 +68,10 @@
                     </div>
                 </div>
 
-                <x-frontend.consultation-link label="Ajukan Kerja Sama" class="mt-10" />
+                <a href="{{ url('#contact') }}"
+                    class="mt-10 inline-flex items-center gap-3 rounded-full bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB] transition hover:-translate-y-1 hover:bg-[#58433D]">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Ajukan Kerja Sama
+                </a>
             </div>
 
             <div class="relative min-h-[420px] lg:min-h-full">
