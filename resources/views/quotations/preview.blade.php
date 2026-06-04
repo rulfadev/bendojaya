@@ -10,7 +10,24 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        .quotation-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        .quotation-table th,
+        .quotation-table td {
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
         @media print {
+            @page {
+                size: A4;
+                margin: 14mm;
+            }
+
             .no-print {
                 display: none !important;
             }
@@ -23,6 +40,41 @@
                 box-shadow: none !important;
                 border: 0 !important;
                 padding: 0 !important;
+            }
+
+            .print-card,
+            .print-card * {
+                max-width: 100% !important;
+            }
+
+            .quotation-table {
+                width: 100% !important;
+                table-layout: fixed !important;
+                font-size: 11px !important;
+            }
+
+            .quotation-table th,
+            .quotation-table td {
+                padding: 10px 8px !important;
+                word-break: break-word !important;
+                overflow-wrap: anywhere !important;
+                white-space: normal !important;
+            }
+
+            .quotation-table .col-item {
+                width: 46% !important;
+            }
+
+            .quotation-table .col-qty {
+                width: 14% !important;
+            }
+
+            .quotation-table .col-price {
+                width: 20% !important;
+            }
+
+            .quotation-table .col-subtotal {
+                width: 20% !important;
             }
         }
     </style>
@@ -55,14 +107,6 @@
                         <i class="fa-solid fa-print"></i>
                         Print / PDF
                     </button>
-
-                    @if ($quotation->phone)
-                        <a href="{{ $quotation->whatsapp_url }}" target="_blank"
-                            class="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-black text-white transition hover:bg-emerald-600">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            WhatsApp
-                        </a>
-                    @endif
                 </div>
             </div>
 
@@ -121,46 +165,44 @@
                 </div>
 
                 <div class="mt-8 overflow-hidden rounded-[1.5rem] border border-[#E6D8C8]">
-                    <div class="overflow-x-auto">
-                        <table class="w-full min-w-[720px] text-left text-sm">
-                            <thead class="bg-[#3C3B39] text-xs font-black uppercase tracking-[0.18em] text-[#FBE9CB]">
-                                <tr>
-                                    <th class="px-5 py-4">Item</th>
-                                    <th class="px-5 py-4 text-right">Qty</th>
-                                    <th class="px-5 py-4 text-right">Harga</th>
-                                    <th class="px-5 py-4 text-right">Subtotal</th>
+                    <table class="quotation-table text-left text-sm">
+                        <thead class="bg-[#3C3B39] text-xs font-black uppercase tracking-[0.18em] text-[#FBE9CB]">
+                            <tr>
+                                <th class="col-item px-5 py-4">Item</th>
+                                <th class="col-qty px-5 py-4 text-right">Qty</th>
+                                <th class="col-price px-5 py-4 text-right">Harga</th>
+                                <th class="col-subtotal px-5 py-4 text-right">Subtotal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="divide-y divide-[#E6D8C8]">
+                            @foreach ($quotation->items as $item)
+                                <tr class="align-top">
+                                    <td class="px-5 py-4">
+                                        <p class="font-black text-[#3C3B39]">{{ $item->item_name }}</p>
+
+                                        @if ($item->description)
+                                            <p class="mt-1 whitespace-pre-line text-xs leading-6 text-[#7F756D]">
+                                                {{ $item->description }}
+                                            </p>
+                                        @endif
+                                    </td>
+
+                                    <td class="px-5 py-4 text-right text-[#7F756D]">
+                                        {{ $item->quantity }} {{ $item->unit }}
+                                    </td>
+
+                                    <td class="px-5 py-4 text-right text-[#7F756D]">
+                                        Rp {{ number_format((float) $item->unit_price, 0, ',', '.') }}
+                                    </td>
+
+                                    <td class="px-5 py-4 text-right font-black text-[#3C3B39]">
+                                        {{ $item->formatted_subtotal }}
+                                    </td>
                                 </tr>
-                            </thead>
-
-                            <tbody class="divide-y divide-[#E6D8C8]">
-                                @foreach ($quotation->items as $item)
-                                    <tr class="align-top">
-                                        <td class="px-5 py-4">
-                                            <p class="font-black text-[#3C3B39]">{{ $item->item_name }}</p>
-
-                                            @if ($item->description)
-                                                <p class="mt-1 whitespace-pre-line text-xs leading-6 text-[#7F756D]">
-                                                    {{ $item->description }}
-                                                </p>
-                                            @endif
-                                        </td>
-
-                                        <td class="px-5 py-4 text-right text-[#7F756D]">
-                                            {{ $item->quantity }} {{ $item->unit }}
-                                        </td>
-
-                                        <td class="px-5 py-4 text-right text-[#7F756D]">
-                                            Rp {{ number_format((float) $item->unit_price, 0, ',', '.') }}
-                                        </td>
-
-                                        <td class="px-5 py-4 text-right font-black text-[#3C3B39]">
-                                            {{ $item->formatted_subtotal }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="mt-8 flex justify-end">
@@ -224,7 +266,7 @@
                         <button
                             class="w-full rounded-2xl bg-emerald-500 px-6 py-4 text-sm font-black text-white transition hover:bg-emerald-600">
                             <i class="fa-solid fa-check mr-2"></i>
-                            Setujui Penawaran
+                            Setujui & Konfirmasi via WhatsApp
                         </button>
                     </form>
 

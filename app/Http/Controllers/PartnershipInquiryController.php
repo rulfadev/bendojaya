@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PartnershipInquiry;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class PartnershipInquiryController extends Controller
             ]
         );
 
-        PartnershipInquiry::query()->create([
+        $inquiry = PartnershipInquiry::query()->create([
             ...$validated,
             'status' => 'new',
             'source_url' => url()->previous(),
@@ -44,6 +45,32 @@ class PartnershipInquiryController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
-        return back()->with('success', 'Inquiry kerja sama berhasil dikirim. Tim Bendo Jaya akan menghubungi Anda.');
+        $setting = SiteSetting::query()->first();
+
+        $adminWhatsapp = preg_replace('/[^0-9]/', '', $setting?->whatsapp_number ?? '6280000000000');
+
+        if (str_starts_with($adminWhatsapp, '0')) {
+            $adminWhatsapp = '62'.substr($adminWhatsapp, 1);
+        }
+
+        $message = "Halo admin Bendo Jaya, saya sudah mengajukan inquiry kerja sama.\n\n";
+        $message .= "Kode Inquiry: #{$inquiry->id}\n";
+        $message .= 'Brand/Perusahaan: '.($inquiry->company_name ?: '-')."\n";
+        $message .= "PIC: {$inquiry->pic_name}\n";
+        $message .= "WhatsApp: {$inquiry->phone}\n";
+        $message .= "Jenis Kerja Sama: {$inquiry->partnership_type_label}\n";
+        $message .= 'Estimasi Jumlah: '.($inquiry->estimated_quantity ?: '-')."\n";
+        $message .= 'Budget: '.($inquiry->budget_range ?: '-')."\n";
+        $message .= 'Deadline: '.($inquiry->deadline_date?->format('d M Y') ?: '-')."\n\n";
+
+        if ($inquiry->message) {
+            $message .= "Catatan:\n{$inquiry->message}\n\n";
+        }
+
+        $message .= 'Mohon dibantu konsultasinya.';
+
+        $whatsappUrl = 'https://wa.me/'.$adminWhatsapp.'?text='.rawurlencode($message);
+
+        return redirect()->away($whatsappUrl);
     }
 }

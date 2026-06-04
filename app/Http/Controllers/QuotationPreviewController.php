@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quotation;
+use App\Models\SiteSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -42,7 +43,24 @@ class QuotationPreviewController extends Controller
             'client_responded_at' => now(),
         ]);
 
-        return back()->with('success', 'Terima kasih. Penawaran telah disetujui.');
+        $setting = SiteSetting::query()->first();
+
+        $adminWhatsapp = preg_replace('/[^0-9]/', '', $setting?->whatsapp_number ?? '6280000000000');
+
+        if (str_starts_with($adminWhatsapp, '0')) {
+            $adminWhatsapp = '62'.substr($adminWhatsapp, 1);
+        }
+
+        $message = "Halo admin Bendo Jaya, saya sudah menyetujui penawaran/quotation.\n\n";
+        $message .= "Nomor Penawaran: {$quotation->quotation_number}\n";
+        $message .= "Nama Client: {$quotation->client_name}\n";
+        $message .= 'Perusahaan/Brand: '.($quotation->company_name ?: '-')."\n";
+        $message .= "Total Penawaran: {$quotation->formatted_total}\n\n";
+        $message .= 'Mohon dikonfirmasi untuk proses kerja sama / produksi selanjutnya.';
+
+        $whatsappUrl = 'https://wa.me/'.$adminWhatsapp.'?text='.rawurlencode($message);
+
+        return redirect()->away($whatsappUrl);
     }
 
     public function reject(Request $request, string $quotation, string $token): RedirectResponse

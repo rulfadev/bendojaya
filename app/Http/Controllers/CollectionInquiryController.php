@@ -34,7 +34,7 @@ class CollectionInquiryController extends Controller
             ]
         );
 
-        CollectionInquiry::query()->create([
+        $inquiry = CollectionInquiry::query()->create([
             ...$validated,
             'collection_id' => $collection->id,
             'status' => 'new',
@@ -43,6 +43,32 @@ class CollectionInquiryController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
-        return back()->with('success', 'Inquiry koleksi berhasil dikirim. Tim Bendo Jaya akan menghubungi Anda.');
+        $setting = SiteSetting::query()->first();
+
+        $adminWhatsapp = preg_replace('/[^0-9]/', '', $setting?->whatsapp_number ?? '6280000000000');
+
+        if (str_starts_with($adminWhatsapp, '0')) {
+            $adminWhatsapp = '62'.substr($adminWhatsapp, 1);
+        }
+
+        $message = "Halo admin Bendo Jaya, saya sudah mengajukan inquiry koleksi.\n\n";
+        $message .= "Kode Inquiry: #{$inquiry->id}\n";
+        $message .= "Nama: {$inquiry->name}\n";
+        $message .= "WhatsApp: {$inquiry->phone}\n";
+        $message .= "Koleksi: {$collection->name}\n";
+        $message .= 'Kategori: '.($collection->category ?: '-')."\n";
+        $message .= "Kebutuhan: {$inquiry->need_type_label}\n";
+        $message .= 'Ukuran: '.($inquiry->size ?: '-')."\n";
+        $message .= 'Jumlah: '.($inquiry->quantity ?: '-')."\n\n";
+
+        if ($inquiry->message) {
+            $message .= "Catatan:\n{$inquiry->message}\n\n";
+        }
+
+        $message .= 'Mohon dibantu konsultasinya.';
+
+        $whatsappUrl = 'https://wa.me/'.$adminWhatsapp.'?text='.rawurlencode($message);
+
+        return redirect()->away($whatsappUrl);
     }
 }

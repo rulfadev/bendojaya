@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 #[Fillable(['user_id', 'collection_inquiry_id', 'partnership_inquiry_id', 'quotation_number', 'title', 'client_name', 'company_name', 'email', 'phone', 'quotation_date', 'valid_until', 'status', 'subtotal', 'discount_amount', 'tax_amount', 'total_amount', 'notes', 'terms', 'sent_at', 'approved_at', 'rejected_at', 'public_token', 'viewed_at', 'client_responded_at'])]
 class Quotation extends Model
