@@ -137,6 +137,13 @@
             'badge' => $newPartnershipInquiriesCount,
         ],
         [
+            'label' => 'Quotation',
+            'route' => 'admin.quotations.index',
+            'active' => 'admin.quotations.*',
+            'icon' => 'fa-solid fa-file-invoice-dollar',
+            'roles' => ['admin', 'editor'],
+        ],
+        [
             'label' => 'Inquiry Koleksi',
             'route' => 'admin.collection-inquiries.index',
             'active' => 'admin.collection-inquiries.*',
@@ -151,6 +158,7 @@
             'icon' => 'fa-brands fa-whatsapp',
             'roles' => ['admin'],
         ],
+
         [
             'label' => 'Backup Data',
             'route' => 'admin.backups.index',

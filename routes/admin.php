@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\PartnershipInquiryController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\QuotationController;
 use App\Http\Controllers\Admin\SeoSettingController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
@@ -119,6 +120,10 @@ Route::prefix('admin')
 
             Route::resource('media-assets', MediaAssetController::class)
                 ->except(['show']);
+
+            Route::patch('/quotations/{quotation}/status', [QuotationController::class, 'updateStatus'])
+                ->name('quotations.status');
+            Route::resource('quotations', QuotationController::class);
         });
 
         Route::middleware('role:admin')->group(function () {

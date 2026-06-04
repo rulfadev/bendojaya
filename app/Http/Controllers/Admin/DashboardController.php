@@ -11,6 +11,7 @@ use App\Models\FashionCollection;
 use App\Models\Gallery;
 use App\Models\Partner;
 use App\Models\PartnershipInquiry;
+use App\Models\Quotation;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use App\Models\User;
@@ -86,6 +87,11 @@ class DashboardController extends Controller
                 'label' => 'Inquiry Kerja Sama',
                 'value' => PartnershipInquiry::query()->where('status', 'new')->count(),
                 'description' => 'Inquiry kerja sama baru yang belum dihubungi.',
+            ],
+            [
+                'label' => 'Quotation Draft',
+                'value' => Quotation::query()->where('status', 'draft')->count(),
+                'description' => 'Penawaran yang masih draft.',
             ],
         ];
 

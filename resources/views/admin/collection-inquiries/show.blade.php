@@ -102,6 +102,11 @@
                     <i class="fa-brands fa-whatsapp"></i>
                     Balas via WhatsApp
                 </x-admin.link-button>
+
+                <x-admin.link-button :href="route('admin.quotations.create', ['collection_inquiry_id' => $inquiry->id])" class="mt-3 w-full">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    Buat Penawaran
+                </x-admin.link-button>
             </section>
 
             <form action="{{ route('admin.collection-inquiries.destroy', $inquiry) }}" method="POST"

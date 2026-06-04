@@ -15,6 +15,8 @@ use App\Models\Page;
 use App\Models\PageSection;
 use App\Models\Partner;
 use App\Models\PartnershipInquiry;
+use App\Models\Quotation;
+use App\Models\QuotationItem;
 use App\Models\Service;
 use App\Models\SiteSetting;
 use App\Models\Testimonial;
@@ -53,6 +55,8 @@ class AppServiceProvider extends ServiceProvider
             HomepageSetting::class,
             SiteSetting::class,
             User::class,
+            Quotation::class,
+            QuotationItem::class,
             CollectionInquiry::class,
             PartnershipInquiry::class,
         ];
