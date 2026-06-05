@@ -1,5 +1,5 @@
 @php
-    $logo = $setting?->logo ? asset('storage/' . $setting->logo) : asset('assets/frontend/logo-bendo-jaya.jpg');
+    $logo = $setting?->logo ? asset('storage/' . $setting->logo) : asset('assets/frontend/logo-bendo-jaya.png');
     $whatsapp = $setting?->whatsapp_number ?? '6280000000000';
     $footerMenus = \App\Models\NavigationMenu::query()->active()->forFooter()->orderBy('sort_order')->get();
 @endphp

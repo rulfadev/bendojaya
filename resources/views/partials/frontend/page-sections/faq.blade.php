@@ -16,21 +16,10 @@
             </h2>
         @endif
 
-        <div class="mt-10 divide-y divide-[#D8C5AF] rounded-[2rem] border border-[#D8C5AF] bg-white/70">
-            @forelse ($items as $item)
-                <details class="group p-6">
-                    <summary class="cursor-pointer list-none font-black text-[#3C3B39]">
-                        {{ $item['question'] ?? 'Pertanyaan' }}
-                    </summary>
-                    <p class="mt-4 text-sm leading-7 text-[#7F756D]">
-                        {{ $item['answer'] ?? '' }}
-                    </p>
-                </details>
-            @empty
-                <div class="p-6 text-sm text-[#7F756D]">
-                    Belum ada FAQ.
-                </div>
-            @endforelse
+        <div class="mt-10 divide-y divide-[#D8C5AF] flex flex-col gap-2">
+            @foreach ($items as $faq)
+                <x-frontend.faq-item :question="$faq['question'] ?? 'Pertanyaan'" :answer="$faq['answer'] ?? ''" />
+            @endforeach
         </div>
     </div>
 </section>

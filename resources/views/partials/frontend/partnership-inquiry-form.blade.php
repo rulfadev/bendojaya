@@ -1,60 +1,54 @@
-<form action="{{ route('partnership-inquiries.store') }}" method="POST" class="grid gap-4">
+<form action="{{ route('partnership-inquiries.store') }}" method="POST" class="grid gap-5">
     @csrf
 
     <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off">
 
     <div class="grid gap-4 md:grid-cols-2">
-        <input type="text" name="company_name" value="{{ old('company_name') }}"
-            placeholder="Nama brand/perusahaan/komunitas"
-            class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
+        <x-admin.form.input name="company_name" label="Brand / Perusahaan / Komunitas" :value="old('company_name')"
+            placeholder="Contoh: Bendo Jaya Group" />
 
-        <input type="text" name="pic_name" value="{{ old('pic_name') }}" placeholder="Nama PIC"
-            class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
+        <x-admin.form.input name="pic_name" label="Nama PIC" :value="old('pic_name')" placeholder="Nama penanggung jawab" />
     </div>
 
     <div class="grid gap-4 md:grid-cols-2">
-        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email opsional"
-            class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
+        <x-admin.form.input name="email" label="Email" type="email" :value="old('email')"
+            placeholder="Email opsional" />
 
-        <input type="text" name="phone" value="{{ old('phone') }}" placeholder="WhatsApp"
-            class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
+        <x-admin.form.input name="phone" label="WhatsApp" :value="old('phone')" placeholder="Contoh: 62812xxxx" />
     </div>
 
     <div class="grid gap-4 md:grid-cols-3">
-        <select name="partnership_type"
-            class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
-            <option value="">Jenis Kerja Sama</option>
+        <x-admin.form.select name="partnership_type" label="Jenis Kerja Sama">
+            <option value="">Pilih jenis kerja sama</option>
+
             @foreach (\App\Models\PartnershipInquiry::PARTNERSHIP_TYPES as $value => $label)
                 <option value="{{ $value }}" @selected(old('partnership_type') === $value)>
                     {{ $label }}
                 </option>
             @endforeach
-        </select>
+        </x-admin.form.select>
 
-        <input type="number" name="estimated_quantity" value="{{ old('estimated_quantity') }}" min="1"
-            placeholder="Estimasi jumlah"
-            class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
+        <x-admin.form.input name="estimated_quantity" label="Estimasi Jumlah" type="number" :value="old('estimated_quantity')"
+            min="1" placeholder="Contoh: 50" />
 
-        <select name="budget_range"
-            class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
-            <option value="">Budget opsional</option>
+        <x-admin.form.select name="budget_range" label="Budget">
+            <option value="">Pilih budget</option>
+
             @foreach (\App\Models\PartnershipInquiry::BUDGET_RANGES as $value => $label)
                 <option value="{{ $value }}" @selected(old('budget_range') === $value)>
                     {{ $label }}
                 </option>
             @endforeach
-        </select>
+        </x-admin.form.select>
     </div>
 
-    <input type="date" name="deadline_date" value="{{ old('deadline_date') }}"
-        class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">
+    <x-admin.form.input name="deadline_date" label="Deadline Kebutuhan" type="date" :value="old('deadline_date')" />
 
-    <textarea name="message" rows="6"
-        placeholder="Ceritakan kebutuhan kerja sama, konsep produk, jumlah produksi, motif, bahan, warna, deadline, atau catatan lainnya."
-        class="rounded-2xl border border-[#E6D8C8] bg-white px-5 py-4 text-sm font-semibold text-[#3C3B39] outline-none focus:border-[#765A4F]">{{ old('message') }}</textarea>
+    <x-admin.form.textarea name="message" label="Catatan Kebutuhan" :value="old('message')" rows="6"
+        placeholder="Ceritakan kebutuhan kerja sama, konsep produk, jumlah produksi, motif, bahan, warna, deadline, atau catatan lainnya." />
 
-    <button type="submit"
-        class="rounded-2xl bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB] transition hover:-translate-y-1 hover:bg-[#58433D]">
-        Kirim Inquiry Kerja Sama
-    </button>
+    <x-admin.button class="w-full">
+        Kirim Proposal Kerja Sama
+        <i class="fa-solid fa-arrow-right text-xs"></i>
+    </x-admin.button>
 </form>

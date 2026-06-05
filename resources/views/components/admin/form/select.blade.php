@@ -14,7 +14,7 @@
         <select id="{{ $name }}" name="{{ $name }}" data-admin-select
             {{ $attributes->merge([
                 'class' =>
-                    'h-[50px] w-full appearance-none rounded-[1.25rem] border border-stone-200 bg-white px-4 pr-12 text-sm font-black text-stone-900 outline-none transition hover:bg-[#fffaf2] focus:border-stone-950 focus:ring-4 focus:ring-amber-200 disabled:cursor-not-allowed disabled:opacity-60',
+                    'h-auto w-full appearance-none rounded-[1.25rem] border border-stone-200 bg-white px-4 pr-12 text-sm font-black text-stone-900 outline-none transition hover:bg-[#fffaf2] focus:border-stone-950 focus:ring-4 focus:ring-amber-200 disabled:cursor-not-allowed disabled:opacity-60',
             ]) }}>
             {{ $slot }}
         </select>

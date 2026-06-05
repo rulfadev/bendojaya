@@ -41,13 +41,15 @@ function closeAllAdminSelects(except = null) {
 }
 
 function initAdminSelects() {
-    const adminLayout = document.querySelector('[data-admin-layout]');
+    const layout =
+        document.querySelector('[data-admin-layout]') ||
+        document.querySelector('[data-frontend-layout]');
 
-    if (!adminLayout) {
+    if (!layout) {
         return;
     }
 
-    const selects = adminLayout.querySelectorAll('select:not([data-native-select]):not([data-bj-select-ready])');
+    const selects = layout.querySelectorAll('select:not([data-native-select]):not([data-bj-select-ready])');
 
     selects.forEach((select) => {
         if (select.multiple) {

@@ -23,7 +23,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body data-success-message="{{ session('success') }}" data-error-message="{{ session('error') }}"
+<body data-frontend-layout data-success-message="{{ session('success') }}" data-error-message="{{ session('error') }}"
     data-validation-errors="@if ($errors->any()) <ul class='text-left'>@foreach ($errors->all() as $error)<li>{{ e($error) }}</li>@endforeach</ul> @endif"
     class="{{ $bodyClass ?? '' }}">
     <div class="pointer-events-none fixed inset-0 z-0 opacity-[0.035]"

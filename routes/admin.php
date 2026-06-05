@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\HomepageSettingController;
 use App\Http\Controllers\Admin\MediaAssetController;
 use App\Http\Controllers\Admin\NavigationMenuController;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
 use App\Http\Controllers\Admin\PartnerController;
@@ -77,6 +78,9 @@ Route::prefix('admin')
                 ->name('partnership-inquiries.status');
             Route::delete('/partnership-inquiries/{partnershipInquiry}', [PartnershipInquiryController::class, 'destroy'])
                 ->name('partnership-inquiries.destroy');
+
+            Route::get('/notifications', [NotificationController::class, 'index'])
+                ->name('notifications.index');
         });
 
         Route::middleware('role:admin,editor')->group(function () {

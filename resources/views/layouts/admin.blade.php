@@ -8,6 +8,12 @@
 
     $newPartnershipInquiriesCount = \App\Models\PartnershipInquiry::query()->where('status', 'new')->count();
 
+    $notificationCount =
+        \App\Models\CollectionInquiry::query()->where('status', 'new')->count() +
+        \App\Models\PartnershipInquiry::query()->where('status', 'new')->count() +
+        \App\Models\Quotation::query()->where('status', 'approved')->count() +
+        \App\Models\Quotation::query()->where('status', 'rejected')->count();
+
     $navItems = [
         [
             'label' => 'Dashboard',
@@ -152,13 +158,20 @@
             'badge' => $newCollectionInquiriesCount,
         ],
         [
+            'label' => 'Notifikasi',
+            'route' => 'admin.notifications.index',
+            'active' => 'admin.notifications.*',
+            'icon' => 'fa-solid fa-bell',
+            'roles' => ['admin', 'editor', 'staff'],
+            'badge' => $notificationCount,
+        ],
+        [
             'label' => 'WA Templates',
             'route' => 'admin.whatsapp-templates.index',
             'active' => 'admin.whatsapp-templates.*',
             'icon' => 'fa-brands fa-whatsapp',
             'roles' => ['admin'],
         ],
-
         [
             'label' => 'Backup Data',
             'route' => 'admin.backups.index',
@@ -305,32 +318,6 @@
             </header>
 
             <main class="px-5 py-8 lg:px-8">
-                {{-- @if (session('success'))
-                    <div
-                        class="mb-6 rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-bold text-emerald-700">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
-                @if (session('error'))
-                    <div
-                        class="mb-6 rounded-3xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-bold text-red-700">
-                        {{ session('error') }}
-                    </div>
-                @endif
-
-                @if ($errors->any())
-                    <div class="mb-6 rounded-3xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700">
-                        <div class="mb-2 font-black">Ada data yang perlu diperbaiki:</div>
-
-                        <ul class="list-inside list-disc space-y-1">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif --}}
-
                 @yield('content')
             </main>
         </div>

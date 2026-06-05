@@ -1,5 +1,5 @@
 @php
-    $logo = $setting?->logo ? asset('storage/' . $setting->logo) : asset('assets/frontend/logo-bendo-jaya.jpg');
+    $logo = $setting?->logo ? asset('storage/' . $setting->logo) : asset('assets/frontend/logo-bendo-jaya.png');
     $headerMenus = \App\Models\NavigationMenu::query()->active()->forHeader()->orderBy('sort_order')->get();
 @endphp
 

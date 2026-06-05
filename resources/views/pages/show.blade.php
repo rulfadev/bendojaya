@@ -50,7 +50,7 @@
             <div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
                 <div>
                     <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
-                        Inquiry Kerja Sama
+                        Proposal Kerja Sama
                     </p>
 
                     <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39]">
