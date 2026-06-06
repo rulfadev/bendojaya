@@ -78,7 +78,7 @@ class SiteSettingController extends Controller
             'about_button_url' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $validated['is_maintenance_mode'] = $request->boolean('is_maintenance_mode');
+        $validated['is_maintenance_mode'] = $request->boolean('is_maintenance_mode') || $request->boolean('is_maintenance');
         $validated['allow_search_indexing'] = $request->boolean('allow_search_indexing');
         $validated['show_about_button'] = $request->boolean('show_about_button');
 
@@ -112,6 +112,18 @@ class SiteSettingController extends Controller
             }
 
             $validated['favicon'] = $request->file('favicon')->store('site', 'public');
+        }
+
+        if ($request->filled('site_tagline') && blank($validated['tagline'] ?? null)) {
+            $validated['tagline'] = $request->input('site_tagline');
+        }
+
+        if ($request->filled('site_description') && blank($validated['short_description'] ?? null)) {
+            $validated['short_description'] = $request->input('site_description');
+        }
+
+        if ($request->filled('maintenance_message') && blank($validated['maintenance_description'] ?? null)) {
+            $validated['maintenance_description'] = $request->input('maintenance_message');
         }
 
         $setting->update($validated);

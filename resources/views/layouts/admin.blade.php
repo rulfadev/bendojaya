@@ -1,6 +1,5 @@
 @php
     $globalSetting = $setting ?? \App\Models\SiteSetting::query()->first();
-
     $siteName = $globalSetting?->site_name ?? 'Bendo Jaya';
     $currentUser = auth()->user();
 
@@ -9,182 +8,211 @@
     $newPartnershipInquiriesCount = \App\Models\PartnershipInquiry::query()->where('status', 'new')->count();
 
     $notificationCount =
-        \App\Models\CollectionInquiry::query()->where('status', 'new')->count() +
-        \App\Models\PartnershipInquiry::query()->where('status', 'new')->count() +
+        $newCollectionInquiriesCount +
+        $newPartnershipInquiriesCount +
         \App\Models\Quotation::query()->where('status', 'approved')->count() +
         \App\Models\Quotation::query()->where('status', 'rejected')->count();
 
-    $navItems = [
+    $navSections = [
         [
-            'label' => 'Dashboard',
-            'route' => 'admin.dashboard',
-            'active' => 'admin.dashboard',
-            'icon' => 'fa-solid fa-chart-line',
-            'roles' => ['admin', 'editor', 'staff'],
+            'label' => 'Utama',
+            'items' => [
+                [
+                    'label' => 'Dashboard',
+                    'route' => 'admin.dashboard',
+                    'active' => 'admin.dashboard',
+                    'icon' => 'fa-solid fa-chart-line',
+                    'roles' => ['admin', 'editor', 'staff'],
+                ],
+                [
+                    'label' => 'Notifikasi',
+                    'route' => 'admin.notifications.index',
+                    'active' => 'admin.notifications.*',
+                    'icon' => 'fa-solid fa-bell',
+                    'roles' => ['admin', 'editor', 'staff'],
+                    'badge' => $notificationCount,
+                ],
+            ],
         ],
+
         [
-            'label' => 'Artikel',
-            'route' => 'admin.articles.index',
-            'active' => 'admin.articles.*',
-            'icon' => 'fa-solid fa-newspaper',
-            'roles' => ['admin', 'editor'],
+            'label' => 'Lead & Penawaran',
+            'items' => [
+                [
+                    'label' => 'Pesan Kontak',
+                    'route' => 'admin.contact-messages.index',
+                    'active' => 'admin.contact-messages.*',
+                    'icon' => 'fa-solid fa-envelope-open-text',
+                    'roles' => ['admin', 'editor', 'staff'],
+                ],
+                [
+                    'label' => 'Inquiry Kerja Sama',
+                    'route' => 'admin.partnership-inquiries.index',
+                    'active' => 'admin.partnership-inquiries.*',
+                    'icon' => 'fa-solid fa-handshake-angle',
+                    'roles' => ['admin', 'editor', 'staff'],
+                    'badge' => $newPartnershipInquiriesCount,
+                ],
+                [
+                    'label' => 'Inquiry Koleksi',
+                    'route' => 'admin.collection-inquiries.index',
+                    'active' => 'admin.collection-inquiries.*',
+                    'icon' => 'fa-solid fa-clipboard-question',
+                    'roles' => ['admin', 'editor', 'staff'],
+                    'badge' => $newCollectionInquiriesCount,
+                ],
+                [
+                    'label' => 'Quotation',
+                    'route' => 'admin.quotations.index',
+                    'active' => 'admin.quotations.*',
+                    'icon' => 'fa-solid fa-file-invoice-dollar',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Testimoni',
+                    'route' => 'admin.testimonials.index',
+                    'active' => 'admin.testimonials.*',
+                    'icon' => 'fa-solid fa-star',
+                    'roles' => ['admin', 'editor', 'staff'],
+                ],
+            ],
         ],
+
         [
-            'label' => 'Custom Page',
-            'route' => 'admin.pages.index',
-            'active' => 'admin.pages.*',
-            'icon' => 'fa-solid fa-file-lines',
-            'roles' => ['admin', 'editor'],
+            'label' => 'Konten Website',
+            'items' => [
+                [
+                    'label' => 'Homepage',
+                    'route' => 'admin.homepage-settings.edit',
+                    'active' => 'admin.homepage-settings.*',
+                    'icon' => 'fa-solid fa-house-laptop',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Menu Navigasi',
+                    'route' => 'admin.navigation-menus.index',
+                    'active' => 'admin.navigation-menus.*',
+                    'icon' => 'fa-solid fa-bars-staggered',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Layanan',
+                    'route' => 'admin.services.index',
+                    'active' => 'admin.services.*',
+                    'icon' => 'fa-solid fa-diamond',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Koleksi',
+                    'route' => 'admin.collections.index',
+                    'active' => 'admin.collections.*',
+                    'icon' => 'fa-solid fa-shirt',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Gallery',
+                    'route' => 'admin.galleries.index',
+                    'active' => 'admin.galleries.*',
+                    'icon' => 'fa-solid fa-images',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Artikel',
+                    'route' => 'admin.articles.index',
+                    'active' => 'admin.articles.*',
+                    'icon' => 'fa-solid fa-newspaper',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Custom Page',
+                    'route' => 'admin.pages.index',
+                    'active' => 'admin.pages.*',
+                    'icon' => 'fa-solid fa-file-lines',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Partner Bisnis',
+                    'route' => 'admin.partners.index',
+                    'active' => 'admin.partners.*',
+                    'icon' => 'fa-solid fa-handshake',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'FAQ',
+                    'route' => 'admin.faqs.index',
+                    'active' => 'admin.faqs.*',
+                    'icon' => 'fa-solid fa-circle-question',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Media Library',
+                    'route' => 'admin.media-assets.index',
+                    'active' => 'admin.media-assets.*',
+                    'icon' => 'fa-solid fa-photo-film',
+                    'roles' => ['admin', 'editor'],
+                ],
+            ],
         ],
+
         [
-            'label' => 'Koleksi',
-            'route' => 'admin.collections.index',
-            'active' => 'admin.collections.*',
-            'icon' => 'fa-solid fa-shirt',
-            'roles' => ['admin', 'editor'],
+            'label' => 'Pengaturan',
+            'items' => [
+                [
+                    'label' => 'Pengaturan Website',
+                    'route' => 'admin.site-settings.index',
+                    'active' => 'admin.site-settings.*',
+                    'icon' => 'fa-solid fa-gear',
+                    'roles' => ['admin'],
+                ],
+                [
+                    'label' => 'SEO',
+                    'route' => 'admin.seo-settings.edit',
+                    'active' => 'admin.seo-settings.*',
+                    'icon' => 'fa-solid fa-magnifying-glass-chart',
+                    'roles' => ['admin'],
+                ],
+                [
+                    'label' => 'Template WhatsApp',
+                    'route' => 'admin.whatsapp-templates.index',
+                    'active' => 'admin.whatsapp-templates.*',
+                    'icon' => 'fa-brands fa-whatsapp',
+                    'roles' => ['admin'],
+                ],
+                [
+                    'label' => 'User Management',
+                    'route' => 'admin.users.index',
+                    'active' => 'admin.users.*',
+                    'icon' => 'fa-solid fa-users-gear',
+                    'roles' => ['admin'],
+                ],
+                [
+                    'label' => 'Backup Data',
+                    'route' => 'admin.backups.index',
+                    'active' => 'admin.backups.*',
+                    'icon' => 'fa-solid fa-file-export',
+                    'roles' => ['admin'],
+                ],
+                [
+                    'label' => 'Activity Log',
+                    'route' => 'admin.activity-logs.index',
+                    'active' => 'admin.activity-logs.*',
+                    'icon' => 'fa-solid fa-clock-rotate-left',
+                    'roles' => ['admin'],
+                ],
+            ],
         ],
+
         [
-            'label' => 'Gallery',
-            'route' => 'admin.galleries.index',
-            'active' => 'admin.galleries.*',
-            'icon' => 'fa-solid fa-images',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'Layanan',
-            'route' => 'admin.services.index',
-            'active' => 'admin.services.*',
-            'icon' => 'fa-solid fa-diamond',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'Partner Bisnis',
-            'route' => 'admin.partners.index',
-            'active' => 'admin.partners.*',
-            'icon' => 'fa-solid fa-handshake',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'Pesan Kontak',
-            'route' => 'admin.contact-messages.index',
-            'active' => 'admin.contact-messages.*',
-            'icon' => 'fa-solid fa-envelope-open-text',
-            'roles' => ['admin', 'editor', 'staff'],
-        ],
-        [
-            'label' => 'FAQ',
-            'route' => 'admin.faqs.index',
-            'active' => 'admin.faqs.*',
-            'icon' => 'fa-solid fa-circle-question',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'Media Library',
-            'route' => 'admin.media-assets.index',
-            'active' => 'admin.media-assets.*',
-            'icon' => 'fa-solid fa-photo-film',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'Testimoni',
-            'route' => 'admin.testimonials.index',
-            'active' => 'admin.testimonials.*',
-            'icon' => 'fa-solid fa-star',
-            'roles' => ['admin', 'editor', 'staff'],
-        ],
-        [
-            'label' => 'Homepage',
-            'route' => 'admin.homepage-settings.edit',
-            'active' => 'admin.homepage-settings.*',
-            'icon' => 'fa-solid fa-house-laptop',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'User Management',
-            'route' => 'admin.users.index',
-            'active' => 'admin.users.*',
-            'icon' => 'fa-solid fa-users-gear',
-            'roles' => ['admin'],
-        ],
-        [
-            'label' => 'Menu Navigasi',
-            'route' => 'admin.navigation-menus.index',
-            'active' => 'admin.navigation-menus.*',
-            'icon' => 'fa-solid fa-bars-staggered',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'Activity Log',
-            'route' => 'admin.activity-logs.index',
-            'active' => 'admin.activity-logs.*',
-            'icon' => 'fa-solid fa-clock-rotate-left',
-            'roles' => ['admin'],
-        ],
-        [
-            'label' => 'SEO Settings',
-            'route' => 'admin.seo-settings.edit',
-            'active' => 'admin.seo-settings.*',
-            'icon' => 'fa-solid fa-magnifying-glass-chart',
-            'roles' => ['admin'],
-        ],
-        [
-            'label' => 'Pengaturan Website',
-            'route' => 'admin.site-settings.index',
-            'active' => 'admin.site-settings.*',
-            'icon' => 'fa-solid fa-gear',
-            'roles' => ['admin'],
-        ],
-        [
-            'label' => 'Inquiry Kerja Sama',
-            'route' => 'admin.partnership-inquiries.index',
-            'active' => 'admin.partnership-inquiries.*',
-            'icon' => 'fa-solid fa-handshake-angle',
-            'roles' => ['admin', 'editor', 'staff'],
-            'badge' => $newPartnershipInquiriesCount,
-        ],
-        [
-            'label' => 'Quotation',
-            'route' => 'admin.quotations.index',
-            'active' => 'admin.quotations.*',
-            'icon' => 'fa-solid fa-file-invoice-dollar',
-            'roles' => ['admin', 'editor'],
-        ],
-        [
-            'label' => 'Inquiry Koleksi',
-            'route' => 'admin.collection-inquiries.index',
-            'active' => 'admin.collection-inquiries.*',
-            'icon' => 'fa-solid fa-clipboard-question',
-            'roles' => ['admin', 'editor', 'staff'],
-            'badge' => $newCollectionInquiriesCount,
-        ],
-        [
-            'label' => 'Notifikasi',
-            'route' => 'admin.notifications.index',
-            'active' => 'admin.notifications.*',
-            'icon' => 'fa-solid fa-bell',
-            'roles' => ['admin', 'editor', 'staff'],
-            'badge' => $notificationCount,
-        ],
-        [
-            'label' => 'WA Templates',
-            'route' => 'admin.whatsapp-templates.index',
-            'active' => 'admin.whatsapp-templates.*',
-            'icon' => 'fa-brands fa-whatsapp',
-            'roles' => ['admin'],
-        ],
-        [
-            'label' => 'Backup Data',
-            'route' => 'admin.backups.index',
-            'active' => 'admin.backups.*',
-            'icon' => 'fa-solid fa-file-export',
-            'roles' => ['admin'],
-        ],
-        [
-            'label' => 'Profil',
-            'route' => 'admin.profile.edit',
-            'active' => 'admin.profile.*',
-            'icon' => 'fa-solid fa-user',
-            'roles' => ['admin', 'editor', 'staff'],
+            'label' => 'Akun',
+            'items' => [
+                [
+                    'label' => 'Profil',
+                    'route' => 'admin.profile.edit',
+                    'active' => 'admin.profile.*',
+                    'icon' => 'fa-solid fa-user',
+                    'roles' => ['admin', 'editor', 'staff'],
+                ],
+            ],
         ],
     ];
 @endphp
@@ -230,32 +258,50 @@
 
             <div class="h-[calc(100vh-6rem)] overflow-y-auto px-5 py-6">
                 <nav class="space-y-1">
-                    @foreach ($navItems as $item)
-                        @if (!in_array($currentUser?->role, $item['roles'] ?? [], true))
+                    @foreach ($navSections as $section)
+                        @php
+                            $visibleItems = collect($section['items'])->filter(function ($item) use ($currentUser) {
+                                return in_array($currentUser?->role, $item['roles'] ?? [], true) &&
+                                    \Illuminate\Support\Facades\Route::has($item['route']);
+                            });
+                        @endphp
+
+                        @if ($visibleItems->isEmpty())
                             @continue
                         @endif
 
-                        <a href="{{ route($item['route']) }}"
-                            class="group flex items-center gap-3 rounded-2xl px-4 py-2 text-sm font-bold transition
-       {{ request()->routeIs($item['active'])
-           ? 'bg-stone-950 text-amber-200 shadow-xl shadow-stone-900/10'
-           : 'text-stone-600 hover:bg-white hover:text-stone-950 hover:shadow-sm' }}">
-                            <span
-                                class="flex h-8 w-8 items-center justify-center rounded-xl text-base
-            {{ request()->routeIs($item['active'])
-                ? 'bg-amber-200 text-stone-950'
-                : 'bg-stone-100 text-stone-500 group-hover:bg-amber-100 group-hover:text-stone-950' }}">
-                                <i class="{{ $item['icon'] }}"></i>
-                            </span>
+                        <div class="mt-6 first:mt-0">
+                            <p class="mb-2 px-4 text-[11px] font-black uppercase tracking-[0.22em] text-stone-400">
+                                {{ $section['label'] }}
+                            </p>
 
-                            <span class="flex-1">{{ $item['label'] }}</span>
+                            <div class="space-y-1">
+                                @foreach ($visibleItems as $item)
+                                    <a href="{{ route($item['route']) }}"
+                                        class="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition
+                   {{ request()->routeIs($item['active'])
+                       ? 'bg-stone-950 text-amber-200 shadow-xl shadow-stone-900/10'
+                       : 'text-stone-600 hover:bg-white hover:text-stone-950 hover:shadow-sm' }}">
+                                        <span
+                                            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-base
+                        {{ request()->routeIs($item['active'])
+                            ? 'bg-amber-200 text-stone-950'
+                            : 'bg-stone-100 text-stone-500 group-hover:bg-amber-100 group-hover:text-stone-950' }}">
+                                            <i class="{{ $item['icon'] }}"></i>
+                                        </span>
 
-                            @if (($item['badge'] ?? 0) > 0)
-                                <span class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
-                                    {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
-                                </span>
-                            @endif
-                        </a>
+                                        <span class="flex-1 truncate">{{ $item['label'] }}</span>
+
+                                        @if (($item['badge'] ?? 0) > 0)
+                                            <span
+                                                class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
+                                                {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
+                                            </span>
+                                        @endif
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
                     @endforeach
                 </nav>
             </div>
@@ -297,22 +343,42 @@
                 </div>
 
                 <div class="flex gap-2 overflow-x-auto border-t border-stone-200/80 px-5 py-3 lg:hidden">
-                    @foreach ($navItems as $item)
-                        @if (!in_array($currentUser?->role, $item['roles'] ?? [], true))
+                    @foreach ($navSections as $section)
+                        @php
+                            $visibleItems = collect($section['items'])->filter(function ($item) use ($currentUser) {
+                                return in_array($currentUser?->role, $item['roles'] ?? [], true) &&
+                                    \Illuminate\Support\Facades\Route::has($item['route']);
+                            });
+                        @endphp
+
+                        @if ($visibleItems->isEmpty())
                             @continue
                         @endif
 
-                        <a href="{{ route($item['route']) }}"
-                            class="flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs font-bold
-           {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
-                            <i class="{{ $item['icon'] }}"></i>
-                            <span>{{ $item['label'] }}</span>
-                            @if (($item['badge'] ?? 0) > 0)
-                                <span class="rounded-full bg-red-100 px-1.5 py-0.5 text-[10px] font-black text-red-700">
-                                    {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
-                                </span>
-                            @endif
-                        </a>
+                        <div class="mt-5 first:mt-0">
+                            <p class="mb-2 px-2 text-[10px] font-black uppercase tracking-[0.22em] text-stone-400">
+                                {{ $section['label'] }}
+                            </p>
+
+                            <div class="grid gap-2">
+                                @foreach ($visibleItems as $item)
+                                    <a href="{{ route($item['route']) }}"
+                                        class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold
+                   {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
+                                        <i class="{{ $item['icon'] }} w-5 text-center"></i>
+
+                                        <span class="flex-1">{{ $item['label'] }}</span>
+
+                                        @if (($item['badge'] ?? 0) > 0)
+                                            <span
+                                                class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
+                                                {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
+                                            </span>
+                                        @endif
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
                     @endforeach
                 </div>
             </header>

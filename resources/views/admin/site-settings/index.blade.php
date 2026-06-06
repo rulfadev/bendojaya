@@ -21,11 +21,9 @@
                         <x-admin.form.input name="site_name" label="Nama Website" :value="$setting->site_name"
                             placeholder="Bendo Jaya" />
 
-                        <x-admin.form.input name="site_tagline" label="Tagline" :value="$setting->site_tagline ?? null"
-                            placeholder="Batik Fashion" />
-
+                        <x-admin.form.input name="tagline" label="Tagline" :value="$setting->tagline ?? null" placeholder="Batik Fashion" />
                         <div class="md:col-span-2">
-                            <x-admin.form.textarea name="site_description" label="Deskripsi Website" :value="$setting->site_description ?? null"
+                            <x-admin.form.textarea name="short_description" label="Deskripsi Website" :value="$setting->short_description ?? null"
                                 rows="4" />
                         </div>
                     </div>
@@ -83,8 +81,10 @@
                         <x-admin.form.textarea name="meta_keywords" label="Meta Keywords" :value="$setting->meta_keywords"
                             rows="3" />
 
-                        <x-admin.form.file name="og_image" label="OG Image" accept=".jpg,.jpeg,.png,.webp"
-                            :preview="$setting->og_image ? asset('storage/' . $setting->og_image) : null" preview-alt="OG Image" />
+                        <x-admin.form.file name="default_og_image" label="OG Image" accept=".jpg,.jpeg,.png,.webp"
+                            :preview="$setting->default_og_image
+                                ? asset('storage/' . $setting->default_og_image)
+                                : null" preview-alt="OG Image" />
                     </div>
                 </section>
 
@@ -99,12 +99,12 @@
                     </div>
 
                     <div class="grid gap-5">
-                        <x-admin.form.toggle name="is_maintenance" label="Aktifkan Maintenance" :checked="$setting->is_maintenance ?? false" />
+                        <x-admin.form.toggle name="is_maintenance_mode" label="Aktifkan Maintenance" :checked="$setting->is_maintenance_mode ?? false" />
 
                         <x-admin.form.input name="maintenance_title" label="Judul Maintenance" :value="$setting->maintenance_title ?? null"
                             placeholder="Website sedang dalam perawatan" />
 
-                        <x-admin.form.textarea name="maintenance_message" label="Pesan Maintenance" :value="$setting->maintenance_message ?? null"
+                        <x-admin.form.textarea name="maintenance_description" label="Pesan Maintenance" :value="$setting->maintenance_description ?? null"
                             rows="4" />
                     </div>
                 </section>
