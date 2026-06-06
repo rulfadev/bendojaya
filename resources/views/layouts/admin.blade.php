@@ -3,10 +3,6 @@
     $siteName = $globalSetting?->site_name ?? 'Bendo Jaya';
     $currentUser = auth()->user();
 
-    $newCollectionInquiriesCount = \App\Models\CollectionInquiry::query()->where('status', 'new')->count();
-
-    $newPartnershipInquiriesCount = \App\Models\PartnershipInquiry::query()->where('status', 'new')->count();
-
     $notificationCount = \App\Models\AdminNotification::query()->whereNull('read_at')->count();
 
     $newCollectionInquiriesCount = \App\Models\CollectionInquiry::query()->where('status', 'new')->count();
@@ -16,6 +12,7 @@
     $navSections = [
         [
             'label' => 'Utama',
+            'icon' => 'fa-solid fa-grid-2',
             'items' => [
                 [
                     'label' => 'Dashboard',
@@ -34,9 +31,9 @@
                 ],
             ],
         ],
-
         [
             'label' => 'Lead & Penawaran',
+            'icon' => 'fa-solid fa-comments-dollar',
             'items' => [
                 [
                     'label' => 'Pesan Kontak',
@@ -68,6 +65,33 @@
                     'icon' => 'fa-solid fa-file-invoice-dollar',
                     'roles' => ['admin', 'editor'],
                 ],
+            ],
+        ],
+        [
+            'label' => 'Landing Page',
+            'icon' => 'fa-solid fa-house-laptop',
+            'items' => [
+                [
+                    'label' => 'Homepage Settings',
+                    'route' => 'admin.homepage-settings.edit',
+                    'active' => 'admin.homepage-settings.*',
+                    'icon' => 'fa-solid fa-house-laptop',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Layanan',
+                    'route' => 'admin.services.index',
+                    'active' => 'admin.services.*',
+                    'icon' => 'fa-solid fa-diamond',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
+                    'label' => 'Partner Bisnis',
+                    'route' => 'admin.partners.index',
+                    'active' => 'admin.partners.*',
+                    'icon' => 'fa-solid fa-handshake',
+                    'roles' => ['admin', 'editor'],
+                ],
                 [
                     'label' => 'Testimoni',
                     'route' => 'admin.testimonials.index',
@@ -75,19 +99,19 @@
                     'icon' => 'fa-solid fa-star',
                     'roles' => ['admin', 'editor', 'staff'],
                 ],
-            ],
-        ],
-
-        [
-            'label' => 'Konten Website',
-            'items' => [
                 [
-                    'label' => 'Homepage',
-                    'route' => 'admin.homepage-settings.edit',
-                    'active' => 'admin.homepage-settings.*',
-                    'icon' => 'fa-solid fa-house-laptop',
+                    'label' => 'FAQ',
+                    'route' => 'admin.faqs.index',
+                    'active' => 'admin.faqs.*',
+                    'icon' => 'fa-solid fa-circle-question',
                     'roles' => ['admin', 'editor'],
                 ],
+            ],
+        ],
+        [
+            'label' => 'Halaman Publik',
+            'icon' => 'fa-solid fa-layer-group',
+            'items' => [
                 [
                     'label' => 'Menu Navigasi',
                     'route' => 'admin.navigation-menus.index',
@@ -96,10 +120,10 @@
                     'roles' => ['admin', 'editor'],
                 ],
                 [
-                    'label' => 'Layanan',
-                    'route' => 'admin.services.index',
-                    'active' => 'admin.services.*',
-                    'icon' => 'fa-solid fa-diamond',
+                    'label' => 'Custom Page',
+                    'route' => 'admin.pages.index',
+                    'active' => 'admin.pages.*',
+                    'icon' => 'fa-solid fa-file-lines',
                     'roles' => ['admin', 'editor'],
                 ],
                 [
@@ -124,27 +148,6 @@
                     'roles' => ['admin', 'editor'],
                 ],
                 [
-                    'label' => 'Custom Page',
-                    'route' => 'admin.pages.index',
-                    'active' => 'admin.pages.*',
-                    'icon' => 'fa-solid fa-file-lines',
-                    'roles' => ['admin', 'editor'],
-                ],
-                [
-                    'label' => 'Partner Bisnis',
-                    'route' => 'admin.partners.index',
-                    'active' => 'admin.partners.*',
-                    'icon' => 'fa-solid fa-handshake',
-                    'roles' => ['admin', 'editor'],
-                ],
-                [
-                    'label' => 'FAQ',
-                    'route' => 'admin.faqs.index',
-                    'active' => 'admin.faqs.*',
-                    'icon' => 'fa-solid fa-circle-question',
-                    'roles' => ['admin', 'editor'],
-                ],
-                [
                     'label' => 'Media Library',
                     'route' => 'admin.media-assets.index',
                     'active' => 'admin.media-assets.*',
@@ -153,9 +156,9 @@
                 ],
             ],
         ],
-
         [
             'label' => 'Pengaturan',
+            'icon' => 'fa-solid fa-gear',
             'items' => [
                 [
                     'label' => 'Pengaturan Website',
@@ -165,7 +168,7 @@
                     'roles' => ['admin'],
                 ],
                 [
-                    'label' => 'SEO',
+                    'label' => 'SEO Manager',
                     'route' => 'admin.seo-settings.edit',
                     'active' => 'admin.seo-settings.*',
                     'icon' => 'fa-solid fa-magnifying-glass-chart',
@@ -201,9 +204,9 @@
                 ],
             ],
         ],
-
         [
             'label' => 'Akun',
+            'icon' => 'fa-solid fa-user',
             'items' => [
                 [
                     'label' => 'Profil',
@@ -258,7 +261,7 @@
 
             <div class="h-[calc(100vh-6rem)] overflow-y-auto px-5 py-6">
                 <nav class="space-y-1">
-                    @foreach ($navSections as $sectionIndex => $section)
+                    @foreach ($navSections as $section)
                         @php
                             $visibleItems = collect($section['items'])->filter(function ($item) use ($currentUser) {
                                 return in_array($currentUser?->role, $item['roles'] ?? [], true) &&
@@ -268,6 +271,7 @@
                             $isSectionActive = $visibleItems->contains(
                                 fn($item) => request()->routeIs($item['active']),
                             );
+                            $sectionBadge = $visibleItems->sum(fn($item) => $item['badge'] ?? 0);
                             $sectionKey = 'admin-sidebar-section-' . \Illuminate\Support\Str::slug($section['label']);
                         @endphp
 
@@ -276,19 +280,15 @@
                         @endif
 
                         <div class="admin-sidebar-section mt-3 first:mt-0" data-sidebar-section="{{ $sectionKey }}"
-                            data-default-open="{{ $isSectionActive || $sectionIndex === 0 ? 'true' : 'false' }}">
+                            data-default-open="{{ $isSectionActive ? 'true' : 'false' }}">
                             <button type="button" data-sidebar-toggle
                                 class="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-xs font-black uppercase tracking-[0.2em] text-stone-400 transition hover:bg-white hover:text-stone-700">
                                 <span
-                                    class="flex h-8 w-8 items-center justify-center rounded-xl bg-stone-100 text-stone-500">
-                                    <i class="fa-solid fa-layer-group text-xs"></i>
+                                    class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-stone-100 text-stone-500">
+                                    <i class="{{ $section['icon'] }}"></i>
                                 </span>
 
                                 <span class="flex-1 truncate">{{ $section['label'] }}</span>
-
-                                @php
-                                    $sectionBadge = $visibleItems->sum(fn($item) => $item['badge'] ?? 0);
-                                @endphp
 
                                 @if ($sectionBadge > 0)
                                     <span
@@ -371,7 +371,7 @@
                 </div>
 
                 <div class="flex gap-2 overflow-x-auto border-t border-stone-200/80 px-5 py-3 lg:hidden">
-                    @foreach ($navSections as $sectionIndex => $section)
+                    @foreach ($navSections as $section)
                         @php
                             $visibleItems = collect($section['items'])->filter(function ($item) use ($currentUser) {
                                 return in_array($currentUser?->role, $item['roles'] ?? [], true) &&
@@ -381,6 +381,7 @@
                             $isSectionActive = $visibleItems->contains(
                                 fn($item) => request()->routeIs($item['active']),
                             );
+                            $sectionBadge = $visibleItems->sum(fn($item) => $item['badge'] ?? 0);
                             $sectionKey =
                                 'admin-mobile-sidebar-section-' . \Illuminate\Support\Str::slug($section['label']);
                         @endphp
@@ -390,10 +391,19 @@
                         @endif
 
                         <div class="admin-sidebar-section mt-3 first:mt-0" data-sidebar-section="{{ $sectionKey }}"
-                            data-default-open="{{ $isSectionActive || $sectionIndex === 0 ? 'true' : 'false' }}">
+                            data-default-open="{{ $isSectionActive ? 'true' : 'false' }}">
                             <button type="button" data-sidebar-toggle
                                 class="flex w-full items-center gap-3 rounded-2xl bg-white px-4 py-3 text-left text-xs font-black uppercase tracking-[0.2em] text-stone-500">
+                                <i class="{{ $section['icon'] }} w-5 text-center"></i>
                                 <span class="flex-1">{{ $section['label'] }}</span>
+
+                                @if ($sectionBadge > 0)
+                                    <span
+                                        class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
+                                        {{ $sectionBadge > 99 ? '99+' : $sectionBadge }}
+                                    </span>
+                                @endif
+
                                 <i class="fa-solid fa-chevron-down text-[10px] transition duration-200"
                                     data-sidebar-chevron></i>
                             </button>

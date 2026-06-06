@@ -332,7 +332,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function initAdminSidebarDropdowns() {
     document.querySelectorAll('[data-sidebar-section]').forEach((section) => {
-        const key = section.dataset.sidebarSection;
         const defaultOpen = section.dataset.defaultOpen === 'true';
         const toggle = section.querySelector('[data-sidebar-toggle]');
         const panel = section.querySelector('[data-sidebar-panel]');
@@ -342,13 +341,13 @@ function initAdminSidebarDropdowns() {
             return;
         }
 
-        const saved = localStorage.getItem(key);
-        let isOpen = saved === null ? defaultOpen : saved === 'true';
+        let isOpen = defaultOpen;
 
         const applyState = () => {
             panel.style.gridTemplateRows = isOpen ? '1fr' : '0fr';
 
             const inner = panel.firstElementChild;
+
             if (inner) {
                 inner.style.minHeight = '0';
             }
@@ -360,7 +359,6 @@ function initAdminSidebarDropdowns() {
 
         toggle.addEventListener('click', () => {
             isOpen = !isOpen;
-            localStorage.setItem(key, isOpen ? 'true' : 'false');
             applyState();
         });
 

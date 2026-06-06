@@ -65,32 +65,6 @@
                 <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
                     <div class="mb-6">
                         <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
-                            SEO
-                        </p>
-                        <h3 class="mt-2 text-xl font-black text-stone-950">
-                            Metadata Website
-                        </h3>
-                    </div>
-
-                    <div class="grid gap-5">
-                        <x-admin.form.input name="meta_title" label="Meta Title" :value="$setting->meta_title" />
-
-                        <x-admin.form.textarea name="meta_description" label="Meta Description" :value="$setting->meta_description"
-                            rows="3" />
-
-                        <x-admin.form.textarea name="meta_keywords" label="Meta Keywords" :value="$setting->meta_keywords"
-                            rows="3" />
-
-                        <x-admin.form.file name="default_og_image" label="OG Image" accept=".jpg,.jpeg,.png,.webp"
-                            :preview="$setting->default_og_image
-                                ? asset('storage/' . $setting->default_og_image)
-                                : null" preview-alt="OG Image" />
-                    </div>
-                </section>
-
-                <section class="rounded-[2rem] border border-stone-200 bg-[#fbf7ef] p-6 shadow-sm">
-                    <div class="mb-6">
-                        <p class="text-xs font-black uppercase tracking-[0.25em] text-amber-700">
                             Maintenance
                         </p>
                         <h3 class="mt-2 text-xl font-black text-stone-950">
