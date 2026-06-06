@@ -1,58 +1,563 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Bendo Jaya Batik Fashion
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Bendo Jaya Batik Fashion** adalah website company profile dan manajemen konten untuk bisnis fashion batik. Website ini dibuat untuk menampilkan profil brand, layanan, koleksi fashion, galeri, artikel, partner kerja sama, testimoni, FAQ, serta pengelolaan inquiry dan quotation dari calon client.
 
-## About Laravel
+Project ini dibangun menggunakan **Laravel**, **Tailwind CSS**, **Vite**, dan panel admin custom.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Public Website
 
-## Learning Laravel
+* Landing page dinamis
+* Hero section dengan CTA WhatsApp
+* Value strip
+* Tentang brand
+* Layanan
+* Koleksi pilihan
+* Galeri
+* Partner / brand kerja sama
+* Artikel / blog
+* FAQ
+* Testimoni
+* Custom page
+* Form kontak
+* Form inquiry koleksi
+* Form inquiry kerja sama
+* Public quotation link
+* Approve / reject quotation dari client
+* SEO meta tag
+* Sitemap XML
+* Robots.txt
+* LLMS.txt
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Admin Panel
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Dashboard
 
-## Agentic Development
+* Ringkasan data website
+* Statistik inquiry
+* Statistik quotation
+* Akses cepat ke modul utama
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Landing Page
+
+* Homepage settings
+* Layanan
+* Partner bisnis
+* Testimoni
+* FAQ
+
+### Halaman Publik
+
+* Menu navigasi dinamis
+* Custom page
+* Koleksi fashion
+* Galeri
+* Artikel / blog
+* Media library
+
+### Lead & Penawaran
+
+* Pesan kontak
+* Inquiry koleksi
+* Inquiry kerja sama
+* Quotation / penawaran sederhana
+* Public quotation preview
+* Link approval quotation
+* Redirect WhatsApp setelah inquiry
+
+### Notifikasi
+
+* Notifikasi inquiry baru
+* Notifikasi quotation dilihat
+* Notifikasi quotation disetujui
+* Notifikasi quotation ditolak
+* Status sudah dibaca / belum dibaca
+
+### Pengaturan
+
+* Pengaturan website
+* SEO Manager
+* Template WhatsApp
+* User management
+* Backup / export data
+* Activity log
+* Profile admin
+* Ubah password
+
+---
+
+## Teknologi
+
+* Laravel
+* PHP 8.3+
+* MySQL / MariaDB
+* Tailwind CSS
+* Vite
+* FontAwesome lokal
+* SweetAlert2
+* Laravel Storage
+* cPanel compatible deployment
+
+---
+
+## Instalasi Lokal
+
+Clone repository:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone git@github.com:rulfadev/bendojaya.git
+cd bendojaya
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Install dependency PHP:
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Install dependency Node:
 
-## Code of Conduct
+```bash
+npm install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Copy file environment:
 
-## Security Vulnerabilities
+```bash
+cp .env.example .env
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Generate app key:
 
-## License
+```bash
+php artisan key:generate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Atur konfigurasi database di `.env`:
+
+```env
+APP_NAME="Bendo Jaya Batik Fashion"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=bendojaya
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Jalankan migration dan seeder:
+
+```bash
+php artisan migrate --seed
+```
+
+Buat storage link:
+
+```bash
+php artisan storage:link
+```
+
+Jalankan Vite:
+
+```bash
+npm run dev
+```
+
+Jalankan Laravel server:
+
+```bash
+php artisan serve
+```
+
+Akses website:
+
+```text
+http://localhost:8000
+```
+
+---
+
+## Build Production
+
+Untuk membuat asset production:
+
+```bash
+npm run build
+```
+
+Hasil build akan dibuat di:
+
+```text
+public/build
+```
+
+Pastikan file berikut tersedia sebelum deploy:
+
+```text
+public/build/manifest.json
+```
+
+---
+
+## Akun Admin
+
+Jika menggunakan seeder, akun admin default dapat disesuaikan di:
+
+```text
+database/seeders/AdminUserSeeder.php
+```
+
+Setelah seeder dijalankan, login melalui:
+
+```text
+/admin/login
+```
+
+atau:
+
+```text
+/login
+```
+
+tergantung route auth yang digunakan.
+
+---
+
+## Deployment ke cPanel
+
+### Struktur Folder
+
+Project diarahkan ke folder:
+
+```text
+/home/username/bendojaya
+```
+
+Domain dapat diarahkan langsung ke folder project root, lalu `.htaccess` root akan meneruskan request ke folder `public`.
+
+---
+
+## `.env` Production
+
+Contoh konfigurasi `.env` production:
+
+```env
+APP_NAME="Bendo Jaya Batik Fashion"
+APP_ENV=production
+APP_KEY=base64:ISI_APP_KEY
+APP_DEBUG=false
+APP_URL=https://bendojaya.id
+
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=nama_database
+DB_USERNAME=user_database
+DB_PASSWORD=password_database
+
+FILESYSTEM_DISK=public
+
+SESSION_DRIVER=file
+CACHE_STORE=file
+QUEUE_CONNECTION=sync
+
+MAIL_MAILER=log
+```
+
+---
+
+## Perintah Setelah Upload / Pull di Hosting
+
+Masuk ke folder project:
+
+```bash
+cd /home/username/bendojaya
+```
+
+Install dependency production:
+
+```bash
+composer install --no-dev --optimize-autoloader
+```
+
+Jalankan migration:
+
+```bash
+php artisan migrate --force
+```
+
+Jalankan seeder yang diperlukan:
+
+```bash
+php artisan db:seed --class=WhatsappTemplateSeeder
+```
+
+Buat storage link:
+
+```bash
+php artisan storage:link
+```
+
+Clear cache:
+
+```bash
+php artisan optimize:clear
+php artisan config:clear
+php artisan view:clear
+```
+
+Cache production:
+
+```bash
+php artisan config:cache
+php artisan view:cache
+```
+
+> Catatan: Jangan gunakan `php artisan route:cache` jika masih ada route closure seperti `robots.txt`, `sitemap.xml`, atau `llms.txt`.
+
+---
+
+## Deploy Menggunakan Git Pull di cPanel
+
+Jika repository private, gunakan SSH key / deploy key GitHub.
+
+Update project:
+
+```bash
+cd /home/username/bendojaya
+git pull origin main
+```
+
+Setelah pull:
+
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan optimize:clear
+php artisan config:clear
+php artisan view:clear
+php artisan config:cache
+php artisan view:cache
+```
+
+Jika `public/build` tidak ikut GitHub, pastikan build asset tetap tersedia di hosting.
+
+Cek:
+
+```bash
+ls -la public/build/manifest.json
+```
+
+Jika tidak ada, lakukan salah satu:
+
+```bash
+npm install
+npm run build
+```
+
+atau upload manual folder:
+
+```text
+public/build
+```
+
+ke hosting.
+
+---
+
+## Catatan Vite di cPanel
+
+Pada beberapa shared hosting, `npm run build` dapat gagal karena limit resource server. Jika terjadi, build asset di lokal:
+
+```bash
+npm install
+npm run build
+```
+
+Lalu upload folder:
+
+```text
+public/build
+```
+
+ke:
+
+```text
+/home/username/bendojaya/public/build
+```
+
+File yang wajib ada:
+
+```text
+public/build/manifest.json
+```
+
+---
+
+## Permission Folder
+
+Pastikan folder berikut writable:
+
+```bash
+chmod -R 775 storage bootstrap/cache
+```
+
+Jika masih terjadi error permission di shared hosting, sementara dapat menggunakan:
+
+```bash
+chmod -R 777 storage bootstrap/cache
+```
+
+---
+
+## Storage
+
+Jika gambar upload tidak tampil, jalankan:
+
+```bash
+php artisan storage:link
+```
+
+Pastikan URL storage dapat diakses:
+
+```text
+/storage/...
+```
+
+Jika masih forbidden, cek permission folder `storage`, `public/storage`, dan symlink.
+
+---
+
+## Modul yang Sudah Tersedia
+
+* Dashboard admin
+* Site settings
+* Homepage settings
+* SEO Manager
+* WhatsApp template
+* Navigation menu builder
+* Services / layanan
+* Fashion collections
+* Gallery
+* Articles / blog
+* Custom pages
+* Partners
+* FAQ
+* Testimonials
+* Contact messages
+* Collection inquiries
+* Partnership inquiries
+* Quotation
+* Public quotation preview
+* Admin notifications
+* User management
+* Profile admin
+* Activity log
+* Backup / export data
+* SweetAlert global popup
+* Maintenance mode
+
+---
+
+## Alur Inquiry dan Quotation
+
+### Inquiry Koleksi
+
+1. Client membuka detail koleksi.
+2. Client mengisi form inquiry.
+3. Data tersimpan ke database.
+4. Client diarahkan ke WhatsApp admin.
+5. Admin follow up dari dashboard.
+6. Admin dapat membuat quotation dari inquiry.
+
+### Inquiry Kerja Sama
+
+1. Client membuka halaman kerja sama.
+2. Client mengisi proposal kerja sama.
+3. Data tersimpan ke database.
+4. Client diarahkan ke WhatsApp admin.
+5. Admin follow up.
+6. Admin dapat membuat quotation resmi.
+
+### Quotation
+
+1. Admin membuat quotation.
+2. Admin mengirim public quotation link ke client.
+3. Client membuka link quotation.
+4. Client dapat print / save PDF.
+5. Client dapat menyetujui atau menolak quotation.
+6. Jika disetujui, client diarahkan ke WhatsApp admin untuk konfirmasi.
+
+---
+
+## SEO
+
+Website menyediakan:
+
+* Meta title
+* Meta description
+* Meta keywords
+* OG image
+* Canonical URL
+* Robots meta
+* JSON-LD schema
+* `robots.txt`
+* `sitemap.xml`
+* `llms.txt`
+
+SEO utama dikelola melalui menu:
+
+```text
+Admin Panel → SEO Manager
+```
+
+---
+
+## Maintenance Mode
+
+Maintenance mode dapat diatur melalui:
+
+```text
+Admin Panel → Pengaturan Website
+```
+
+Jika aktif, halaman publik akan menampilkan halaman maintenance, sementara admin tetap dapat mengakses panel.
+
+---
+
+## Commit Message Contoh
+
+```text
+Update:
+- Admin Sidebar
+- Notification Module
+- Site Settings
+- SEO Manager
+- WhatsApp Template
+- Inquiry Flow
+- Public Quotation
+- SweetAlert Popup
+- cPanel Deployment Fix
+- Readme.md
+```
+
+---
+
+## Lisensi
+
+Project ini dibuat untuk kebutuhan website **Bendo Jaya Batik Fashion**.
+
+---
+
+## Developer
+
+Developed by **RulfaDev**.
