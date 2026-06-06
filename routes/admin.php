@@ -81,6 +81,14 @@ Route::prefix('admin')
 
             Route::get('/notifications', [NotificationController::class, 'index'])
                 ->name('notifications.index');
+            Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])
+                ->name('notifications.mark-all-as-read');
+            Route::get('/notifications/{notification}/read', [NotificationController::class, 'read'])
+                ->name('notifications.read');
+            Route::patch('/notifications/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])
+                ->name('notifications.mark-as-read');
+            Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])
+                ->name('notifications.destroy');
         });
 
         Route::middleware('role:admin,editor')->group(function () {

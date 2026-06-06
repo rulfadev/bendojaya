@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CollectionInquiry;
 use App\Models\FashionCollection;
+use App\Support\AdminNotifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -42,6 +43,18 @@ class CollectionInquiryController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
+
+        AdminNotifier::send(
+            'collection_inquiry',
+            'Inquiry koleksi baru',
+            $inquiry->name.' tertarik dengan koleksi '.($collection->name ?? 'Bendo Jaya'),
+            route('admin.collection-inquiries.show', $inquiry),
+            [
+                'id' => $inquiry->id,
+                'phone' => $inquiry->phone,
+                'collection_id' => $collection->id,
+            ]
+        );
 
         $setting = SiteSetting::query()->first();
 

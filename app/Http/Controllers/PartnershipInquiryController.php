@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PartnershipInquiry;
 use App\Models\SiteSetting;
+use App\Support\AdminNotifier;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,17 @@ class PartnershipInquiryController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
+
+        AdminNotifier::send(
+            'partnership_inquiry',
+            'Inquiry kerja sama baru',
+            ($inquiry->company_name ?: 'Kerja Sama Bendo Jaya').' dari PIC '.$inquiry->pic_name,
+            route('admin.partnership-inquiries.show', $inquiry),
+            [
+                'id' => $inquiry->id,
+                'phone' => $inquiry->phone,
+            ]
+        );
 
         $setting = SiteSetting::query()->first();
 

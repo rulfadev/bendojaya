@@ -7,11 +7,11 @@
 
     $newPartnershipInquiriesCount = \App\Models\PartnershipInquiry::query()->where('status', 'new')->count();
 
-    $notificationCount =
-        $newCollectionInquiriesCount +
-        $newPartnershipInquiriesCount +
-        \App\Models\Quotation::query()->where('status', 'approved')->count() +
-        \App\Models\Quotation::query()->where('status', 'rejected')->count();
+    $notificationCount = \App\Models\AdminNotification::query()->whereNull('read_at')->count();
+
+    $newCollectionInquiriesCount = \App\Models\CollectionInquiry::query()->where('status', 'new')->count();
+
+    $newPartnershipInquiriesCount = \App\Models\PartnershipInquiry::query()->where('status', 'new')->count();
 
     $navSections = [
         [
@@ -258,48 +258,76 @@
 
             <div class="h-[calc(100vh-6rem)] overflow-y-auto px-5 py-6">
                 <nav class="space-y-1">
-                    @foreach ($navSections as $section)
+                    @foreach ($navSections as $sectionIndex => $section)
                         @php
                             $visibleItems = collect($section['items'])->filter(function ($item) use ($currentUser) {
                                 return in_array($currentUser?->role, $item['roles'] ?? [], true) &&
                                     \Illuminate\Support\Facades\Route::has($item['route']);
                             });
+
+                            $isSectionActive = $visibleItems->contains(
+                                fn($item) => request()->routeIs($item['active']),
+                            );
+                            $sectionKey = 'admin-sidebar-section-' . \Illuminate\Support\Str::slug($section['label']);
                         @endphp
 
                         @if ($visibleItems->isEmpty())
                             @continue
                         @endif
 
-                        <div class="mt-6 first:mt-0">
-                            <p class="mb-2 px-4 text-[11px] font-black uppercase tracking-[0.22em] text-stone-400">
-                                {{ $section['label'] }}
-                            </p>
+                        <div class="admin-sidebar-section mt-3 first:mt-0" data-sidebar-section="{{ $sectionKey }}"
+                            data-default-open="{{ $isSectionActive || $sectionIndex === 0 ? 'true' : 'false' }}">
+                            <button type="button" data-sidebar-toggle
+                                class="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-xs font-black uppercase tracking-[0.2em] text-stone-400 transition hover:bg-white hover:text-stone-700">
+                                <span
+                                    class="flex h-8 w-8 items-center justify-center rounded-xl bg-stone-100 text-stone-500">
+                                    <i class="fa-solid fa-layer-group text-xs"></i>
+                                </span>
 
-                            <div class="space-y-1">
-                                @foreach ($visibleItems as $item)
-                                    <a href="{{ route($item['route']) }}"
-                                        class="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition
-                   {{ request()->routeIs($item['active'])
-                       ? 'bg-stone-950 text-amber-200 shadow-xl shadow-stone-900/10'
-                       : 'text-stone-600 hover:bg-white hover:text-stone-950 hover:shadow-sm' }}">
-                                        <span
-                                            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-base
-                        {{ request()->routeIs($item['active'])
-                            ? 'bg-amber-200 text-stone-950'
-                            : 'bg-stone-100 text-stone-500 group-hover:bg-amber-100 group-hover:text-stone-950' }}">
-                                            <i class="{{ $item['icon'] }}"></i>
-                                        </span>
+                                <span class="flex-1 truncate">{{ $section['label'] }}</span>
 
-                                        <span class="flex-1 truncate">{{ $item['label'] }}</span>
+                                @php
+                                    $sectionBadge = $visibleItems->sum(fn($item) => $item['badge'] ?? 0);
+                                @endphp
 
-                                        @if (($item['badge'] ?? 0) > 0)
+                                @if ($sectionBadge > 0)
+                                    <span
+                                        class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
+                                        {{ $sectionBadge > 99 ? '99+' : $sectionBadge }}
+                                    </span>
+                                @endif
+
+                                <i class="fa-solid fa-chevron-down text-[10px] transition duration-200"
+                                    data-sidebar-chevron></i>
+                            </button>
+
+                            <div data-sidebar-panel class="grid overflow-hidden transition-all duration-300">
+                                <div class="space-y-1 py-1 pl-2">
+                                    @foreach ($visibleItems as $item)
+                                        <a href="{{ route($item['route']) }}"
+                                            class="group flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition
+                       {{ request()->routeIs($item['active'])
+                           ? 'bg-stone-950 text-amber-200 shadow-xl shadow-stone-900/10'
+                           : 'text-stone-600 hover:bg-white hover:text-stone-950 hover:shadow-sm' }}">
                                             <span
-                                                class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
-                                                {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
+                                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-base
+                            {{ request()->routeIs($item['active'])
+                                ? 'bg-amber-200 text-stone-950'
+                                : 'bg-stone-100 text-stone-500 group-hover:bg-amber-100 group-hover:text-stone-950' }}">
+                                                <i class="{{ $item['icon'] }}"></i>
                                             </span>
-                                        @endif
-                                    </a>
-                                @endforeach
+
+                                            <span class="flex-1 truncate">{{ $item['label'] }}</span>
+
+                                            @if (($item['badge'] ?? 0) > 0)
+                                                <span
+                                                    class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
+                                                    {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
+                                                </span>
+                                            @endif
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -343,40 +371,52 @@
                 </div>
 
                 <div class="flex gap-2 overflow-x-auto border-t border-stone-200/80 px-5 py-3 lg:hidden">
-                    @foreach ($navSections as $section)
+                    @foreach ($navSections as $sectionIndex => $section)
                         @php
                             $visibleItems = collect($section['items'])->filter(function ($item) use ($currentUser) {
                                 return in_array($currentUser?->role, $item['roles'] ?? [], true) &&
                                     \Illuminate\Support\Facades\Route::has($item['route']);
                             });
+
+                            $isSectionActive = $visibleItems->contains(
+                                fn($item) => request()->routeIs($item['active']),
+                            );
+                            $sectionKey =
+                                'admin-mobile-sidebar-section-' . \Illuminate\Support\Str::slug($section['label']);
                         @endphp
 
                         @if ($visibleItems->isEmpty())
                             @continue
                         @endif
 
-                        <div class="mt-5 first:mt-0">
-                            <p class="mb-2 px-2 text-[10px] font-black uppercase tracking-[0.22em] text-stone-400">
-                                {{ $section['label'] }}
-                            </p>
+                        <div class="admin-sidebar-section mt-3 first:mt-0" data-sidebar-section="{{ $sectionKey }}"
+                            data-default-open="{{ $isSectionActive || $sectionIndex === 0 ? 'true' : 'false' }}">
+                            <button type="button" data-sidebar-toggle
+                                class="flex w-full items-center gap-3 rounded-2xl bg-white px-4 py-3 text-left text-xs font-black uppercase tracking-[0.2em] text-stone-500">
+                                <span class="flex-1">{{ $section['label'] }}</span>
+                                <i class="fa-solid fa-chevron-down text-[10px] transition duration-200"
+                                    data-sidebar-chevron></i>
+                            </button>
 
-                            <div class="grid gap-2">
-                                @foreach ($visibleItems as $item)
-                                    <a href="{{ route($item['route']) }}"
-                                        class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold
-                   {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
-                                        <i class="{{ $item['icon'] }} w-5 text-center"></i>
+                            <div data-sidebar-panel class="grid overflow-hidden transition-all duration-300">
+                                <div class="grid gap-2 py-2">
+                                    @foreach ($visibleItems as $item)
+                                        <a href="{{ route($item['route']) }}"
+                                            class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold
+                       {{ request()->routeIs($item['active']) ? 'bg-stone-950 text-amber-200' : 'bg-white text-stone-600' }}">
+                                            <i class="{{ $item['icon'] }} w-5 text-center"></i>
 
-                                        <span class="flex-1">{{ $item['label'] }}</span>
+                                            <span class="flex-1">{{ $item['label'] }}</span>
 
-                                        @if (($item['badge'] ?? 0) > 0)
-                                            <span
-                                                class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
-                                                {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
-                                            </span>
-                                        @endif
-                                    </a>
-                                @endforeach
+                                            @if (($item['badge'] ?? 0) > 0)
+                                                <span
+                                                    class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">
+                                                    {{ $item['badge'] > 99 ? '99+' : $item['badge'] }}
+                                                </span>
+                                            @endif
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     @endforeach
