@@ -12,7 +12,7 @@
     $navSections = [
         [
             'label' => 'Utama',
-            'icon' => 'fa-solid fa-grid-2',
+            'icon' => 'fa-solid fa-house',
             'items' => [
                 [
                     'label' => 'Dashboard',

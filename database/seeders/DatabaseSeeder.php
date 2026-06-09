@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             HomepageSettingSeeder::class,
             FaqSeeder::class,
             WhatsappTemplateSeeder::class,
+            DefaultEnglishTranslationSeeder::class,
         ]);
     }
 }
