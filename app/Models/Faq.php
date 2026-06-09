@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 #[Fillable(['question', 'answer', 'category', 'is_featured', 'is_active', 'sort_order'])]
 class Faq extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'question',
+        'answer',
+    ];
+
     protected function casts(): array
     {
         return [

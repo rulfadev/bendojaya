@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,17 @@ use Illuminate\Support\Facades\Storage;
 #[Fillable(['title', 'slug', 'icon', 'image', 'short_description', 'description', 'is_featured', 'is_active', 'sort_order', 'show_button', 'button_label', 'button_url'])]
 class Service extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'title',
+        'short_description',
+        'description',
+        'button_text',
+        'seo_title',
+        'seo_description',
+    ];
+
     protected function casts(): array
     {
         return [

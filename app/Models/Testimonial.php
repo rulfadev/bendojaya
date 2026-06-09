@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,13 @@ use Illuminate\Support\Str;
 #[Fillable(['token', 'name', 'company_name', 'position', 'email', 'phone', 'rating', 'message', 'photo', 'logo', 'status', 'is_featured', 'consent_to_publish', 'sort_order', 'submitted_at', 'approved_at'])]
 class Testimonial extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'position',
+        'message',
+    ];
+
     protected function casts(): array
     {
         return [

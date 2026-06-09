@@ -5,6 +5,7 @@ use App\Http\Controllers\CollectionInquiryController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FashionCollectionController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PageController as FrontendPageController;
 use App\Http\Controllers\PartnershipInquiryController;
@@ -13,6 +14,8 @@ use App\Http\Controllers\TestimonialFormController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('site.maintenance')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+
     Route::get('/pages/{page:slug}', [FrontendPageController::class, 'show'])
         ->name('pages.show');
 

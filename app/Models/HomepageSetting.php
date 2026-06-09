@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -75,6 +76,56 @@ use Illuminate\Support\Facades\Storage;
 ])]
 class HomepageSetting extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'hero_badge',
+        'hero_title',
+        'hero_subtitle',
+        'hero_primary_label',
+        'hero_secondary_label',
+
+        'about_badge',
+        'about_title',
+        'about_subtitle',
+        'about_description',
+        'about_button_label',
+
+        'services_badge',
+        'services_title',
+        'services_subtitle',
+
+        'collection_badge',
+        'collection_title',
+        'collection_subtitle',
+
+        'gallery_badge',
+        'gallery_title',
+        'gallery_subtitle',
+
+        'partners_badge',
+        'partners_title',
+        'partners_subtitle',
+
+        'testimonials_badge',
+        'testimonials_title',
+        'testimonials_subtitle',
+
+        'articles_badge',
+        'articles_title',
+        'articles_subtitle',
+
+        'faq_badge',
+        'faq_title',
+        'faq_subtitle',
+
+        'cta_badge',
+        'cta_title',
+        'cta_subtitle',
+        'cta_primary_label',
+        'cta_secondary_label',
+    ];
+
     protected function casts(): array
     {
         return [

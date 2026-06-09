@@ -182,6 +182,13 @@
                     'roles' => ['admin'],
                 ],
                 [
+                    'label' => 'Translate Content',
+                    'route' => 'admin.translations.index',
+                    'active' => 'admin.translations.*',
+                    'icon' => 'fa-solid fa-language',
+                    'roles' => ['admin', 'editor'],
+                ],
+                [
                     'label' => 'User Management',
                     'route' => 'admin.users.index',
                     'active' => 'admin.users.*',

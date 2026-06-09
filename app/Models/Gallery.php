@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,17 @@ use Illuminate\Support\Facades\Storage;
 
 class Gallery extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'title',
+        'short_description',
+        'description',
+        'alt_text',
+        'seo_title',
+        'seo_description',
+    ];
+
     protected function casts(): array
     {
         return [

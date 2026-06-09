@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,17 @@ use Illuminate\Support\Facades\Storage;
 #[Fillable(['name', 'slug', 'category', 'main_image', 'short_description', 'description', 'material', 'color_palette', 'size_info', 'is_featured', 'is_active', 'sort_order'])]
 class FashionCollection extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'name',
+        'category',
+        'short_description',
+        'description',
+        'seo_title',
+        'seo_description',
+    ];
+
     protected function casts(): array
     {
         return [

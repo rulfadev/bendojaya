@@ -24,6 +24,7 @@
         </nav>
 
         <div class="flex items-center gap-3">
+            <x-frontend.language-switcher />
             <x-frontend.consultation-link class="hidden sm:inline-flex !bg-[#FBE9CB] !text-[#3C3B39] hover:!bg-white" />
 
             <button type="button"

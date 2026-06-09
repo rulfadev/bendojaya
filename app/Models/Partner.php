@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,12 @@ use Illuminate\Support\Facades\Storage;
 
 class Partner extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'description',
+    ];
+
     protected function casts(): array
     {
         return [

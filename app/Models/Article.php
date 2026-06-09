@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,16 @@ use Illuminate\Support\Facades\Storage;
 
 class Article extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'title',
+        'excerpt',
+        'content',
+        'seo_title',
+        'seo_description',
+    ];
+
     protected function casts(): array
     {
         return [

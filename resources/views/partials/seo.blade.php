@@ -23,6 +23,10 @@
     <meta name="keywords" content="{{ $seoMeta['keywords'] }}">
 @endif
 
+<link rel="alternate" hreflang="id" href="{{ \App\Support\LocalizedUrl::switchTo('id') }}">
+<link rel="alternate" hreflang="en" href="{{ \App\Support\LocalizedUrl::switchTo('en') }}">
+<link rel="alternate" hreflang="x-default" href="{{ \App\Support\LocalizedUrl::switchTo('id') }}">
+
 <meta name="robots" content="{{ $seoMeta['robots'] }}">
 <link rel="canonical" href="{{ $seoMeta['canonical'] }}">
 

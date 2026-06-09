@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\BackupExportController;
 use App\Http\Controllers\Admin\CollectionInquiryController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ContentTranslationController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FashionCollectionController;
@@ -136,6 +137,15 @@ Route::prefix('admin')
             Route::patch('/quotations/{quotation}/status', [QuotationController::class, 'updateStatus'])
                 ->name('quotations.status');
             Route::resource('quotations', QuotationController::class);
+
+            Route::get('/translations', [ContentTranslationController::class, 'index'])
+                ->name('translations.index');
+            Route::get('/translations/{resource}', [ContentTranslationController::class, 'list'])
+                ->name('translations.list');
+            Route::get('/translations/{resource}/{id}/{locale?}', [ContentTranslationController::class, 'edit'])
+                ->name('translations.edit');
+            Route::put('/translations/{resource}/{id}/{locale?}', [ContentTranslationController::class, 'update'])
+                ->name('translations.update');
         });
 
         Route::middleware('role:admin')->group(function () {

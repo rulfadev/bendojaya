@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['label', 'type', 'url', 'page_id', 'article_id', 'anchor', 'position', 'target', 'is_active', 'sort_order'])]
 class NavigationMenu extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'label',
+    ];
+
     protected function casts(): array
     {
         return [
