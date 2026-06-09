@@ -79,13 +79,6 @@
                     <p>{{ $setting?->email ?? 'info@bendojaya.id' }}</p>
                     <p>{{ $setting?->address ?? 'Indonesia' }}</p>
 
-                    <a href="https://wa.me/{{ $whatsapp }}" target="_blank"
-                        class="inline-flex rounded-full bg-[#FBE9CB] px-5 py-3 font-bold text-[#3C3B39] transition hover:bg-white">
-
-                        {{ __('frontend.whatsapp') }}
-
-                    </a>
-
                 </div>
 
             </div>

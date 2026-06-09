@@ -34,8 +34,8 @@
 
                     @if ($homepage?->cta_button_label)
                         <a href="{{ $ctaHref }}"
-                            class="mt-8 inline-flex rounded-full bg-[#FBE9CB] px-8 py-4 text-sm font-black text-[#3C3B39] transition hover:-translate-y-1 hover:bg-white">
-                            {{ $homepage->cta_button_label }}
+                            class="mt-8 inline-flex rounded-full bg-[#FBE9CB] px-8 py-4 text-sm font-black text-[#3C3B39] transition hover:-translate-y-1 hover:bg-white gap-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> {{ $homepage->cta_button_label }}
                         </a>
                     @endif
                 </div>

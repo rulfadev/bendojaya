@@ -41,51 +41,53 @@ class ContentTranslationController extends Controller
             'model' => HomepageSetting::class,
             'title_field' => 'hero_title',
             'fields' => [
-                'hero_badge' => 'Hero Badge',
+                'hero_eyebrow' => 'Hero Eyebrow',
                 'hero_title' => 'Hero Title',
                 'hero_subtitle' => 'Hero Subtitle',
                 'hero_primary_label' => 'Hero Primary Button',
                 'hero_secondary_label' => 'Hero Secondary Button',
 
-                'about_badge' => 'About Badge',
+                'value_items' => 'Value Strip Items',
+
+                'about_eyebrow' => 'About Eyebrow',
                 'about_title' => 'About Title',
-                'about_subtitle' => 'About Subtitle',
                 'about_description' => 'About Description',
                 'about_button_label' => 'About Button',
+                'about_points' => 'About Points',
 
-                'services_badge' => 'Services Badge',
+                'services_eyebrow' => 'Services Eyebrow',
                 'services_title' => 'Services Title',
-                'services_subtitle' => 'Services Subtitle',
+                'services_description' => 'Services Description',
 
-                'collection_badge' => 'Collection Badge',
-                'collection_title' => 'Collection Title',
-                'collection_subtitle' => 'Collection Subtitle',
+                'collections_eyebrow' => 'Collections Eyebrow',
+                'collections_title' => 'Collections Title',
+                'collections_description' => 'Collections Description',
 
-                'gallery_badge' => 'Gallery Badge',
+                'gallery_eyebrow' => 'Gallery Eyebrow',
                 'gallery_title' => 'Gallery Title',
-                'gallery_subtitle' => 'Gallery Subtitle',
+                'gallery_description' => 'Gallery Description',
 
-                'partners_badge' => 'Partners Badge',
+                'partners_eyebrow' => 'Partners Eyebrow',
                 'partners_title' => 'Partners Title',
-                'partners_subtitle' => 'Partners Subtitle',
+                'partners_description' => 'Partners Description',
+                'partners_points' => 'Partners Points',
 
-                'testimonials_badge' => 'Testimonials Badge',
+                'testimonials_eyebrow' => 'Testimonials Eyebrow',
                 'testimonials_title' => 'Testimonials Title',
-                'testimonials_subtitle' => 'Testimonials Subtitle',
+                'testimonials_description' => 'Testimonials Description',
 
-                'articles_badge' => 'Articles Badge',
+                'articles_eyebrow' => 'Articles Eyebrow',
                 'articles_title' => 'Articles Title',
-                'articles_subtitle' => 'Articles Subtitle',
+                'articles_description' => 'Articles Description',
 
-                'faq_badge' => 'FAQ Badge',
+                'faq_eyebrow' => 'FAQ Eyebrow',
                 'faq_title' => 'FAQ Title',
-                'faq_subtitle' => 'FAQ Subtitle',
+                'faq_description' => 'FAQ Description',
 
-                'cta_badge' => 'CTA Badge',
+                'cta_eyebrow' => 'CTA Eyebrow',
                 'cta_title' => 'CTA Title',
-                'cta_subtitle' => 'CTA Subtitle',
-                'cta_primary_label' => 'CTA Primary Button',
-                'cta_secondary_label' => 'CTA Secondary Button',
+                'cta_description' => 'CTA Description',
+                'cta_button_label' => 'CTA Button',
             ],
         ],
 
@@ -104,6 +106,7 @@ class ContentTranslationController extends Controller
             'title_field' => 'title',
             'fields' => [
                 'title' => 'Judul',
+                'category' => 'Kategori',
                 'short_description' => 'Deskripsi Singkat',
                 'description' => 'Deskripsi',
                 'alt_text' => 'Alt Text',
@@ -150,6 +153,7 @@ class ContentTranslationController extends Controller
             'title_field' => 'title',
             'fields' => [
                 'title' => 'Judul',
+                'category' => 'Kategori',
                 'excerpt' => 'Ringkasan',
                 'content' => 'Konten',
                 'seo_title' => 'SEO Title',
@@ -249,8 +253,22 @@ class ContentTranslationController extends Controller
 
         $data = [];
 
+        $jsonFields = [
+            'value_items',
+            'about_points',
+            'partners_points',
+        ];
+
         foreach (array_keys($config['fields']) as $field) {
-            $data[$field] = $request->input('data.'.$field);
+            $value = $request->input('data.'.$field);
+
+            if (in_array($field, $jsonFields, true) && is_string($value)) {
+                $decoded = json_decode($value, true);
+
+                $value = json_last_error() === JSON_ERROR_NONE ? $decoded : $value;
+            }
+
+            $data[$field] = $value;
         }
 
         ContentTranslation::query()->updateOrCreate(

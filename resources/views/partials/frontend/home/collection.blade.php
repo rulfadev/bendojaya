@@ -1,6 +1,28 @@
 @php
     $collectionItems = collect($collections ?? []);
     $defaultImage = asset('assets/frontend/hero-product.jpg');
+    $isEnglish = app()->getLocale() === 'en';
+
+    $getText = function ($item, string $field, mixed $fallback = null) {
+        if (is_object($item) && method_exists($item, 'translated')) {
+            return $item->translated($field, null, data_get($item, $field, $fallback));
+        }
+
+        return data_get($item, $field, $fallback);
+    };
+
+    $collectionsIndexUrl =
+        $isEnglish && \Illuminate\Support\Facades\Route::has('en.collections.index')
+            ? route('en.collections.index')
+            : route('collections.index');
+
+    $collectionShowUrl = function ($collection, $slug) use ($isEnglish) {
+        if ($isEnglish && \Illuminate\Support\Facades\Route::has('en.collections.show')) {
+            return route('en.collections.show', $slug ?: $collection);
+        }
+
+        return $slug ? route('collections.show', $slug) : route('collections.index');
+    };
 @endphp
 
 <section id="collection" class="bg-[#FFF8ED] py-24 lg:py-32">
@@ -22,9 +44,9 @@
                 @endif
             </div>
 
-            <a href="{{ route('collections.index') }}"
+            <a href="{{ $collectionsIndexUrl }}"
                 class="group inline-flex w-fit items-center gap-4 rounded-full bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB] shadow-xl shadow-[#3C3B39]/10 transition hover:-translate-y-1 hover:bg-[#58433D] sm:px-7">
-                <span>Lihat Semua Koleksi</span>
+                <span>{{ __('frontend.view_all_collections') }}</span>
                 <span
                     class="flex h-9 w-9 items-center justify-center rounded-full bg-[#FBE9CB] text-[#3C3B39] transition group-hover:translate-x-1">
                     <i class="fa-solid fa-arrow-right text-xs"></i>
@@ -35,17 +57,15 @@
         <div class="grid gap-8 lg:grid-cols-12">
             @forelse ($collectionItems as $collection)
                 @php
-                    $name = data_get($collection, 'name', 'Bendo Jaya Collection');
-                    $category = data_get($collection, 'category', 'Bendo Jaya Collection');
-                    $shortDescription = data_get(
-                        $collection,
-                        'short_description',
-                        'Koleksi batik Bendo Jaya dengan karakter hangat dan elegan.',
-                    );
+                    $name = $getText($collection, 'name', 'Bendo Jaya Collection');
+                    $category = $getText($collection, 'category', 'Bendo Jaya Collection');
+
+                    $shortDescription = $getText($collection, 'short_description', __('frontend.footer_description'));
+
                     $mainImage = data_get($collection, 'main_image');
                     $slug = data_get($collection, 'slug');
+                    $detailUrl = $collectionShowUrl($collection, $slug);
 
-                    $detailUrl = $slug ? route('collections.show', $slug) : route('collections.index');
                     $image = $mainImage ? asset('storage/' . $mainImage) : $defaultImage;
 
                     $spanClass = $loop->first ? 'lg:col-span-6' : 'lg:col-span-3';
@@ -78,7 +98,7 @@
 
                                     <div
                                         class="mt-3 inline-flex items-center gap-3 rounded-full bg-[#FBE9CB] px-5 py-3 text-sm font-black text-[#3C3B39] transition group-hover:bg-white">
-                                        Detail Koleksi
+                                        {{ __('frontend.collection_detail') }}
                                         <i
                                             class="fa-solid fa-arrow-right text-xs transition group-hover:translate-x-1"></i>
                                     </div>
@@ -89,7 +109,7 @@
                 </article>
             @empty
                 <div class="rounded-[2rem] border border-[#E6D8C8] bg-white p-10 text-[#7F756D] lg:col-span-12">
-                    Belum ada koleksi aktif.
+                    {{ __('frontend.no_active_collections') }}
                 </div>
             @endforelse
         </div>

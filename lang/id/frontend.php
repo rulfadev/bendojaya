@@ -124,4 +124,56 @@ return [
         'above_50m' => '> 50 juta',
         'discuss' => 'Diskusi dahulu',
     ],
+
+    'about_image_alt' => 'Tentang Bendo Jaya',
+    'about_card_brand' => 'Bendo Jaya',
+    'about_card_title' => 'Traditional soul, modern wear.',
+    'about_eyebrow' => 'Tentang Bendo Jaya',
+    'about_title' => 'Menghadirkan batik sebagai identitas gaya yang hangat dan elegan.',
+    'about_description' => 'Bendo Jaya mengembangkan pakaian batik dengan karakter tradisional, warna hangat, dan tampilan yang cocok untuk kebutuhan harian, acara, hingga custom produksi.',
+    'about_button_label' => 'Selengkapnya Tentang Kami',
+
+    'about_points' => [
+        [
+            'title' => 'Koleksi berkarakter',
+            'description' => 'Motif, warna, dan potongan yang tetap membawa nuansa tradisional.',
+        ],
+        [
+            'title' => 'Custom untuk kebutuhan bisnis',
+            'description' => 'Cocok untuk brand, komunitas, instansi, maupun kebutuhan seragam.',
+        ],
+        [
+            'title' => 'Pendekatan kolaboratif',
+            'description' => 'Diskusi kebutuhan, konsep, warna, hingga arah visual produk.',
+        ],
+    ],
+
+    'consult' => 'Konsultasi',
+    'view_all_collections' => 'Lihat Semua Koleksi',
+    'collection_detail' => 'Detail Koleksi',
+    'view_detail' => 'Lihat Detail',
+    'view_all_gallery' => 'Lihat Semua Gallery',
+    'submit_partnership' => 'Ajukan Kerja Sama',
+    'view_all_articles' => 'Lihat Semua Artikel',
+    'read_article' => 'Baca Artikel',
+    'view_all_faq' => 'Lihat Semua FAQ',
+
+    'no_active_services' => 'Belum ada layanan aktif.',
+    'no_active_collections' => 'Belum ada koleksi aktif.',
+    'no_active_gallery' => 'Belum ada gallery aktif.',
+
+    'partners_points' => [
+        [
+            'title' => 'Brand Fashion',
+            'description' => 'Kolaborasi produk dan pengembangan koleksi.',
+        ],
+        [
+            'title' => 'Komunitas',
+            'description' => 'Custom seragam dan kebutuhan acara.',
+        ],
+        [
+            'title' => 'Instansi',
+            'description' => 'Produksi pakaian batik sesuai kebutuhan.',
+        ],
+    ],
 ];

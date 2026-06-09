@@ -1,11 +1,48 @@
 @php
-    $valueItems = collect(
-        $homepage?->value_items ?? [
-            ['title' => 'Batik Fashion', 'description' => 'Koleksi pakaian batik berkarakter.'],
-            ['title' => 'Custom Produksi', 'description' => 'Untuk brand, komunitas, dan instansi.'],
-            ['title' => 'Kerja Sama', 'description' => 'Kolaborasi produk dan seragam batik.'],
-        ],
-    );
+    $defaultValueItems =
+        app()->getLocale() === 'en'
+            ? [
+                [
+                    'title' => 'Batik Fashion',
+                    'description' => 'Characterful batik clothing collections.',
+                ],
+                [
+                    'title' => 'Custom Production',
+                    'description' => 'For brands, communities, and institutions.',
+                ],
+                [
+                    'title' => 'Partnership',
+                    'description' => 'Product collaboration and batik uniforms.',
+                ],
+            ]
+            : [
+                [
+                    'title' => 'Batik Fashion',
+                    'description' => 'Koleksi pakaian batik berkarakter.',
+                ],
+                [
+                    'title' => 'Custom Produksi',
+                    'description' => 'Untuk brand, komunitas, dan instansi.',
+                ],
+                [
+                    'title' => 'Kerja Sama',
+                    'description' => 'Kolaborasi produk dan seragam batik.',
+                ],
+            ];
+
+    $translatedValueItems = null;
+
+    if ($homepage && app()->getLocale() !== 'id' && method_exists($homepage, 'contentTranslations')) {
+        $translatedValueItems = data_get(
+            $homepage
+                ->contentTranslations()
+                ->where('locale', app()->getLocale())
+                ->first()?->data,
+            'value_items',
+        );
+    }
+
+    $valueItems = collect($translatedValueItems ?: $homepage?->value_items ?? $defaultValueItems);
 @endphp
 
 <section class="bg-[#3C3B39] py-10 text-[#FBE9CB]">
@@ -19,7 +56,7 @@
                     </h3>
 
                     <p class="mt-3 text-sm leading-7 text-[#E6D8C8]">
-                        {{ data_get($item, 'description', 'Batik fashion dengan karakter hangat dan elegan.') }}
+                        {{ data_get($item, 'description', app()->getLocale() === 'en' ? 'Batik fashion with a warm and elegant character.' : 'Batik fashion dengan karakter hangat dan elegan.') }}
                     </p>
                 </div>
             @endforeach

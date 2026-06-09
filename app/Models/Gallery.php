@@ -16,6 +16,7 @@ class Gallery extends Model
 
     protected array $translatable = [
         'title',
+        'category',
         'short_description',
         'description',
         'alt_text',

@@ -1,7 +1,12 @@
 @php
     $faqItems = collect($faqs ?? []);
-@endphp
+    $isEnglish = app()->getLocale() === 'en';
 
+    $faqIndexUrl =
+        $isEnglish && \Illuminate\Support\Facades\Route::has('en.faqs.index')
+            ? route('en.faqs.index')
+            : route('faqs.index');
+@endphp
 @if ($faqItems->isNotEmpty())
     <section id="faq" class="bg-[#FFF8ED] py-24 lg:py-32">
         <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
@@ -18,9 +23,9 @@
                     {{ $homepage?->faq_description ?: 'Informasi singkat seputar layanan, custom batik, kerja sama, dan pemesanan.' }}
                 </p>
 
-                <a href="{{ route('faqs.index') }}"
+                <a href="{{ $faqIndexUrl }}"
                     class="mt-8 inline-flex items-center gap-3 rounded-full bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB] transition hover:-translate-y-1 hover:bg-[#58433D]">
-                    Lihat Semua FAQ
+                    {{ __('frontend.view_all_faq') }}
                     <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>

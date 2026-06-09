@@ -24,18 +24,30 @@
         <div class="grid gap-6 lg:grid-cols-3">
             @forelse ($serviceItems as $service)
                 @php
-                    $title = data_get($service, 'title', data_get($service, 'name', 'Layanan Bendo Jaya'));
-                    $shortDescription = data_get(
+                    $getText = function ($item, string $field, mixed $fallback = null) {
+                        if (is_object($item) && method_exists($item, 'translated')) {
+                            return $item->translated($field, null, data_get($item, $field, $fallback));
+                        }
+
+                        return data_get($item, $field, $fallback);
+                    };
+
+                    $title = $getText($service, 'title', $getText($service, 'name', 'Layanan Bendo Jaya'));
+
+                    $shortDescription = $getText(
                         $service,
                         'short_description',
-                        data_get($service, 'description', 'Layanan batik dan custom fashion.'),
+                        $getText($service, 'description', 'Layanan batik dan custom fashion.'),
                     );
+
                     $image = data_get($service, 'image')
                         ? asset('storage/' . data_get($service, 'image'))
                         : $defaultServiceImage;
 
                     $showButton = data_get($service, 'show_button', true);
-                    $buttonLabel = data_get($service, 'button_label') ?: 'Konsultasi';
+
+                    $buttonLabel =
+                        $getText($service, 'button_text', data_get($service, 'button_label')) ?: __('frontend.consult');
 
                     $customButtonUrl = data_get($service, 'button_url');
                     $settingButtonUrl = $setting?->consultation_url;
@@ -48,11 +60,7 @@
                             : $settingButtonUrl;
                     } else {
                         $buttonHref = \App\Support\WhatsappMessage::url('service', [
-                            'service_title' => data_get(
-                                $service,
-                                'title',
-                                data_get($service, 'name', 'Layanan Bendo Jaya'),
-                            ),
+                            'service_title' => $title,
                         ]);
                     }
                 @endphp
@@ -98,7 +106,7 @@
                 </article>
             @empty
                 <div class="rounded-[2rem] border border-[#E6D8C8] bg-white p-8 text-[#7F756D] lg:col-span-3">
-                    Belum ada layanan aktif.
+                    {{ __('frontend.no_active_services') }}
                 </div>
             @endforelse
         </div>

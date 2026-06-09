@@ -16,6 +16,7 @@ class Article extends Model
 
     protected array $translatable = [
         'title',
+        'category',
         'excerpt',
         'content',
         'seo_title',

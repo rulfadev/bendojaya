@@ -124,4 +124,56 @@ return [
         'above_50m' => 'Above IDR 50 million',
         'discuss' => 'To be discussed',
     ],
+
+    'about_image_alt' => 'About Bendo Jaya',
+    'about_card_brand' => 'Bendo Jaya',
+    'about_card_title' => 'Traditional soul, modern wear.',
+    'about_eyebrow' => 'About Bendo Jaya',
+    'about_title' => 'Bringing batik into warm, elegant, and modern everyday style.',
+    'about_description' => 'Bendo Jaya develops batik clothing with traditional character, warm colors, and styles suitable for daily wear, events, uniforms, and custom production.',
+    'about_button_label' => 'More About Us',
+
+    'about_points' => [
+        [
+            'title' => 'Characterful collections',
+            'description' => 'Motifs, colors, and cuts that preserve the traditional essence of batik.',
+        ],
+        [
+            'title' => 'Custom for business needs',
+            'description' => 'Suitable for brands, communities, institutions, companies, and uniform needs.',
+        ],
+        [
+            'title' => 'Collaborative approach',
+            'description' => 'Discussion for needs, concepts, colors, and visual direction of the product.',
+        ],
+    ],
+
+    'consult' => 'Consult',
+    'view_all_collections' => 'View All Collections',
+    'collection_detail' => 'Collection Details',
+    'view_detail' => 'View Detail',
+    'view_all_gallery' => 'View All Gallery',
+    'submit_partnership' => 'Submit Partnership',
+    'view_all_articles' => 'View All Articles',
+    'read_article' => 'Read Article',
+    'view_all_faq' => 'View All FAQ',
+
+    'no_active_services' => 'No active services available.',
+    'no_active_collections' => 'No active collections available.',
+    'no_active_gallery' => 'No active gallery items available.',
+
+    'partners_points' => [
+        [
+            'title' => 'Fashion Brands',
+            'description' => 'Product collaboration and collection development.',
+        ],
+        [
+            'title' => 'Communities',
+            'description' => 'Custom uniforms and event needs.',
+        ],
+        [
+            'title' => 'Institutions',
+            'description' => 'Batik clothing production based on specific requirements.',
+        ],
+    ],
 ];

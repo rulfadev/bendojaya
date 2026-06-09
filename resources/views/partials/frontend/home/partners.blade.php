@@ -12,6 +12,10 @@
     $partnersImage = $homepage?->partners_image
         ? asset('storage/' . $homepage->partners_image)
         : asset('assets/frontend/hero-product.jpg');
+
+    $isEnglish = app()->getLocale() === 'en';
+
+    $partnershipUrl = $isEnglish ? url('/en/pages/kerja-sama') : url('/pages/kerja-sama');
 @endphp
 @if ($partnerItems->isNotEmpty())
     <div class="partner-marquee-wrap overflow-hidden border-y border-[#E6D8C8] py-7 bg-[#FFF8ED]">
@@ -52,25 +56,32 @@
                 </p>
 
                 <div class="mt-8 grid gap-4 text-sm leading-7 text-[#58433D] sm:grid-cols-3">
-                    <div class="border-l border-[#D8C5AF] pl-5">
-                        <p class="font-black text-[#3C3B39]">Brand Fashion</p>
-                        <p class="mt-2">Kolaborasi produk dan pengembangan koleksi.</p>
-                    </div>
+                    @php
+                        $translatedPartnersPoints = null;
 
-                    <div class="border-l border-[#D8C5AF] pl-5">
-                        <p class="font-black text-[#3C3B39]">Komunitas</p>
-                        <p class="mt-2">Custom seragam dan kebutuhan acara.</p>
-                    </div>
+                        if ($homepage && $isEnglish && method_exists($homepage, 'contentTranslations')) {
+                            $translatedPartnersPoints = data_get(
+                                $homepage
+                                    ->contentTranslations()
+                                    ->where('locale', app()->getLocale())
+                                    ->first()?->data,
+                                'partners_points',
+                            );
+                        }
 
-                    <div class="border-l border-[#D8C5AF] pl-5">
-                        <p class="font-black text-[#3C3B39]">Instansi</p>
-                        <p class="mt-2">Produksi pakaian batik sesuai kebutuhan.</p>
-                    </div>
+                        $partnersPoints = collect($translatedPartnersPoints ?: __('frontend.partners_points'));
+                    @endphp
+                    @foreach ($partnersPoints as $point)
+                        <div>
+                            <h3 class="font-black text-[#3C3B39]">{{ data_get($point, 'title') }}</h3>
+                            <p class="mt-1 text-sm leading-7 text-[#7F756D]">{{ data_get($point, 'description') }}</p>
+                        </div>
+                    @endforeach
                 </div>
 
                 <a href="{{ url('#contact') }}"
                     class="mt-10 inline-flex items-center gap-3 rounded-full bg-[#3C3B39] px-6 py-4 text-sm font-black text-[#FBE9CB] transition hover:-translate-y-1 hover:bg-[#58433D]">
-                    <i class="fa-brands fa-whatsapp text-lg"></i> Ajukan Kerja Sama
+                    <i class="fa-brands fa-whatsapp text-lg"></i> {{ __('frontend.submit_partnership') }}
                 </a>
             </div>
 

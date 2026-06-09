@@ -84,52 +84,94 @@ class DefaultEnglishTranslationSeeder extends Seeder
         }
 
         $this->translate($homepage, [
-            'hero_badge' => 'Batik Cap Manufacturer Indonesia',
             'hero_eyebrow' => 'Bendo Jaya Batik Fashion',
-            'hero_title' => 'Batik Cap Manufacturer from Kota Pekalongan, Indonesia',
-            'hero_subtitle' => 'Bendo Jaya provides batik cap production, custom batik motifs, batik uniforms, fashion batik collections, and production partnerships for brands, communities, institutions, companies, and international markets.',
+            'hero_title' => 'Traditional Batik with a Modern Elegant Touch.',
+            'hero_subtitle' => 'Batik clothing collections, custom uniforms, and production partnerships for brands, communities, and institutions.',
             'hero_primary_label' => 'Consult Now',
             'hero_secondary_label' => 'View Collections',
 
-            'about_badge' => 'About Bendo Jaya',
-            'about_title' => 'Batik Cap Production with Pekalongan Craftsmanship',
-            'about_subtitle' => 'Traditional batik craftsmanship with modern production needs.',
-            'about_description' => 'Bendo Jaya is based in Kota Pekalongan, Central Java, Indonesia. We combine traditional batik cap craftsmanship with practical production services for fashion, uniforms, custom motifs, and brand partnerships.',
-            'about_button_label' => 'Learn More',
+            'value_items' => [
+                [
+                    'title' => 'Batik Fashion',
+                    'description' => 'Characterful batik clothing collections.',
+                ],
+                [
+                    'title' => 'Custom Production',
+                    'description' => 'For brands, communities, and institutions.',
+                ],
+                [
+                    'title' => 'Partnership',
+                    'description' => 'Product collaboration and batik uniforms.',
+                ],
+            ],
 
-            'services_badge' => 'Services',
-            'services_title' => 'Batik Production Services',
-            'services_subtitle' => 'From batik cap manufacturing to custom production and partnership programs.',
+            'about_eyebrow' => 'About Bendo Jaya',
+            'about_title' => 'Batik Cap Production with Pekalongan Craftsmanship.',
+            'about_description' => 'Bendo Jaya develops batik clothing with traditional character, warm colors, and styles suitable for daily wear, events, uniforms, and custom production.',
+            'about_button_label' => 'More About Us',
 
-            'collection_badge' => 'Featured Collections',
-            'collection_title' => 'Selected Batik Fashion Collections',
-            'collection_subtitle' => 'Explore our batik fashion collections for daily wear, uniforms, events, and custom needs.',
+            'about_points' => [
+                [
+                    'title' => 'Characterful collections',
+                    'description' => 'Motifs, colors, and cuts that preserve the traditional essence of batik.',
+                ],
+                [
+                    'title' => 'Custom for business needs',
+                    'description' => 'Suitable for brands, communities, institutions, companies, and uniform needs.',
+                ],
+                [
+                    'title' => 'Collaborative approach',
+                    'description' => 'Discussion for needs, concepts, colors, and visual direction of the product.',
+                ],
+            ],
 
-            'gallery_badge' => 'Gallery',
-            'gallery_title' => 'Batik Production and Fashion Gallery',
-            'gallery_subtitle' => 'A visual look at our batik products, production details, and fashion collections.',
+            'services_eyebrow' => 'Services',
+            'services_title' => 'Batik services for personal, community, and business needs.',
+            'services_description' => 'From ready-to-wear collections, custom clothing, to production partnerships.',
 
-            'partners_badge' => 'Partners',
-            'partners_title' => 'Business and Brand Partnerships',
-            'partners_subtitle' => 'Open for production partnerships with brands, communities, institutions, and companies.',
+            'collections_eyebrow' => 'Featured Collections',
+            'collections_title' => 'Batik collections with warm colors and characterful motifs.',
+            'collections_description' => 'Selected Bendo Jaya batik collections with elegant looks and versatile styling.',
 
-            'testimonials_badge' => 'Testimonials',
-            'testimonials_title' => 'Client Stories',
-            'testimonials_subtitle' => 'Trusted by clients for batik fashion, uniforms, custom production, and business partnerships.',
+            'gallery_eyebrow' => 'Gallery',
+            'gallery_title' => 'Motif details, collections, and Bendo Jaya visual stories.',
+            'gallery_description' => 'Product documentation, motifs, photoshoots, and the creative process of Bendo Jaya Batik Fashion.',
 
-            'articles_badge' => 'Articles',
-            'articles_title' => 'Batik Insights and Stories',
-            'articles_subtitle' => 'Read articles about batik cap, Pekalongan batik, fashion batik, and production ideas.',
+            'partners_eyebrow' => 'Partnership',
+            'partners_title' => 'Open for brands, communities, and custom needs.',
+            'partners_description' => 'Bendo Jaya can be your partner for fashion collections, custom batik clothing, community uniforms, and product development with brands.',
 
-            'faq_badge' => 'FAQ',
-            'faq_title' => 'Frequently Asked Questions',
-            'faq_subtitle' => 'Find answers about ordering, custom production, partnerships, and quotation process.',
+            'partners_points' => [
+                [
+                    'title' => 'Fashion Brands',
+                    'description' => 'Product collaboration and collection development.',
+                ],
+                [
+                    'title' => 'Communities',
+                    'description' => 'Custom uniforms and event needs.',
+                ],
+                [
+                    'title' => 'Institutions',
+                    'description' => 'Batik clothing production based on specific requirements.',
+                ],
+            ],
 
-            'cta_badge' => 'Start Consultation',
-            'cta_title' => 'Looking for Batik Cap Production or Custom Batik?',
-            'cta_subtitle' => 'Discuss your batik production needs with Bendo Jaya and get a suitable recommendation.',
-            'cta_primary_label' => 'Consult via WhatsApp',
-            'cta_secondary_label' => 'View Collections',
+            'testimonials_eyebrow' => 'Testimonials',
+            'testimonials_title' => 'Stories from clients who have worked with us.',
+            'testimonials_description' => 'Experiences from clients, brands, and communities with Bendo Jaya.',
+
+            'articles_eyebrow' => 'Articles',
+            'articles_title' => 'Batik stories, inspiration, and education.',
+            'articles_description' => 'Articles about batik, fashion, care tips, and style inspiration.',
+
+            'faq_eyebrow' => 'FAQ',
+            'faq_title' => 'Frequently Asked Questions.',
+            'faq_description' => 'Quick information about services, custom batik, partnerships, and ordering.',
+
+            'cta_eyebrow' => 'Start a Discussion',
+            'cta_title' => 'Ready to create a batik collection with Bendo Jaya?',
+            'cta_description' => 'Tell us about your collection, custom clothing, uniform, or brand partnership needs.',
+            'cta_button_label' => 'Consult Now',
         ]);
     }
 
@@ -263,6 +305,7 @@ class DefaultEnglishTranslationSeeder extends Seeder
     {
         Gallery::query()->get()->each(function (Gallery $gallery) {
             $this->translate($gallery, [
+                'category' => $gallery->category ? $this->translateShortLabel($gallery->category) : null,
                 'seo_title' => ($gallery->title ? $gallery->title.' | ' : '').'Bendo Jaya Gallery',
                 'seo_description' => 'View Bendo Jaya batik product and production gallery from Kota Pekalongan, Indonesia.',
             ]);
@@ -273,6 +316,7 @@ class DefaultEnglishTranslationSeeder extends Seeder
     {
         Article::query()->get()->each(function (Article $article) {
             $this->translate($article, [
+                'category' => $article->category ? $this->translateShortLabel($article->category) : null,
                 'seo_title' => ($article->title ? $article->title.' | ' : '').'Bendo Jaya Articles',
                 'seo_description' => 'Read articles about batik cap, Pekalongan batik, fashion batik, and custom batik production by Bendo Jaya.',
             ]);

@@ -79,51 +79,53 @@ class HomepageSetting extends Model
     use HasContentTranslations;
 
     protected array $translatable = [
-        'hero_badge',
+        'hero_eyebrow',
         'hero_title',
         'hero_subtitle',
         'hero_primary_label',
         'hero_secondary_label',
 
-        'about_badge',
+        'value_items',
+
+        'about_eyebrow',
         'about_title',
-        'about_subtitle',
         'about_description',
         'about_button_label',
+        'about_points',
 
-        'services_badge',
+        'services_eyebrow',
         'services_title',
-        'services_subtitle',
+        'services_description',
 
-        'collection_badge',
-        'collection_title',
-        'collection_subtitle',
+        'collections_eyebrow',
+        'collections_title',
+        'collections_description',
 
-        'gallery_badge',
+        'gallery_eyebrow',
         'gallery_title',
-        'gallery_subtitle',
+        'gallery_description',
 
-        'partners_badge',
+        'partners_eyebrow',
         'partners_title',
-        'partners_subtitle',
+        'partners_description',
+        'partners_points',
 
-        'testimonials_badge',
+        'testimonials_eyebrow',
         'testimonials_title',
-        'testimonials_subtitle',
+        'testimonials_description',
 
-        'articles_badge',
+        'articles_eyebrow',
         'articles_title',
-        'articles_subtitle',
+        'articles_description',
 
-        'faq_badge',
+        'faq_eyebrow',
         'faq_title',
-        'faq_subtitle',
+        'faq_description',
 
-        'cta_badge',
+        'cta_eyebrow',
         'cta_title',
-        'cta_subtitle',
-        'cta_primary_label',
-        'cta_secondary_label',
+        'cta_description',
+        'cta_button_label',
     ];
 
     protected function casts(): array

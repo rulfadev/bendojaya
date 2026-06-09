@@ -1,5 +1,27 @@
 @php
     $articleItems = collect($articles ?? []);
+    $isEnglish = app()->getLocale() === 'en';
+
+    $getText = function ($item, string $field, mixed $fallback = null) {
+        if (is_object($item) && method_exists($item, 'translated')) {
+            return $item->translated($field, null, data_get($item, $field, $fallback));
+        }
+
+        return data_get($item, $field, $fallback);
+    };
+
+    $articlesIndexUrl =
+        $isEnglish && \Illuminate\Support\Facades\Route::has('en.articles.index')
+            ? route('en.articles.index')
+            : route('articles.index');
+
+    $articleShowUrl = function ($article) use ($isEnglish) {
+        if ($isEnglish && \Illuminate\Support\Facades\Route::has('en.articles.show')) {
+            return route('en.articles.show', $article);
+        }
+
+        return route('articles.show', $article);
+    };
 @endphp
 
 <section id="articles" class="bg-[#FFF8ED] pb-24 lg:pb-32">
@@ -21,22 +43,24 @@
                 @endif
             </div>
 
-            <a href="{{ route('articles.index') }}" class="text-sm font-black text-[#8A3F35]">
-                Lihat Semua Artikel →
+            <a href="{{ $articlesIndexUrl }}" class="text-sm font-black text-[#8A3F35]">
+                {{ __('frontend.view_all_articles') }} <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
 
         <div class="grid gap-8 lg:grid-cols-2">
             @forelse ($articleItems as $article)
                 @php
-                    $title = data_get($article, 'title', 'Artikel Bendo Jaya');
-                    $category = data_get($article, 'category', 'Batik Insight');
-                    $excerpt = data_get($article, 'excerpt', 'Inspirasi singkat seputar batik dan fashion.');
+                    $title = $getText($article, 'title', 'Artikel Bendo Jaya');
+                    $category = $getText($article, 'category', 'Batik Insight');
+                    $excerpt = $getText($article, 'excerpt', 'Inspirasi singkat seputar batik dan fashion.');
+
                     $featuredImage = data_get($article, 'featured_image');
                     $image = $featuredImage
                         ? asset('storage/' . $featuredImage)
                         : asset('assets/frontend/hero-product.jpg');
-                    $url = data_get($article, 'slug') ? route('articles.show', $article) : route('articles.index');
+
+                    $url = data_get($article, 'slug') ? $articleShowUrl($article) : $articlesIndexUrl;
                 @endphp
 
                 <article
@@ -65,13 +89,13 @@
 
                         <a href="{{ $url }}"
                             class="mt-7 inline-flex items-center gap-3 rounded-full border border-[#765A4F]/35 px-5 py-3 text-sm font-black text-[#765A4F] transition hover:bg-[#765A4F] hover:text-white">
-                            Baca Artikel
+                            {{ __('frontend.read_article') }}
                             <i class="fa-solid fa-arrow-right text-xs"></i>
                         </a>
                     </div>
                 </article>
             @empty
-                <p class="text-stone-500">Belum ada artikel.</p>
+                <p class="text-stone-500">{{ __('frontend.no_articles') }}</p>
             @endforelse
         </div>
     </div>
