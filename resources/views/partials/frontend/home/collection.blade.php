@@ -3,6 +3,48 @@
     $defaultImage = asset('assets/frontend/hero-product.jpg');
     $isEnglish = app()->getLocale() === 'en';
 
+    $localizeUrl = function (?string $url): string {
+        $url = trim((string) $url);
+
+        if ($url === '') {
+            return '#';
+        }
+
+        if (str_starts_with($url, 'mailto:') || str_starts_with($url, 'tel:')) {
+            return $url;
+        }
+
+        $baseUrl = rtrim(url('/'), '/');
+
+        if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) {
+            if (!str_starts_with($url, $baseUrl)) {
+                return $url;
+            }
+
+            $url = '/' . ltrim(str_replace($baseUrl, '', $url), '/');
+        }
+
+        if (str_starts_with($url, '#')) {
+            return app()->getLocale() === 'en' ? url('/en') . $url : url('/') . $url;
+        }
+
+        if (app()->getLocale() === 'en') {
+            if ($url === '/en' || str_starts_with($url, '/en/')) {
+                return url($url);
+            }
+
+            if (str_starts_with($url, 'en/')) {
+                return url('/' . $url);
+            }
+
+            return url('/en/' . ltrim($url, '/'));
+        }
+
+        $url = preg_replace('#^/?en(/|$)#', '/', $url);
+
+        return url('/' . ltrim($url, '/'));
+    };
+
     $getText = function ($item, string $field, mixed $fallback = null) {
         if (is_object($item) && method_exists($item, 'translated')) {
             return $item->translated($field, null, data_get($item, $field, $fallback));
@@ -14,14 +56,18 @@
     $collectionsIndexUrl =
         $isEnglish && \Illuminate\Support\Facades\Route::has('en.collections.index')
             ? route('en.collections.index')
-            : route('collections.index');
+            : $localizeUrl(route('collections.index'));
 
-    $collectionShowUrl = function ($collection, $slug) use ($isEnglish) {
+    $collectionShowUrl = function ($collection, $slug) use ($isEnglish, $localizeUrl) {
         if ($isEnglish && \Illuminate\Support\Facades\Route::has('en.collections.show')) {
             return route('en.collections.show', $slug ?: $collection);
         }
 
-        return $slug ? route('collections.show', $slug) : route('collections.index');
+        if ($slug) {
+            return $localizeUrl(route('collections.show', $slug));
+        }
+
+        return $localizeUrl(route('collections.index'));
     };
 @endphp
 
@@ -30,18 +76,16 @@
         <div class="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div class="max-w-3xl">
                 <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
-                    {{ $homepage?->collections_eyebrow ?: 'Koleksi Pilihan' }}
+                    {{ $homepage?->collections_eyebrow ?: __('frontend.collections_eyebrow') }}
                 </p>
 
                 <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39] sm:text-5xl">
-                    {{ $homepage?->collections_title ?: 'Koleksi batik dengan warna hangat dan motif berkarakter.' }}
+                    {{ $homepage?->collections_title ?: __('frontend.collections_title') }}
                 </h2>
 
-                @if ($homepage?->collections_description)
-                    <p class="mt-5 text-base leading-8 text-[#7F756D]">
-                        {{ $homepage->collections_description }}
-                    </p>
-                @endif
+                <p class="mt-5 text-base leading-8 text-[#7F756D]">
+                    {{ $homepage?->collections_description ?: __('frontend.collections_description') }}
+                </p>
             </div>
 
             <a href="{{ $collectionsIndexUrl }}"
@@ -60,7 +104,11 @@
                     $name = $getText($collection, 'name', 'Bendo Jaya Collection');
                     $category = $getText($collection, 'category', 'Bendo Jaya Collection');
 
-                    $shortDescription = $getText($collection, 'short_description', __('frontend.footer_description'));
+                    $shortDescription = $getText(
+                        $collection,
+                        'short_description',
+                        __('frontend.collection_default_description'),
+                    );
 
                     $mainImage = data_get($collection, 'main_image');
                     $slug = data_get($collection, 'slug');

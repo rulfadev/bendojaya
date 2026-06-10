@@ -22,6 +22,7 @@ use App\Models\SiteSetting;
 use App\Models\Testimonial;
 use App\Models\User;
 use App\Observers\ActivityLogObserver;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -66,5 +67,9 @@ class AppServiceProvider extends ServiceProvider
                 $model::observe(ActivityLogObserver::class);
             }
         }
+
+        View::composer('*', function ($view) {
+            $view->with('setting', SiteSetting::query()->first());
+        });
     }
 }

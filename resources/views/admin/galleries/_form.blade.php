@@ -20,6 +20,15 @@
                 </div>
             </div>
         </section>
+        @include('admin.shared.english-translation-fields', [
+            'model' => $gallery,
+            'fields' => [
+                'title' => ['label' => 'Judul'],
+                'category' => ['label' => 'Kategori'],
+                'caption' => ['label' => 'Caption', 'type' => 'textarea', 'rows' => 4],
+                'description' => ['label' => 'Deskripsi', 'type' => 'textarea', 'rows' => 6],
+            ],
+        ])
     </div>
 
     <div class="space-y-8">

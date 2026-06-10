@@ -19,6 +19,9 @@ class Page extends Model
         'title',
         'excerpt',
         'content',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
         'seo_title',
         'seo_description',
     ];

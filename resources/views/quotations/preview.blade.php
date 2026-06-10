@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
@@ -81,6 +81,21 @@
 </head>
 
 <body class="bg-[#FFF8ED] text-[#3C3B39] antialiased">
+    @php
+        $isEnglish = app()->getLocale() === 'en';
+
+        $statusLabel = $isEnglish
+            ? match ($quotation->status ?? null) {
+                'draft' => 'Draft',
+                'sent' => 'Sent',
+                'approved' => 'Approved',
+                'rejected' => 'Rejected',
+                'expired' => 'Expired',
+                default => $quotation->status_label,
+            }
+            : $quotation->status_label;
+    @endphp
+
     <main class="min-h-screen px-5 py-8 lg:px-8">
         <div class="mx-auto max-w-5xl">
             @if (session('success'))
@@ -94,7 +109,7 @@
                 class="no-print mb-6 flex flex-col gap-4 rounded-[2rem] border border-[#E6D8C8] bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <p class="text-xs font-black uppercase tracking-[0.25em] text-[#8A3F35]">
-                        Public Quotation
+                        {{ __('frontend.quotation_public_label') }}
                     </p>
                     <h1 class="mt-2 text-xl font-black text-[#3C3B39]">
                         {{ $quotation->quotation_number }}
@@ -105,7 +120,7 @@
                     <button type="button" onclick="window.print()"
                         class="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#765A4F]/25 bg-white px-5 py-3 text-sm font-black text-[#765A4F] transition hover:bg-[#765A4F] hover:text-white">
                         <i class="fa-solid fa-print"></i>
-                        Print / PDF
+                        {{ __('frontend.print_pdf') }}
                     </button>
                 </div>
             </div>
@@ -119,25 +134,27 @@
                         </p>
 
                         <h2 class="mt-4 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39]">
-                            Penawaran Harga
+                            {{ __('frontend.quotation_title') }}
                         </h2>
 
                         <p class="mt-3 text-sm font-semibold text-[#7F756D]">
-                            {{ $quotation->title ?: 'Penawaran Bendo Jaya' }}
+                            {{ $quotation->title ?: __('frontend.quotation_default_title') }}
                         </p>
                     </div>
 
                     <div class="rounded-[1.5rem] bg-[#FFF8ED] p-5 text-sm leading-7 text-[#7F756D] sm:text-right">
                         <p class="font-black text-[#3C3B39]">{{ $quotation->quotation_number }}</p>
-                        <p>Tanggal: {{ $quotation->quotation_date?->format('d M Y') ?: '-' }}</p>
-                        <p>Berlaku sampai: {{ $quotation->valid_until?->format('d M Y') ?: '-' }}</p>
+                        <p>{{ __('frontend.quotation_date') }}:
+                            {{ $quotation->quotation_date?->format('d M Y') ?: '-' }}</p>
+                        <p>{{ __('frontend.quotation_valid_until') }}:
+                            {{ $quotation->valid_until?->format('d M Y') ?: '-' }}</p>
                     </div>
                 </div>
 
                 <div class="mt-8 grid gap-6 sm:grid-cols-2">
                     <div class="rounded-[1.5rem] border border-[#E6D8C8] p-5">
                         <p class="text-xs font-black uppercase tracking-[0.2em] text-[#8A3F35]">
-                            Ditujukan Kepada
+                            {{ __('frontend.quotation_client_to') }}
                         </p>
 
                         <h3 class="mt-3 text-xl font-black text-[#3C3B39]">
@@ -151,15 +168,15 @@
 
                     <div class="rounded-[1.5rem] border border-[#E6D8C8] p-5">
                         <p class="text-xs font-black uppercase tracking-[0.2em] text-[#8A3F35]">
-                            Status Penawaran
+                            {{ __('frontend.quotation_status') }}
                         </p>
 
                         <h3 class="mt-3 text-xl font-black text-[#3C3B39]">
-                            {{ $quotation->status_label }}
+                            {{ $statusLabel }}
                         </h3>
 
                         <p class="mt-2 text-sm leading-7 text-[#7F756D]">
-                            Penawaran ini dapat dicetak atau disimpan sebagai PDF melalui tombol Print / PDF.
+                            {{ __('frontend.quotation_print_notice') }}
                         </p>
                     </div>
                 </div>
@@ -168,10 +185,11 @@
                     <table class="quotation-table text-left text-sm">
                         <thead class="bg-[#3C3B39] text-xs font-black uppercase tracking-[0.18em] text-[#FBE9CB]">
                             <tr>
-                                <th class="col-item px-5 py-4">Item</th>
-                                <th class="col-qty px-5 py-4 text-right">Qty</th>
-                                <th class="col-price px-5 py-4 text-right">Harga</th>
-                                <th class="col-subtotal px-5 py-4 text-right">Subtotal</th>
+                                <th class="col-item px-5 py-4">{{ __('frontend.quotation_item') }}</th>
+                                <th class="col-qty px-5 py-4 text-right">{{ __('frontend.quotation_qty') }}</th>
+                                <th class="col-price px-5 py-4 text-right">{{ __('frontend.quotation_price') }}</th>
+                                <th class="col-subtotal px-5 py-4 text-right">{{ __('frontend.quotation_subtotal') }}
+                                </th>
                             </tr>
                         </thead>
 
@@ -208,21 +226,21 @@
                 <div class="mt-8 flex justify-end">
                     <div class="w-full max-w-sm space-y-3 text-sm">
                         <div class="flex justify-between">
-                            <span class="text-[#7F756D]">Subtotal</span>
+                            <span class="text-[#7F756D]">{{ __('frontend.quotation_subtotal') }}</span>
                             <span class="font-bold text-[#3C3B39]">
                                 Rp {{ number_format((float) $quotation->subtotal, 0, ',', '.') }}
                             </span>
                         </div>
 
                         <div class="flex justify-between">
-                            <span class="text-[#7F756D]">Diskon</span>
+                            <span class="text-[#7F756D]">{{ __('frontend.quotation_discount') }}</span>
                             <span class="font-bold text-[#3C3B39]">
                                 Rp {{ number_format((float) $quotation->discount_amount, 0, ',', '.') }}
                             </span>
                         </div>
 
                         <div class="flex justify-between">
-                            <span class="text-[#7F756D]">Pajak / Tambahan</span>
+                            <span class="text-[#7F756D]">{{ __('frontend.quotation_tax') }}</span>
                             <span class="font-bold text-[#3C3B39]">
                                 Rp {{ number_format((float) $quotation->tax_amount, 0, ',', '.') }}
                             </span>
@@ -230,7 +248,7 @@
 
                         <div class="border-t border-[#E6D8C8] pt-3">
                             <div class="flex justify-between text-xl">
-                                <span class="font-black text-[#3C3B39]">Total</span>
+                                <span class="font-black text-[#3C3B39]">{{ __('frontend.quotation_total') }}</span>
                                 <span class="font-black text-[#3C3B39]">{{ $quotation->formatted_total }}</span>
                             </div>
                         </div>
@@ -239,7 +257,7 @@
 
                 @if ($quotation->notes)
                     <div class="mt-8 rounded-[1.5rem] bg-[#FFF8ED] p-5">
-                        <p class="font-black text-[#3C3B39]">Catatan</p>
+                        <p class="font-black text-[#3C3B39]">{{ __('frontend.quotation_notes') }}</p>
                         <p class="mt-2 whitespace-pre-line text-sm leading-7 text-[#7F756D]">
                             {{ $quotation->notes }}
                         </p>
@@ -248,7 +266,7 @@
 
                 @if ($quotation->terms)
                     <div class="mt-6 rounded-[1.5rem] bg-[#FFF8ED] p-5">
-                        <p class="font-black text-[#3C3B39]">Syarat & Ketentuan</p>
+                        <p class="font-black text-[#3C3B39]">{{ __('frontend.quotation_terms') }}</p>
                         <p class="mt-2 whitespace-pre-line text-sm leading-7 text-[#7F756D]">
                             {{ $quotation->terms }}
                         </p>
@@ -261,30 +279,30 @@
                     <form
                         action="{{ route('quotations.preview.approve', [$quotation->quotation_number, $quotation->public_token]) }}"
                         method="POST" data-confirm-action data-confirm-icon="success"
-                        data-confirm-title="Setujui penawaran ini?"
-                        data-confirm-message="Setelah disetujui, Anda akan diarahkan ke WhatsApp admin untuk konfirmasi."
-                        data-confirm-yes="Ya, Setujui">
+                        data-confirm-title="{{ __('frontend.quotation_approve_confirm_title') }}"
+                        data-confirm-message="{{ __('frontend.quotation_approve_confirm_message') }}"
+                        data-confirm-yes="{{ __('frontend.quotation_approve_confirm_yes') }}">
                         @csrf
 
                         <button
                             class="w-full rounded-2xl bg-emerald-500 px-6 py-4 text-sm font-black text-white transition hover:bg-emerald-600">
                             <i class="fa-solid fa-check mr-2"></i>
-                            Setujui & Konfirmasi via WhatsApp
+                            {{ __('frontend.quotation_approve_button') }}
                         </button>
                     </form>
 
                     <form
                         action="{{ route('quotations.preview.reject', [$quotation->quotation_number, $quotation->public_token]) }}"
                         method="POST" data-confirm-action data-confirm-icon="warning"
-                        data-confirm-title="Tolak penawaran ini?"
-                        data-confirm-message="Status penawaran akan ditandai sebagai ditolak."
-                        data-confirm-yes="Ya, Tolak">
+                        data-confirm-title="{{ __('frontend.quotation_reject_confirm_title') }}"
+                        data-confirm-message="{{ __('frontend.quotation_reject_confirm_message') }}"
+                        data-confirm-yes="{{ __('frontend.quotation_reject_confirm_yes') }}">
                         @csrf
 
                         <button
                             class="w-full rounded-2xl bg-red-100 px-6 py-4 text-sm font-black text-red-700 transition hover:bg-red-200">
                             <i class="fa-solid fa-xmark mr-2"></i>
-                            Tolak Penawaran
+                            {{ __('frontend.quotation_reject_button') }}
                         </button>
                     </form>
                 </div>

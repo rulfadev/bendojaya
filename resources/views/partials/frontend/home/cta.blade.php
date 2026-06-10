@@ -3,11 +3,49 @@
         ? asset('storage/' . $homepage->cta_image)
         : asset('assets/frontend/hero-product.jpg');
 
+    $localizeUrl = function (?string $url): string {
+        $url = trim((string) $url);
+
+        if ($url === '') {
+            return '#';
+        }
+
+        if (
+            str_starts_with($url, 'http://') ||
+            str_starts_with($url, 'https://') ||
+            str_starts_with($url, 'mailto:') ||
+            str_starts_with($url, 'tel:')
+        ) {
+            return $url;
+        }
+
+        if (str_starts_with($url, '#')) {
+            return app()->getLocale() === 'en' ? url('/en') . $url : url('/') . $url;
+        }
+
+        if (app()->getLocale() === 'en') {
+            if ($url === '/en' || str_starts_with($url, '/en/')) {
+                return url($url);
+            }
+
+            if (str_starts_with($url, 'en/')) {
+                return url('/' . $url);
+            }
+
+            return url('/en/' . ltrim($url, '/'));
+        }
+
+        $url = preg_replace('#^/?en(/|$)#', '/', $url);
+
+        return url('/' . ltrim($url, '/'));
+    };
+
     $ctaUrl =
         $homepage?->cta_button_url ?:
         ($setting?->consultation_url ?:
         'https://wa.me/' . ($setting?->whatsapp_number ?? '6280000000000'));
-    $ctaHref = str_starts_with($ctaUrl, '/') ? url($ctaUrl) : $ctaUrl;
+
+    $ctaHref = $localizeUrl($ctaUrl);
 @endphp
 
 <section id="contact" class="bg-[#FFF8ED] py-24 lg:py-32">
@@ -21,23 +59,22 @@
             <div class="relative grid gap-10 p-8 sm:p-12 lg:grid-cols-[0.9fr_1.1fr] lg:p-16">
                 <div>
                     <p class="text-xs font-black uppercase tracking-[0.3em] text-[#EEBDB5]">
-                        {{ $homepage?->cta_eyebrow ?: 'Mulai Diskusi' }}
+                        {{ $homepage?->cta_eyebrow ?: __('frontend.cta_eyebrow') }}
                     </p>
 
                     <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight sm:text-5xl">
-                        {{ $homepage?->cta_title ?: 'Siap membuat koleksi batik bersama Bendo Jaya?' }}
+                        {{ $homepage?->cta_title ?: __('frontend.cta_title') }}
                     </h2>
 
                     <p class="mt-6 text-base leading-8 text-[#E6D8C8]">
-                        {{ $homepage?->cta_description ?: 'Ceritakan kebutuhan koleksi, custom pakaian, seragam, atau kerja sama brand Anda.' }}
+                        {{ $homepage?->cta_description ?: __('frontend.cta_description') }}
                     </p>
 
-                    @if ($homepage?->cta_button_label)
-                        <a href="{{ $ctaHref }}"
-                            class="mt-8 inline-flex rounded-full bg-[#FBE9CB] px-8 py-4 text-sm font-black text-[#3C3B39] transition hover:-translate-y-1 hover:bg-white gap-2">
-                            <i class="fa-brands fa-whatsapp text-lg"></i> {{ $homepage->cta_button_label }}
-                        </a>
-                    @endif
+                    <a href="{{ $ctaHref }}"
+                        class="mt-8 inline-flex rounded-full bg-[#FBE9CB] px-8 py-4 text-sm font-black text-[#3C3B39] transition hover:-translate-y-1 hover:bg-white gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        {{ $homepage?->cta_button_label ?: __('frontend.cta_button_label') }}
+                    </a>
                 </div>
 
                 <div class="rounded-[2rem] bg-[#FFF8ED] p-6 text-left">

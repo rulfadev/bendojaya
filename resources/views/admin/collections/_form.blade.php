@@ -36,6 +36,18 @@
                     placeholder="S, M, L, XL / Custom" />
             </div>
         </section>
+        @include('admin.shared.english-translation-fields', [
+            'model' => $collection,
+            'fields' => [
+                'name' => ['label' => 'Nama Koleksi'],
+                'category' => ['label' => 'Kategori'],
+                'short_description' => ['label' => 'Deskripsi Singkat', 'type' => 'textarea', 'rows' => 4],
+                'description' => ['label' => 'Deskripsi', 'type' => 'textarea', 'rows' => 6],
+                'material' => ['label' => 'Material'],
+                'color_palette' => ['label' => 'Palet Warna'],
+                'size_info' => ['label' => 'Info Ukuran'],
+            ],
+        ])
     </div>
 
     <div class="space-y-8">

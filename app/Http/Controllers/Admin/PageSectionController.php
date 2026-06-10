@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\SavesInlineEnglishTranslation;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\PageSection;
@@ -13,6 +14,8 @@ use Illuminate\View\View;
 
 class PageSectionController extends Controller
 {
+    use SavesInlineEnglishTranslation;
+
     public function index(Page $page): View
     {
         $sections = $page->sections()
@@ -57,7 +60,16 @@ class PageSectionController extends Controller
             $validated['image'] = $request->file('image')->store('page-sections', 'public');
         }
 
-        PageSection::query()->create($validated);
+        $section = PageSection::query()->create($validated);
+
+        $this->saveInlineEnglishTranslation($section, $request, [
+            'eyebrow',
+            'title',
+            'subtitle',
+            'content',
+            'button_label',
+            'settings',
+        ]);
 
         return redirect()
             ->route('admin.pages.sections.index', $page)
@@ -96,6 +108,14 @@ class PageSectionController extends Controller
         }
 
         $section->update($validated);
+        $this->saveInlineEnglishTranslation($section, $request, [
+            'eyebrow',
+            'title',
+            'subtitle',
+            'content',
+            'button_label',
+            'settings',
+        ]);
 
         return redirect()
             ->route('admin.pages.sections.index', $page)

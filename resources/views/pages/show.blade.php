@@ -4,6 +4,18 @@
     @php
         $defaultImage = asset('assets/frontend/hero-product.jpg');
         $image = $page->featured_image ? asset('storage/' . $page->featured_image) : $defaultImage;
+
+        $getText = function ($item, string $field, mixed $fallback = null) {
+            if (is_object($item) && method_exists($item, 'translated')) {
+                return $item->translated($field, null, data_get($item, $field, $fallback));
+            }
+
+            return data_get($item, $field, $fallback);
+        };
+
+        $pageTitle = $getText($page, 'title', 'Bendo Jaya');
+        $pageExcerpt = $getText($page, 'excerpt');
+        $pageContent = $getText($page, 'content');
     @endphp
 
     @if ($page->activeSections->isNotEmpty())
@@ -21,15 +33,17 @@
             <div class="absolute inset-0 bg-[#3C3B39]/75"></div>
 
             <div class="relative mx-auto max-w-5xl px-5 text-center lg:px-8">
-                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#EEBDB5]">Bendo Jaya</p>
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#EEBDB5]">
+                    {{ __('frontend.page_brand_label') }}
+                </p>
 
                 <h1 class="mt-5 font-['Playfair_Display'] text-5xl font-black leading-tight sm:text-6xl">
-                    {{ $page->title }}
+                    {{ $pageTitle }}
                 </h1>
 
-                @if ($page->excerpt)
+                @if ($pageExcerpt)
                     <p class="mx-auto mt-6 max-w-3xl text-base leading-8 text-[#E6D8C8]">
-                        {{ $page->excerpt }}
+                        {{ $pageExcerpt }}
                     </p>
                 @endif
             </div>
@@ -38,32 +52,32 @@
         <section class="py-20 lg:py-28">
             <div class="mx-auto max-w-4xl px-5 lg:px-8">
                 <article class="rounded-[2rem] border border-[#E6D8C8] bg-white/80 p-7 text-[#58433D] shadow-sm sm:p-10">
-                    <div class="space-y-6 text-base leading-8">
-                        {!! $page->content ?: '<p>Konten halaman belum tersedia.</p>' !!}
+                    <div class="space-y-6 text-base leading-8 trix-content page-content">
+                        {!! $pageContent ?: '<p>' . e(__('frontend.page_content_empty')) . '</p>' !!}
                     </div>
                 </article>
             </div>
         </section>
     @endif
+
     @if (($page->slug ?? null) === 'kerja-sama')
         <section class="bg-[#FFF8ED] py-20">
             <div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
                 <div>
                     <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
-                        Proposal Kerja Sama
+                        {{ __('frontend.partnership_proposal_eyebrow') }}
                     </p>
 
                     <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39]">
-                        Diskusikan kebutuhan produksi batik Anda.
+                        {{ __('frontend.partnership_proposal_title') }}
                     </h2>
 
                     <p class="mt-5 text-base leading-8 text-[#7F756D]">
-                        Isi form ini untuk kebutuhan custom seragam, produksi brand, reseller, instansi, komunitas, atau
-                        kerja sama lainnya.
+                        {{ __('frontend.partnership_proposal_description') }}
                     </p>
 
                     <div class="mt-8">
-                        <x-frontend.consultation-link label="Konsultasi via WhatsApp" template="partnership" />
+                        <x-frontend.consultation-link :label="__('frontend.consult_whatsapp')" template="partnership" />
                     </div>
                 </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\SavesInlineEnglishTranslation;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use Illuminate\Http\RedirectResponse;
@@ -10,6 +11,8 @@ use Illuminate\View\View;
 
 class FaqController extends Controller
 {
+    use SavesInlineEnglishTranslation;
+
     public function index(): View
     {
         $faqs = Faq::query()
@@ -41,7 +44,13 @@ class FaqController extends Controller
     {
         $validated = $this->validated($request);
 
-        Faq::query()->create($validated);
+        $faq = Faq::query()->create($validated);
+
+        $this->saveInlineEnglishTranslation($faq, $request, [
+            'question',
+            'answer',
+            'category',
+        ]);
 
         return redirect()
             ->route('admin.faqs.index')
@@ -59,7 +68,15 @@ class FaqController extends Controller
 
     public function update(Request $request, Faq $faq): RedirectResponse
     {
-        $faq->update($this->validated($request));
+        $validated = $this->validated($request);
+
+        $faq->update($validated);
+
+        $this->saveInlineEnglishTranslation($faq, $request, [
+            'question',
+            'answer',
+            'category',
+        ]);
 
         return redirect()
             ->route('admin.faqs.index')

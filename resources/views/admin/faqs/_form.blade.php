@@ -7,6 +7,14 @@
                 <x-admin.form.textarea name="answer" label="Jawaban" :value="$faq->answer" rows="9" />
             </div>
         </section>
+        @include('admin.shared.english-translation-fields', [
+            'model' => $faq,
+            'fields' => [
+                'question' => ['label' => 'Pertanyaan'],
+                'answer' => ['label' => 'Jawaban', 'type' => 'textarea', 'rows' => 6],
+                'category' => ['label' => 'Kategori'],
+            ],
+        ])
     </div>
 
     <div class="space-y-8">

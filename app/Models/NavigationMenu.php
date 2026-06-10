@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasContentTranslations;
+use App\Support\LocalizedRoute;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -71,8 +72,8 @@ class NavigationMenu extends Model
     public function getHrefAttribute(): string
     {
         return match ($this->type) {
-            'page' => $this->page ? route('pages.show', $this->page) : '#',
-            'article' => $this->article ? route('articles.show', $this->article) : '#',
+            'page' => $this->page ? LocalizedRoute::route('pages.show', $this->page) : '#',
+            'article' => $this->article ? LocalizedRoute::route('articles.show', $this->article) : '#',
             'anchor' => $this->formatAnchorUrl(),
             default => $this->formatCustomUrl(),
         };
@@ -80,23 +81,7 @@ class NavigationMenu extends Model
 
     private function formatCustomUrl(): string
     {
-        if (! $this->url) {
-            return '#';
-        }
-
-        if (str_starts_with($this->url, 'http://') || str_starts_with($this->url, 'https://')) {
-            return $this->url;
-        }
-
-        if (str_starts_with($this->url, '#')) {
-            return route('home').$this->url;
-        }
-
-        if (str_starts_with($this->url, '/')) {
-            return url($this->url);
-        }
-
-        return url('/'.$this->url);
+        return LocalizedRoute::url($this->url);
     }
 
     private function formatAnchorUrl(): string
@@ -104,9 +89,9 @@ class NavigationMenu extends Model
         $anchor = ltrim((string) $this->anchor, '#');
 
         if ($anchor === '' || $anchor === 'home') {
-            return route('home');
+            return LocalizedRoute::route('home');
         }
 
-        return route('home').'#'.$anchor;
+        return LocalizedRoute::route('home').'#'.$anchor;
     }
 }

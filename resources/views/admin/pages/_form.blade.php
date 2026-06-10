@@ -32,9 +32,24 @@
                 </div>
 
                 <div class="md:col-span-2">
-                    <label for="content" class="{{ $labelClass }}">Konten</label>
-                    <textarea id="content" name="content" rows="12" class="{{ $inputClass }}"
-                        placeholder="Boleh isi HTML sederhana seperti <p>...</p>">{{ old('content', $page->content) }}</textarea>
+                    <label class="{{ $labelClass }}">Konten</label>
+
+                    @include('admin.shared.trix-editor', [
+                        'name' => 'content',
+                        'value' => old('content', $page->content ?? ''),
+                        'id' => 'page_content',
+                    ])
+
+                    @error('content')
+                        <p class="mt-2 text-xs font-bold text-red-600">
+                            {{ $message }}
+                        </p>
+                    @enderror
+
+                    <p class="mt-2 text-xs font-semibold leading-6 text-stone-500">
+                        Gunakan editor ini untuk menulis halaman. Bisa menambahkan heading, list, quote, link, gambar,
+                        dan lampiran.
+                    </p>
                 </div>
             </div>
         </section>
@@ -63,6 +78,18 @@
                 </div>
             </div>
         </section>
+
+        @include('admin.shared.english-translation-fields', [
+            'model' => $page,
+            'fields' => [
+                'title' => ['label' => 'Judul'],
+                'excerpt' => ['label' => 'Ringkasan', 'type' => 'textarea', 'rows' => 4],
+                'content' => ['label' => 'Konten Halaman', 'type' => 'editor', 'rows' => 10],
+                'meta_title' => ['label' => 'Meta Title'],
+                'meta_description' => ['label' => 'Meta Description', 'type' => 'textarea', 'rows' => 3],
+                'meta_keywords' => ['label' => 'Meta Keywords', 'type' => 'textarea', 'rows' => 3],
+            ],
+        ])
     </div>
 
     <div class="space-y-8">

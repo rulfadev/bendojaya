@@ -16,7 +16,7 @@ class LocalizedUrl
         $path = trim($path ?? '', '/');
 
         if ($locale === 'en') {
-            return url(trim('en/'.$path, '/'));
+            return url($path ? 'en/'.$path : 'en');
         }
 
         return url($path ?: '/');

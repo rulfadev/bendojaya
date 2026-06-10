@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\SavesInlineEnglishTranslation;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +14,8 @@ use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
+    use SavesInlineEnglishTranslation;
+
     public function index(): View
     {
         $articles = Article::query()
@@ -54,7 +57,17 @@ class ArticleController extends Controller
             $validated['featured_image'] = $request->file('featured_image')->store('articles', 'public');
         }
 
-        Article::query()->create($validated);
+        $article = Article::query()->create($validated);
+
+        $this->saveInlineEnglishTranslation($article, $request, [
+            'title',
+            'category',
+            'excerpt',
+            'content',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+        ]);
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil ditambahkan.');
     }
@@ -86,6 +99,15 @@ class ArticleController extends Controller
         }
 
         $article->update($validated);
+        $this->saveInlineEnglishTranslation($article, $request, [
+            'title',
+            'category',
+            'excerpt',
+            'content',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+        ]);
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diperbarui.');
     }

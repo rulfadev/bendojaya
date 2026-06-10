@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\SavesInlineEnglishTranslation;
 use App\Http\Controllers\Controller;
 use App\Models\FashionCollection;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +14,8 @@ use Illuminate\View\View;
 
 class FashionCollectionController extends Controller
 {
+    use SavesInlineEnglishTranslation;
+
     public function index(): View
     {
         $collections = FashionCollection::query()
@@ -56,7 +59,17 @@ class FashionCollectionController extends Controller
             $validated['main_image'] = $request->file('main_image')->store('collections', 'public');
         }
 
-        FashionCollection::query()->create($validated);
+        $collection = FashionCollection::query()->create($validated);
+
+        $this->saveInlineEnglishTranslation($collection, $request, [
+            'name',
+            'category',
+            'short_description',
+            'description',
+            'material',
+            'color_palette',
+            'size_info',
+        ]);
 
         return redirect()
             ->route('admin.collections.index')
@@ -94,6 +107,15 @@ class FashionCollectionController extends Controller
         }
 
         $collection->update($validated);
+        $this->saveInlineEnglishTranslation($collection, $request, [
+            'name',
+            'category',
+            'short_description',
+            'description',
+            'material',
+            'color_palette',
+            'size_info',
+        ]);
 
         return redirect()
             ->route('admin.collections.index')

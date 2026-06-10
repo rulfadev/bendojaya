@@ -1,34 +1,78 @@
 @php
-    $image = $section->image ? asset('storage/' . $section->image) : asset('assets/frontend/hero-product.jpg');
+    $eyebrow = method_exists($section, 'translated') ? $section->translated('eyebrow') : $section->eyebrow;
+
+    $title = method_exists($section, 'translated') ? $section->translated('title') : $section->title;
+
+    $subtitle = method_exists($section, 'translated') ? $section->translated('subtitle') : $section->subtitle;
+
+    $settings = method_exists($section, 'translated')
+        ? $section->translated('settings', null, $section->settings ?? [])
+        : $section->settings ?? [];
+
+    if (is_string($settings)) {
+        $decodedSettings = json_decode($settings, true);
+        $settings = json_last_error() === JSON_ERROR_NONE ? $decodedSettings : [];
+    }
+
+    $items = $settings['items'] ?? [];
 @endphp
 
-<section class="bg-[#3C3B39] py-20 text-[#FBE9CB] lg:py-28">
+<section class="bg-[#FFF8ED] py-20 lg:py-28">
     <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mb-10 max-w-3xl">
-            @if ($section->eyebrow)
-                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#EEBDB5]">
-                    {{ $section->eyebrow }}
+        <div class="mb-12 max-w-3xl">
+            @if ($eyebrow)
+                <p class="text-xs font-black uppercase tracking-[0.3em] text-[#8A3F35]">
+                    {{ $eyebrow }}
                 </p>
             @endif
 
-            @if ($section->title)
-                <h2 class="mt-4 font-['Playfair_Display'] text-4xl font-black sm:text-5xl">
-                    {{ $section->title }}
+            @if ($title)
+                <h2 class="mt-5 font-['Playfair_Display'] text-4xl font-black leading-tight text-[#3C3B39] sm:text-5xl">
+                    {{ $title }}
                 </h2>
             @endif
 
-            @if ($section->subtitle)
-                <p class="mt-5 text-sm leading-7 text-[#E6D8C8]">
-                    {{ $section->subtitle }}
+            @if ($subtitle)
+                <p class="mt-5 text-base leading-8 text-[#7F756D]">
+                    {{ $subtitle }}
                 </p>
             @endif
         </div>
 
-        <div class="grid gap-5 md:grid-cols-3">
-            <img src="{{ $image }}" class="h-96 w-full rounded-[2rem] object-cover object-left" alt="">
-            <img src="{{ $image }}" class="h-96 w-full rounded-[2rem] object-cover object-center md:mt-12"
-                alt="">
-            <img src="{{ $image }}" class="h-96 w-full rounded-[2rem] object-cover object-right" alt="">
-        </div>
+        @if (!empty($items))
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($items as $item)
+                    @php
+                        $image = data_get($item, 'image')
+                            ? asset('storage/' . data_get($item, 'image'))
+                            : asset('assets/frontend/hero-product.jpg');
+
+                        $itemTitle = data_get($item, 'title');
+                        $itemCaption = data_get($item, 'caption');
+                    @endphp
+
+                    <article class="overflow-hidden rounded-[2rem] border border-[#E6D8C8] bg-white shadow-sm">
+                        <img src="{{ $image }}" alt="{{ $itemTitle ?: 'Bendo Jaya Gallery' }}"
+                            class="h-80 w-full object-cover">
+
+                        @if ($itemTitle || $itemCaption)
+                            <div class="p-6">
+                                @if ($itemTitle)
+                                    <h3 class="font-['Playfair_Display'] text-2xl font-black text-[#3C3B39]">
+                                        {{ $itemTitle }}
+                                    </h3>
+                                @endif
+
+                                @if ($itemCaption)
+                                    <p class="mt-3 text-sm leading-7 text-[#7F756D]">
+                                        {{ $itemCaption }}
+                                    </p>
+                                @endif
+                            </div>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>

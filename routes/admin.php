@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\SeoSettingController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TrixAttachmentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WhatsappTemplateController;
 use Illuminate\Support\Facades\Route;
@@ -146,6 +147,9 @@ Route::prefix('admin')
                 ->name('translations.edit');
             Route::put('/translations/{resource}/{id}/{locale?}', [ContentTranslationController::class, 'update'])
                 ->name('translations.update');
+
+            Route::post('/trix/attachments', [TrixAttachmentController::class, 'store'])
+                ->name('trix.attachments.store');
         });
 
         Route::middleware('role:admin')->group(function () {

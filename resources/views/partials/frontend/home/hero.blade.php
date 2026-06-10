@@ -1,22 +1,28 @@
 @php
+    use App\Support\LocalizedRoute;
+    use App\Support\WhatsappMessage;
+
     $heroImage = $homepage?->hero_image
         ? asset('storage/' . $homepage->hero_image)
-        : $heroImage ?? asset('assets/frontend/hero-product.jpg');
+        : asset('assets/frontend/hero-product.jpg');
 
     $primaryUrl = $homepage?->hero_primary_url;
+    $secondaryUrl = $homepage?->hero_secondary_url;
 
     if ($primaryUrl) {
-        $primaryHref = str_starts_with($primaryUrl, '/') ? url($primaryUrl) : $primaryUrl;
+        $primaryHref = LocalizedRoute::url($primaryUrl);
     } else {
-        $primaryHref = \App\Support\WhatsappMessage::url('hero', [
-            'page_title' => $homepage?->hero_title ?: 'Bendo Jaya Batik Fashion',
-            'current_url' => route('home'),
+        $primaryHref = WhatsappMessage::url('hero', [
+            'page_title' => $homepage?->hero_title ?? 'Bendo Jaya',
+            'current_url' => LocalizedRoute::route('home'),
         ]);
     }
 
-    $secondaryUrl = $homepage?->hero_secondary_url ?: route('collections.index');
-
-    $secondaryHref = str_starts_with($secondaryUrl, '/') ? url($secondaryUrl) : $secondaryUrl;
+    if ($secondaryUrl) {
+        $secondaryHref = LocalizedRoute::url($secondaryUrl);
+    } else {
+        $secondaryHref = LocalizedRoute::route('collections.index');
+    }
 @endphp
 
 <section id="home" class="relative min-h-[calc(100vh-80px)] overflow-hidden bg-[#3C3B39] text-[#FBE9CB]">

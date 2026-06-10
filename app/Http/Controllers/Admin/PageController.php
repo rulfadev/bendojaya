@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\SavesInlineEnglishTranslation;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +14,8 @@ use Illuminate\View\View;
 
 class PageController extends Controller
 {
+    use SavesInlineEnglishTranslation;
+
     public function index(): View
     {
         $pages = Page::query()
@@ -54,7 +57,16 @@ class PageController extends Controller
             $validated['featured_image'] = $request->file('featured_image')->store('pages', 'public');
         }
 
-        Page::query()->create($validated);
+        $page = Page::query()->create($validated);
+
+        $this->saveInlineEnglishTranslation($page, $request, [
+            'title',
+            'excerpt',
+            'content',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+        ]);
 
         return redirect()
             ->route('admin.pages.index')
@@ -88,6 +100,14 @@ class PageController extends Controller
         }
 
         $page->update($validated);
+        $this->saveInlineEnglishTranslation($page, $request, [
+            'title',
+            'excerpt',
+            'content',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+        ]);
 
         return redirect()
             ->route('admin.pages.index')

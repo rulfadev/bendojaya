@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasContentTranslations;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,17 @@ use Illuminate\Support\Facades\Storage;
 #[Fillable(['page_id', 'type', 'eyebrow', 'title', 'subtitle', 'content', 'image', 'image_position', 'button_label', 'button_url', 'settings', 'is_active', 'sort_order'])]
 class PageSection extends Model
 {
+    use HasContentTranslations;
+
+    protected array $translatable = [
+        'eyebrow',
+        'title',
+        'subtitle',
+        'content',
+        'button_label',
+        'settings',
+    ];
+
     protected function casts(): array
     {
         return [

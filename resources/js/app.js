@@ -1,6 +1,8 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'trix';
+import './trix-upload';
 
 window.Swal = Swal;
 

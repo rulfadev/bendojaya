@@ -32,7 +32,7 @@
     <section class="py-20 lg:py-28">
         <div class="mx-auto max-w-4xl px-5 lg:px-8">
             <article class="rounded-[2rem] border border-[#E6D8C8] bg-white/80 p-7 text-[#58433D] shadow-sm sm:p-10">
-                <div class="space-y-6 text-base leading-8">
+                <div class="space-y-6 text-base leading-8 trix-content">
                     {!! $article->content ?: '<p>Konten artikel belum tersedia.</p>' !!}
                 </div>
             </article>

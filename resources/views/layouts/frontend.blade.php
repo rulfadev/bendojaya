@@ -1,4 +1,5 @@
 @php
+    $setting = $setting ?? \App\Models\SiteSetting::query()->first();
     $siteName = $setting?->site_name ?? 'Bendo Jaya';
     $siteTagline = $setting?->tagline ?? 'Batik Fashion';
     $logo = $setting?->logo ? asset('storage/' . $setting->logo) : asset('assets/frontend/logo-bendo-jaya.jpg');

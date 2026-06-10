@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\SavesInlineEnglishTranslation;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use Illuminate\Http\RedirectResponse;
@@ -13,6 +14,8 @@ use Illuminate\View\View;
 
 class GalleryController extends Controller
 {
+    use SavesInlineEnglishTranslation;
+
     public function index(): View
     {
         $galleries = Gallery::query()
@@ -53,7 +56,14 @@ class GalleryController extends Controller
             $validated['image'] = $request->file('image')->store('gallery', 'public');
         }
 
-        Gallery::query()->create($validated);
+        $gallery = Gallery::query()->create($validated);
+
+        $this->saveInlineEnglishTranslation($gallery, $request, [
+            'title',
+            'category',
+            'caption',
+            'description',
+        ]);
 
         return redirect()->route('admin.galleries.index')->with('success', 'Gallery berhasil ditambahkan.');
     }
@@ -85,6 +95,12 @@ class GalleryController extends Controller
         }
 
         $gallery->update($validated);
+        $this->saveInlineEnglishTranslation($gallery, $request, [
+            'title',
+            'category',
+            'caption',
+            'description',
+        ]);
 
         return redirect()->route('admin.galleries.index')->with('success', 'Gallery berhasil diperbarui.');
     }

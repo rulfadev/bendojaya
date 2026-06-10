@@ -16,8 +16,26 @@
                 </div>
 
                 <div class="md:col-span-2">
-                    <x-admin.form.textarea name="content" label="Konten" :value="$article->content" rows="12"
-                        placeholder="Boleh isi HTML sederhana" />
+                    <label class="mb-2 block text-sm font-black text-stone-700">
+                        Konten
+                    </label>
+
+                    @include('admin.shared.trix-editor', [
+                        'name' => 'content',
+                        'value' => old('content', $article->content ?? ''),
+                        'id' => 'article_content',
+                    ])
+
+                    @error('content')
+                        <p class="mt-2 text-xs font-bold text-red-600">
+                            {{ $message }}
+                        </p>
+                    @enderror
+
+                    <p class="mt-2 text-xs font-semibold leading-6 text-stone-500">
+                        Gunakan editor ini untuk menulis artikel. Bisa menambahkan heading, list, link, gambar, dan
+                        lampiran.
+                    </p>
                 </div>
             </div>
         </section>
@@ -32,6 +50,19 @@
                 <x-admin.form.textarea name="meta_keywords" label="Meta Keywords" :value="$article->meta_keywords" rows="3" />
             </div>
         </section>
+
+        @include('admin.shared.english-translation-fields', [
+            'model' => $article,
+            'fields' => [
+                'title' => ['label' => 'Judul'],
+                'category' => ['label' => 'Kategori'],
+                'excerpt' => ['label' => 'Ringkasan', 'type' => 'textarea', 'rows' => 4],
+                'content' => ['label' => 'Konten Artikel', 'type' => 'editor', 'rows' => 10],
+                'meta_title' => ['label' => 'Meta Title'],
+                'meta_description' => ['label' => 'Meta Description', 'type' => 'textarea', 'rows' => 3],
+                'meta_keywords' => ['label' => 'Meta Keywords', 'type' => 'textarea', 'rows' => 3],
+            ],
+        ])
     </div>
 
     <div class="space-y-8">
